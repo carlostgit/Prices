@@ -1,0 +1,103 @@
+extends Control
+
+class_name Combination
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+var _thing_quantity_dict:Dictionary = {}
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	
+	var dict1 = {"chocolate":2.2,"candy":1.1 }
+	var dict2 = {"chocolate":2.2,"candy":1.1 }
+	var dict3 = {"chocolate":2.21,"candy":1.1 }
+	var dict4 = {"chocolat":2.2,"candy":1.1 }
+	
+	init(dict1)
+	
+	print("dict1 equals dict2 ?")
+	print(self.equals(dict2))
+	
+	print("dict1 equals dict3 ?")
+	print(self.equals(dict3))
+	
+	print("dict1 equals dict4 ?")
+	print(self.equals(dict4))
+	
+	print("compatibles?")
+	print(self.is_compatible(dict2))
+	print(self.is_compatible(dict3))
+	print(self.is_compatible(dict4))
+	
+	
+	print(self.get_quantity_of_thing("chocolate"))
+	print(self.get_quantity_of_thing("candy"))
+	print(self.get_array_of_things())
+	
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+#
+func _init(thing_quantity_dict_arg={}): #Sin ={}, me aparece un error al lanzar la escena
+	init(thing_quantity_dict_arg)
+	
+func init(thing_quantity_dict_arg:Dictionary)->void:
+	for thing in thing_quantity_dict_arg.keys():
+		assert(typeof(thing)==TYPE_STRING)
+		assert(typeof(thing_quantity_dict_arg[thing])==TYPE_REAL)
+		
+	_thing_quantity_dict = thing_quantity_dict_arg
+	
+func get_thing_quantity_dict()->Dictionary:
+	return _thing_quantity_dict
+	
+func get_quantity_of_thing(thing_arg:String)->float:
+	return _thing_quantity_dict[thing_arg]
+
+func get_array_of_things()->Array:
+	return _thing_quantity_dict.keys()
+	
+func is_compatible(thing_quantity_dict_arg:Dictionary)->bool:
+	if (thing_quantity_dict_arg.size() and _thing_quantity_dict.size()):
+		if thing_quantity_dict_arg.keys() == _thing_quantity_dict.keys():
+			return true
+	return false
+
+func equals_dict(thing_quantity_dict_arg:Dictionary)->bool:
+	if (thing_quantity_dict_arg.size() and _thing_quantity_dict.size()):
+		if thing_quantity_dict_arg.keys() == _thing_quantity_dict.keys():
+			for thing in thing_quantity_dict_arg.keys():
+				if false==(thing in _thing_quantity_dict):
+					return false;
+				else:
+					if thing_quantity_dict_arg[thing] != _thing_quantity_dict[thing]:
+						return false
+		else:
+			return false			
+	else:
+		return false
+#	Finished testing
+	return true
+
+func equals(combination_arg:Combination)->bool:
+	var thing_quantity_dict:Dictionary = combination_arg.get_thing_quantity_dict()
+	if (thing_quantity_dict.size() and _thing_quantity_dict.size()):
+		if thing_quantity_dict.keys() == _thing_quantity_dict.keys():
+			for thing in thing_quantity_dict.keys():
+				if false==(thing in _thing_quantity_dict):
+					return false;
+				else:
+					if thing_quantity_dict[thing] != _thing_quantity_dict[thing]:
+						return false
+		else:
+			return false			
+	else:
+		return false
+#	Finished testing
+	return true
