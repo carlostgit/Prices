@@ -29,42 +29,13 @@ var _func_label_dict:Dictionary = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-#	var x_left_arg:float = _left_margin
-#	var max_quantity_arg:float = 5.0
-#	var num_of_calculated_points_arg:int = 10
+#	init(7,80)
 #
-#	var canvas_item_arg:CanvasItem = self
-#
-#	var param_min_width = 10
-#	_width = self.get_rect().size.x - _left_margin - _right_margin
-#
-#	if _width < param_min_width:
-#		_width = param_min_width
-#
-#	var x_zoom_arg:float = _width/float(num_of_calculated_points_arg)
-#
-#	var y_max:float = _max_y
-#	var height:float = self.get_rect().size.y - _top_margin - _bottom_margin
-#	var param_min_height = 10
-#	if height < param_min_height:
-#		height = param_min_height
-#
-#
-#	var y_zoom_arg:float = height/y_max
-#	var y_bottom_arg:float = height+_top_margin
-#
-#	TODO: 
-#	hacer que el with y height se cojan automáticamente del size del nodo
-#	hacer que se configure un x_max, y_max (siendo "x" el valor que se le pasa a la función y "y" el valor que devuelve)
-#	hacer que se puedan añadir funciones a plotear, acompañadas de un label
-	
-
-	init(7,80)
-		
-	var test_funcref = funcref( self, "default_test_function")
-	_func_array.append(test_funcref)
-	#_label_array.append("test")
-	_func_label_dict[test_funcref]="test"
+#	var test_funcref = funcref( self, "default_test_function")
+#	_func_array.append(test_funcref)
+#	#_label_array.append("test")
+#	_func_label_dict[test_funcref]="test"
+	pass
 
 func add_func_ref(func_ref_arg:FuncRef, label_arg:String = "")->void:
 	_func_array.append(func_ref_arg)
@@ -77,7 +48,30 @@ func default_test_function(x_arg:float) -> float:
 #
 #func _init(y_bottom_arg:float, x_left_arg:float, x_zoom_arg:float,y_zoom_arg:float,max_quantity_arg:float,num_of_calculated_points_arg:int, canvas_item_arg:CanvasItem):
 #	init(y_bottom_arg,x_left_arg,x_zoom_arg,y_zoom_arg,max_quantity_arg,num_of_calculated_points_arg,canvas_item_arg)
-#
+
+func updated_size()->void:
+	_canvas_item = self
+	var param_min_width = 10
+	_width = self.get_rect().size.x - _left_margin - _right_margin
+	
+	if _width < param_min_width:
+		_width = param_min_width
+	
+	_x_zoom = _width/float(_total_num_of_calculated_points)
+	
+	var y_max:float = _max_y
+	_height = self.get_rect().size.y - _top_margin - _bottom_margin
+	var param_min_height = 10
+	if _height < param_min_height:
+		_height = param_min_height
+
+	_y_zoom = _height/y_max
+	
+	_calculated_points_per_unit = float(_max_x)/float(_total_num_of_calculated_points)
+
+
+func _init(x_max_arg:float=5, y_max_arg:float=10, left_margin_arg:float=40, right_margin_arg:float=40, top_margin_arg:float=40, bottom_margin_arg:float=40, points_calculated_arg=100):
+	init(x_max_arg, y_max_arg, left_margin_arg, right_margin_arg, top_margin_arg, bottom_margin_arg, points_calculated_arg)
 
 func init(x_max_arg:float, y_max_arg:float, left_margin_arg:float=40, right_margin_arg:float=40, top_margin_arg:float=40, bottom_margin_arg:float=40, points_calculated_arg=100):
 
@@ -192,7 +186,7 @@ func draw_background():
 	#_canvas_item.draw_string(_font,Vector2(0,_height+_top_margin-1*_y_zoom),"1",Color(1,1,1))
 
 	#_max_y Etiqueta con el máximo en Y
-	_canvas_item.draw_string(_font,Vector2(0,_top_margin-1*_y_zoom),str(_max_y),Color(1,1,1))
+	_canvas_item.draw_string(_font,Vector2(0,_top_margin),str(_max_y),Color(1,1,1))
 	
 	#Etiqueta con el mínimo en y
 	_canvas_item.draw_string(_font,Vector2(0,_height+_top_margin),String("0"),Color(1,1,1))

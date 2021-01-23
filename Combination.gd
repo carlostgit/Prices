@@ -50,7 +50,7 @@ func _init(thing_quantity_dict_arg={}): #Sin ={}, me aparece un error al lanzar 
 func init(thing_quantity_dict_arg:Dictionary)->void:
 	for thing in thing_quantity_dict_arg.keys():
 		assert(typeof(thing)==TYPE_STRING)
-		assert(typeof(thing_quantity_dict_arg[thing])==TYPE_REAL)
+		assert(typeof(thing_quantity_dict_arg[thing])==TYPE_REAL or typeof(thing_quantity_dict_arg[thing])==TYPE_INT)
 		
 	_thing_quantity_dict = thing_quantity_dict_arg
 	

@@ -3,8 +3,9 @@
 [ext_resource path="res://Plotter.gd" type="Script" id=1]
 
 [node name="Plotter" type="Control"]
-margin_right = 229.0
-margin_bottom = 268.0
+margin_right = 278.0
+margin_bottom = 313.0
+rect_min_size = Vector2( 200, 200 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
