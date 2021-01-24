@@ -5,18 +5,18 @@ extends Control
 # var a = 2
 # var b = "text"
 
-var _param_preference_at_0 = {"chocolate": 2.16, "candy": 4.5}
-var _maximum_satisf = {"chocolate": 10.0, "candy": 4.0}
+#var _param_preference_at_0 = {"chocolate": 2.16, "candy": 4.5}
+#var _maximum_satisf = {"chocolate": 10.0, "candy": 4.0}
 
-var _combo = {"sweets":["chocolate","candy"]}
-var _param_combo_preference_at_0 = {"sweets":10.8}
-var _param_combo_maximum_quantity_satisf = {"sweets":3.0}
+var _combos:Dictionary = {"sweets":["chocolate","candy"]}
+#var _param_combo_preference_at_0 = {"sweets":10.8}
+#var _param_combo_maximum_quantity_satisf = {"sweets":3.0}
 
 var _products = ["chocolate","candy"]
 
 const Plotter = preload("res://Plotter.gd")
 const SatisfactionCurve = preload("res://SatisfactionCurve.gd")
-#TODO Usar SatisfactionCurve
+
 var _product_satisf_curve_dict:Dictionary = {}
 var _combo_satisf_curve_dict:Dictionary = {}
 
@@ -80,9 +80,9 @@ func calculate_satisf(combination_dict_arg:Dictionary) -> float:
 #		satisf_of_prod_individually += satisf_curve.calculate_satifaction(amount_of_product)
 
 	var satisf_of_combi = 0.0
-	for combi_name in self._combo.keys():
+	for combi_name in self._combos.keys():
 		var amount_of_product = 0
-		for product in _combo[combi_name]:
+		for product in _combos[combi_name]:
 			amount_of_product += combination_dict_arg[product]
 		satisf_of_combi += self.calculate_satifaction_of_prod_combo(combi_name,amount_of_product)
 
@@ -112,9 +112,9 @@ func calculate_satisfaction_of_prod_combos_in_combination(combination:Dictionary
 	var satisfaction:float = 0.0
 
 	#var _combo = {"sweets":["chocolate","candy"]}
-	for combo in self._combo.keys():
+	for combo in self._combos.keys():
 		var dict_prod_of_combo_repetitions:Dictionary = Dictionary()
-		var prods_in_combo:Array = _combo[combo]
+		var prods_in_combo:Array = _combos[combo]
 		for prod in prods_in_combo:
 			dict_prod_of_combo_repetitions[prod] = 0.0
 
@@ -172,7 +172,7 @@ func calculate_satifaction_of_product(product_arg:String, quantity_arg:float) ->
 
 func calculate_satifaction_of_prod_combo(combi_arg:String, quantity_arg:float) -> float:
 	
-	if false==self._combo.has(combi_arg):
+	if false==self._combos.has(combi_arg):
 		return 0.0
 	
 	var ret_satisf = 0.0
