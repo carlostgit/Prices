@@ -36,6 +36,10 @@ config/name="Prices"
 run/main_scene="res://CombinationItemList.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Prices="*res://Prices.gd"
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
