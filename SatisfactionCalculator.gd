@@ -53,7 +53,8 @@ func _ready():
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_chocolate"),"chocolate")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_candy"),"candy")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_sweets"),"sweets")
-
+	
+	print ("patatin")
 	
 ##test funcs
 func calculate_satifaction_of_chocolate(quantity_arg:float) -> float:
@@ -68,6 +69,19 @@ func calculate_satifaction_of_sweets(quantity_arg:float) -> float:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func _init():
+	init_default_satisfaction()
+	
+func init_default_satisfaction():
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,4)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,3)
+	
+	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
+	_product_satisf_curve_dict["candy"]=satis_curve_candy
+	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+	
 
 func calculate_satisf(combination_dict_arg:Dictionary) -> float:
 	var satisfaction_return = 0.0
