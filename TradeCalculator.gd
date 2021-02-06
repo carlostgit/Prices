@@ -21,7 +21,12 @@ func _ready():
 	print (combination_result)
 	
 	
-	print("best combi: "+ str(calculate_best_combination(5.0)))
+	print("best combi: "+ str(calculate_best_combination(50.0)))
+	
+	var bad_combi_too_much_candy:Dictionary = {"chocolate": 2, "candy": 50}
+	var trade_result_too_much_candy:Dictionary = calculate_trade(bad_combi_too_much_candy)
+	print("Too much candy result:")
+	print (trade_result_too_much_candy)
 	
 	pass # Replace with function body.
 
@@ -38,9 +43,7 @@ func calculate_trade(combination_dict_arg:Dictionary)->Dictionary:
 	var satisfaction:float =_satisfaction_calculator.calculate_satisf(combination_dict_arg)
 	#Prices está en autoload, por lo que lo puedo usar en cualquier lado
 	var price:float = Prices.calculate_price(combination_dict_arg)
-	
-	
-	
+		
 	var best_combination:Dictionary = calculate_best_combination(price)
 	var satisfaction_of_best_combination:float = _satisfaction_calculator.calculate_satisf(best_combination)
 	
@@ -63,7 +66,7 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 	
 #	var best_next_combination:Dictionary = combination.duplicate()
 	while true:
-			
+#		print ("left money: "+ str(left_money))	
 		var no_more_money = true
 		var best_product_combination:Dictionary = {}
 		var best_product_satisfaction = 0.0
@@ -74,10 +77,16 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 			var satisfaction_of_trying_combination = _satisfaction_calculator.calculate_satisf(trying_combination)
 			var price = Prices.get_price_of_product(product)*step_length
 			
+			
+			
 			if price<left_money:
 				no_more_money = false
 				
 				var satisfacton_of_trying_combination_for_price = satisfaction_of_trying_combination/price
+				
+#				print("product: "+ product)
+#				print(trying_combination)
+#				print ("satisf for price: " + str(satisfacton_of_trying_combination_for_price))
 				
 				if satisfacton_of_trying_combination_for_price > best_product_satisfaction:
 					best_product_satisfaction = satisfacton_of_trying_combination_for_price

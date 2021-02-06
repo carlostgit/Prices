@@ -42,9 +42,9 @@ func _ready():
 	
 #	print(calculate_param_preference_at_0(10, 1, 1))
 
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(0.56,10)
 	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,4)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,3)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,15)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
@@ -53,8 +53,12 @@ func _ready():
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_chocolate"),"chocolate")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_candy"),"candy")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_sweets"),"sweets")
+
+#	var combi = {"chocolate": 10.0, "candy": 10.0}
+#	print("satisf_combi: " + str(self.calculate_satisf(combi)))
+#	var combi_2 = {"chocolate": 15.0, "candy": 5.0}
+#	print("satisf_combi_2: " + str(self.calculate_satisf(combi_2)))
 	
-	print ("patatin")
 	
 ##test funcs
 func calculate_satifaction_of_chocolate(quantity_arg:float) -> float:
@@ -74,9 +78,9 @@ func _init():
 	init_default_satisfaction()
 	
 func init_default_satisfaction():
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,4)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,3)
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(30.16,10)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,3)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,30)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
@@ -95,13 +99,20 @@ func calculate_satisf(combination_dict_arg:Dictionary) -> float:
 
 	var satisf_of_combi = 0.0
 	for combi_name in self._combos.keys():
-		var amount_of_product = 0
+		var amount_of_combi = 0
+		var count = 0
 		for product in _combos[combi_name]:
-			amount_of_product += combination_dict_arg[product]
-		satisf_of_combi += self.calculate_satifaction_of_prod_combo(combi_name,amount_of_product)
+			var amount_of_product = combination_dict_arg[product]
+			if amount_of_product < amount_of_combi or 0 == count:
+				amount_of_combi = amount_of_product
+			count += 1
+		satisf_of_combi += self.calculate_satifaction_of_prod_combo(combi_name,amount_of_combi)
 
 	satisfaction_return = satisf_of_prod_individually+satisf_of_combi		
 		
+#	print("indiv: "+str(satisf_of_prod_individually))
+#	print("combi: "+str(satisf_of_combi))
+	
 	return satisfaction_return
 
 func calculate_satisfaction_of_combination(combination:Dictionary) -> float:

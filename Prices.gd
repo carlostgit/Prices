@@ -6,7 +6,7 @@ extends Control
 
 var _products = ["chocolate","candy"]
 var _currency = "candy"
-var _prices_dict = {"chocolate": 2.0, "candy":1.0}
+var _prices_dict = {"chocolate": 1.0, "candy":0.9}
 
 
 # Called when the node enters the scene tree for the first time.
