@@ -18,7 +18,7 @@ func _ready():
 	var combination_1:Dictionary = {"chocolate": 0, "candy": 0}
 	var combination_2:Dictionary = {"chocolate": 2, "candy": 1}
 	var combination_result = calculate_combination_difference(combination_1,combination_2)
-	print (combination_result)
+	print ("diff: "+ str(combination_result))
 	
 	
 	print("best combi: "+ str(calculate_best_combination(50.0)))
@@ -65,39 +65,56 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 	var left_money:float = money_arg
 	
 #	var best_next_combination:Dictionary = combination.duplicate()
+	var count = 0
+	var best_previous_satisfaction = 0.0
 	while true:
 #		print ("left money: "+ str(left_money))	
-		var no_more_money = true
+		var end_calculating = false
 		var best_product_combination:Dictionary = {}
 		var best_product_satisfaction = 0.0
 		var best_product_price = 0.0
+		var best_increment_of_satisfaction_for_price:float = 0.0
+#		print("count :"+str(count))
 		for product in products:
 			var trying_combination:Dictionary = combination.duplicate()
 			trying_combination[product] += step_length
-			var satisfaction_of_trying_combination = _satisfaction_calculator.calculate_satisf(trying_combination)
+			var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf(trying_combination)
+			
+			var increment_of_satisfaction:float = satisfaction_of_trying_combination - best_previous_satisfaction
+			
+			
 			var price = Prices.get_price_of_product(product)*step_length
 			
+#			print("product: "+ product)
+#			print("satisf: "+ str(satisfaction_of_trying_combination))
 			
-			
-			if price<left_money:
-				no_more_money = false
+			if price<left_money and increment_of_satisfaction > 0.0:
 				
-				var satisfacton_of_trying_combination_for_price = satisfaction_of_trying_combination/price
-				
+#				var satisfacton_of_trying_combination_for_price = satisfaction_of_trying_combination/price
+				var increment_of_satisfaction_for_price:float = increment_of_satisfaction/price
+#				print("satisf/price: "+ str(satisfacton_of_trying_combination_for_price))
+#				print("satisf/price: "+ str(increment_of_satisfaction_for_price))
 #				print("product: "+ product)
 #				print(trying_combination)
-#				print ("satisf for price: " + str(satisfacton_of_trying_combination_for_price))
+#				print ("increment of satisf for price: " + str(increment_of_satisfaction_for_price))
 				
-				if satisfacton_of_trying_combination_for_price > best_product_satisfaction:
-					best_product_satisfaction = satisfacton_of_trying_combination_for_price
+				if increment_of_satisfaction_for_price > best_increment_of_satisfaction_for_price:
+					best_product_satisfaction = satisfaction_of_trying_combination
 					best_product_combination = trying_combination
 					best_product_price = price
+					best_increment_of_satisfaction_for_price = increment_of_satisfaction_for_price
+			else:
+#				no money, or no increment of satisfaction
+				end_calculating = true
+				break 
 		
-		if no_more_money:
+		if end_calculating:
 			break
-		else:
-			left_money -= best_product_price
-			combination = best_product_combination
+		
+		left_money -= best_product_price
+		combination = best_product_combination
+		best_previous_satisfaction = best_product_satisfaction
+		count += 1
 			
 		
 	

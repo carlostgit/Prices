@@ -33,7 +33,7 @@ func _ready():
 #	_param_preference_at_0["chocolate"] = preference_at_0
 #	_maximum_satisf["chocolate"] = param_max_satisf
 
-	var plotter:Plotter = Plotter.new(100,15)
+	var plotter:Plotter = Plotter.new(10,15)
 	plotter.set_size(Vector2(300,300))
 	plotter.updated_size()
 #	var dimin_ret_fact_func_ref:FuncRef = funcref( self, "get_diminishing_returns_factor")
@@ -42,22 +42,24 @@ func _ready():
 	
 #	print(calculate_param_preference_at_0(10, 1, 1))
 
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(0.56,10)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,4)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,15)
-	
-	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
-	_product_satisf_curve_dict["candy"]=satis_curve_candy
-	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+#	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(0.56,10)
+#	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,4)
+#	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,15)
+#
+#	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
+#	_product_satisf_curve_dict["candy"]=satis_curve_candy
+#	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+
+	init_default_satisfaction()
 	
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_chocolate"),"chocolate")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_candy"),"candy")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_sweets"),"sweets")
 
-#	var combi = {"chocolate": 10.0, "candy": 10.0}
-#	print("satisf_combi: " + str(self.calculate_satisf(combi)))
-#	var combi_2 = {"chocolate": 15.0, "candy": 5.0}
-#	print("satisf_combi_2: " + str(self.calculate_satisf(combi_2)))
+	var combi = {"chocolate": 10.0, "candy": 10.0}
+	print("satisf_combi: " + str(self.calculate_satisf(combi)))
+	var combi_2 = {"chocolate": 11.0, "candy": 9.0}
+	print("satisf_combi_2: " + str(self.calculate_satisf(combi_2)))
 	
 	
 ##test funcs
@@ -80,7 +82,7 @@ func _init():
 func init_default_satisfaction():
 	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(30.16,10)
 	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,3)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(10.8,30)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8,15)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
