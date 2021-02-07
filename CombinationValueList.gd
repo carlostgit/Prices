@@ -64,6 +64,13 @@ func has_combination(combination_arg:Combination)->bool:
 			return true
 	return false
 	
+func get_combinations()->Array:
+	var combis:Array = []
+	for combination_value in _combination_value_array:
+		var combination:Combination = (combination_value as CombinationValue).get_combination()
+		combis.append(combination)
+	return combis
+	
 func get_combination_value_array()->Array:
 	return _combination_value_array
 
@@ -101,3 +108,10 @@ func get_thing_quantity_dict_array()->Array:
 func sort()->void:
 	_combination_value_array.sort_custom(CombinationValueSorter,"sort")
 
+func get_value_of_combination(combination_arg:Combination)->float:
+	for combination_value in _combination_value_array:
+		var combination:Combination = (combination_value as CombinationValue).get_combination()
+		if (combination_arg.equals(combination)):
+			return (combination_value as CombinationValue).get_value()
+
+	return 0.0

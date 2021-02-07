@@ -8,6 +8,8 @@ extends Control
 #var _param_preference_at_0 = {"chocolate": 2.16, "candy": 4.5}
 #var _maximum_satisf = {"chocolate": 10.0, "candy": 4.0}
 
+const Combination = preload("res://Combination.gd")
+
 var _combos:Dictionary = {"sweets":["chocolate","candy"]}
 #var _param_combo_preference_at_0 = {"sweets":10.8}
 #var _param_combo_maximum_quantity_satisf = {"sweets":3.0}
@@ -88,6 +90,12 @@ func init_default_satisfaction():
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
 	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
 	
+func calculate_satisf_of_combination(combination_arg:Combination):
+	if combination_arg as Combination:
+		var combination_dict:Dictionary = combination_arg.get_thing_quantity_dict()
+		return calculate_satisf(combination_dict)
+	else:
+		assert(false)
 
 func calculate_satisf(combination_dict_arg:Dictionary) -> float:
 	var satisfaction_return = 0.0
@@ -117,21 +125,21 @@ func calculate_satisf(combination_dict_arg:Dictionary) -> float:
 	
 	return satisfaction_return
 
-func calculate_satisfaction_of_combination(combination:Dictionary) -> float:
-	#Satisfaction of individual products
-	#{candy:3, chocolate:0}
-	var satisfaction:float = 0.0
-		
-	for prod in combination.keys():
-		var num_of_prod:float = combination[prod]
-		if num_of_prod > 0.0:
-			var satisf_of_prod = calculate_satifaction_of_product(prod,num_of_prod)
-			satisfaction += satisf_of_prod
-
-	#Satisfaction of combos
-	var satisf_combos:float = calculate_satisfaction_of_prod_combos_in_combination(combination)
-
-	return satisfaction+satisf_combos
+#func calculate_satisfaction_of_combination(combination:Dictionary) -> float:
+#	#Satisfaction of individual products
+#	#{candy:3, chocolate:0}
+#	var satisfaction:float = 0.0
+#
+#	for prod in combination.keys():
+#		var num_of_prod:float = combination[prod]
+#		if num_of_prod > 0.0:
+#			var satisf_of_prod = calculate_satifaction_of_product(prod,num_of_prod)
+#			satisfaction += satisf_of_prod
+#
+#	#Satisfaction of combos
+#	var satisf_combos:float = calculate_satisfaction_of_prod_combos_in_combination(combination)
+#
+#	return satisfaction+satisf_combos
 
 func calculate_satisfaction_of_prod_combos_in_combination(combination:Dictionary) -> float:
 	#Satisfaction of individual products

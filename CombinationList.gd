@@ -33,8 +33,13 @@ func _ready():
 #	add_combination(Combination.new(thing_quantity_dict_arg))
 	
 func add_combination(combination_arg:Combination)->void:
-	_combinations_array.append(combination_arg)
-	
+	if combination_arg as Combination:
+#		var class_of_combination_arg = combination_arg.get_class()
+#		assert(class_of_combination_arg=="Combination")
+		_combinations_array.append(combination_arg)
+	else:
+		assert(false)
+		
 func has_combination(combination_arg:Combination)->bool:
 	for combination in _combinations_array:
 		if combination.equals(combination_arg):

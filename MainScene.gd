@@ -19,41 +19,32 @@ func _ready():
 
 #	CombinationSatisfactionList
 	
-	var combination_value_list:CombinationValueList = CombinationValueList.new()
-	
 	var satisfaction_calculator:SatisfactionCalculator = SatisfactionCalculator.new()
 	satisfaction_calculator.init_default_satisfaction()
 
-	var combination_creator = CombinationCreator.new()
-	var combination_list = combination_creator.calculate_combination_list(5)
-	print(combination_list.get_thing_quantity_dict_array())
+	var combination_creator = CombinationCreator.new() #Pasar mejor esto a auto load, o como estático
+	var combination_list:CombinationList = combination_creator.calculate_combination_list(5)
+#	print(combination_list.get_thing_quantity_dict_array())
 	
 	var combinations_array:Array = combination_list.get_combinations_array()
 	
-#	var combination_satisfaction:Dictionary = {}
-#	var combination_dict_array:Array = []
+	var combination_value_list:CombinationValueList = CombinationValueList.new()
 	for combination in combinations_array:
-		var combination_dict = combination.get_thing_quantity_dict()
-#		combination_dict_array.append(combination_dict)
-#		print(combination_dict)
-		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
-#		combination_satisfaction[combination_dict] = satisf
-#		print(satisf)
-		
+#		var combination_dict = combination.get_thing_quantity_dict()
+#		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
+		var satisf:float = satisfaction_calculator.calculate_satisf_of_combination(combination)
 		combination_value_list.add_combination_value(combination,satisf)
-	
 	
 	combination_value_list.sort()
 	
-	
-	var combination_dict_array_sorted:Array = combination_value_list.get_combination_dict_array()
-	
-	var combination_satisfaction:Dictionary = {}
-	for combination_dict in combination_dict_array_sorted:
-		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
-		combination_satisfaction[combination_dict] = satisf
-	
-	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
+#	var combination_dict_array_sorted:Array = combination_value_list.get_combination_dict_array()	
+#	var combination_satisfaction:Dictionary = {}
+#	for combination_dict in combination_dict_array_sorted:
+#		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
+#		combination_satisfaction[combination_dict] = satisf
+#
+#	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
+	$CombinationSatisfaction.init_with_combination_value_list(combination_value_list)
 
 	pass # Replace with function body.
 

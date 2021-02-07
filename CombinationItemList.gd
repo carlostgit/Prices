@@ -2,6 +2,8 @@ extends Node2D
 
 #class_name CombinationItemList
 
+const CombinationValueList = preload("res://CombinationValueList.gd")
+
 var _name:String = ""
 
 # Declare member variables here. Examples:
@@ -57,6 +59,19 @@ func init_default_test():
 #	pass
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array, combination_satisfaction_arg:Dictionary = Dictionary()):
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combination_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
+
+func init_with_combination_value_list(combination_value_list:CombinationValueList):
+	var combinations:Array = combination_value_list.get_combinations()
+	var combination_dicts_array:Array = []
+	var combination_dict_satisfaction:Dictionary = {}
+	for combination in combinations:
+		var combination_dict:Dictionary = (combination as Combination).get_thing_quantity_dict()
+		combination_dicts_array.append(combination_dict)
+		var satisf:float = combination_value_list.get_value_of_combination(combination)
+		combination_dict_satisfaction[combination_dict]=satisf
+		
+	_init(combination_dicts_array, combination_dict_satisfaction)
+	
 
 func init(combinations_arg:Array, combination_satisfaction_arg:Dictionary):
 	_init(combinations_arg, combination_satisfaction_arg)
