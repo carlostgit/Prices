@@ -75,6 +75,7 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 		var best_product_price = 0.0
 		var best_increment_of_satisfaction_for_price:float = 0.0
 #		print("count :"+str(count))
+		var product_found = false
 		for product in products:
 			var trying_combination:Dictionary = combination.duplicate()
 			trying_combination[product] += step_length
@@ -89,6 +90,7 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 #			print("satisf: "+ str(satisfaction_of_trying_combination))
 			
 			if price<left_money and increment_of_satisfaction > 0.0:
+				product_found = true
 				
 #				var satisfacton_of_trying_combination_for_price = satisfaction_of_trying_combination/price
 				var increment_of_satisfaction_for_price:float = increment_of_satisfaction/price
@@ -103,12 +105,9 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 					best_product_combination = trying_combination
 					best_product_price = price
 					best_increment_of_satisfaction_for_price = increment_of_satisfaction_for_price
-			else:
-#				no money, or no increment of satisfaction
-				end_calculating = true
-				break 
 		
-		if end_calculating:
+		
+		if false==product_found:
 			break
 		
 		left_money -= best_product_price

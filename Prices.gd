@@ -6,7 +6,7 @@ extends Control
 
 var _products = ["chocolate","candy"]
 var _currency = "candy"
-var _prices_dict = {"chocolate": 1.0, "candy":0.9}
+var _prices_dict = {"chocolate": 1.0, "candy":0.5}
 
 
 # Called when the node enters the scene tree for the first time.
@@ -16,7 +16,7 @@ func _ready():
 		print(product +": " + str(get_price_of_product(product)))
 	
 	var combination_dict:Dictionary = {"chocolate": 4,"candy":6}
-	print("combination price: "+str(calculate_price(combination_dict)))
+#	print("combination price: "+str(calculate_price(combination_dict)))
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

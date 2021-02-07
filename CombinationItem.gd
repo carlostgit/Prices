@@ -28,14 +28,14 @@ var _item_list:ItemList = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print ("ready!!")
+#	print ("ready!!")
 #	init_default_test()
 #
 #	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#	pass
+	pass
 
 func init_default_test():
 #	var default_canvas_item = CanvasItem.new()
@@ -47,10 +47,7 @@ func init_default_test():
 
 func init(combination_dict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 #	_canvas_item = canvas_item_arg
-
-
 	_combination_dict = combination_dict_arg
-
 	#TODO
 	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
 	add_item_list(combination_dict_arg, labels_arg)
@@ -59,18 +56,17 @@ func init(combination_dict_arg:Dictionary = Dictionary(), name_arg:String = "", 
 
 func _init(combination_dict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 ##	_canvas_item = canvas_item_arg
-
-
-	_combination_dict = combination_dict_arg
-
-	#TODO
-	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
-	add_item_list(combination_dict_arg, labels_arg)
-
-	self.set_label(name_arg)
+#	_combination_dict = combination_dict_arg
 #
+#	#TODO
+#	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
+#	add_item_list(combination_dict_arg, labels_arg)
+#
+#	self.set_label(name_arg)
+	pass
+	
 func set_label(label_name_arg:String)->void:
-	print("label_name is")
+#	print("label_name is")
 	var label_name:Label = Label.new()
 	label_name.set_scale(Vector2(1.5,1.5))
 	label_name.set_text(label_name_arg)

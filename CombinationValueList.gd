@@ -30,19 +30,19 @@ class CombinationValueSorter:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	var dict1 = {"chocolate":2.2,"candy":1.1 }
-	var dict2 = {"chocolate":2.2,"candy":1.1 }
-	var dict3 = {"chocolate":2.21,"candy":1.1 }
-	
-	add_combination_value(Combination.new(dict1),5)
-	add_combination_value(Combination.new(dict2),2)
-	add_combination_value(Combination.new(dict3),3)
-	
-	print(get_thing_quantity_value_array())
-	
-	self.sort()
-	
-	print(get_thing_quantity_value_array())
+#	var dict1 = {"chocolate":2.2,"candy":1.1 }
+#	var dict2 = {"chocolate":2.2,"candy":1.1 }
+#	var dict3 = {"chocolate":2.21,"candy":1.1 }
+#
+#	add_combination_value(Combination.new(dict1),5)
+#	add_combination_value(Combination.new(dict2),2)
+#	add_combination_value(Combination.new(dict3),3)
+#
+#	print(get_thing_quantity_value_array())
+#
+#	self.sort()
+#
+#	print(get_thing_quantity_value_array())
 	
 	pass # Replace with function body.
 
@@ -66,7 +66,16 @@ func has_combination(combination_arg:Combination)->bool:
 	
 func get_combination_value_array()->Array:
 	return _combination_value_array
-	
+
+func get_combination_dict_array()->Array:
+	var combination_dict_array:Array = []
+	for combination_value in _combination_value_array:
+		var combination:Combination = combination_value.get_combination()
+		var thing_quantity_dict:Dictionary = combination.get_thing_quantity_dict()
+		combination_dict_array.append(thing_quantity_dict)
+
+	return combination_dict_array
+
 func get_thing_quantity_value_array()->Array:
 	var return_array = []
 	for combination_value in _combination_value_array:

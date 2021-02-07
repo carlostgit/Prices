@@ -80,9 +80,9 @@ func _init():
 	init_default_satisfaction()
 	
 func init_default_satisfaction():
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(30.16,10)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(10,3)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8,15)
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,14)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy

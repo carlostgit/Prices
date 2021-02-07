@@ -37,8 +37,8 @@ var _combination_item_scene = preload("res://CombinationItem.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#self.set_size(Vector2(40,40))
-	init_default_test()
-#	pass # Replace with function body.
+#	init_default_test()
+	pass # Replace with function body.
 
 
 func init_default_test():
@@ -57,6 +57,10 @@ func init_default_test():
 #	pass
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array, combination_satisfaction_arg:Dictionary = Dictionary()):
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combination_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
+
+func init(combinations_arg:Array, combination_satisfaction_arg:Dictionary):
+	_init(combinations_arg, combination_satisfaction_arg)
+
 func _init(combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combination_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
 #	_canvas_item = canvas_item_arg
 	#_combinations = combinations_arg
