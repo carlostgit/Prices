@@ -38,7 +38,7 @@ static func find_value_in_dictionary_with_dictionary_key(dict_with_dictionary_ke
 	
 	return null
 	
-static func get_ordered_combinations(combination_satisfaction_arg:Dictionary) -> Array:
+static func get_ordered_combidicts(combination_satisfaction_arg:Dictionary) -> Array:
 	#Se ordenano de menor a mayor satisfacción
 	
 	var satisfactions_ordered:Array = combination_satisfaction_arg.values()

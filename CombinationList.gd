@@ -20,7 +20,7 @@ func _ready():
 	add_combination(Combination.new(dict2))
 	add_combination(Combination.new(dict3))
 	
-	print (get_thing_quantity_dict_array())
+#	print (get_combidict_array())
 	
 	pass # Replace with function body.
 
@@ -49,8 +49,8 @@ func has_combination(combination_arg:Combination)->bool:
 func get_combinations_array()->Array:
 	return _combinations_array
 
-func get_thing_quantity_dict_array()->Array:
-	var return_array = []
-	for combination in _combinations_array:
-		return_array.append(combination.get_thing_quantity_dict())
-	return return_array
+#func get_combidict_array()->Array:
+#	var return_array = []
+#	for combination in _combidicts_array:
+#		return_array.append(combination.get_combidict())
+#	return return_array

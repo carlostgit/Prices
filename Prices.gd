@@ -29,12 +29,12 @@ func get_price_of_product(product_arg:String)->float:
 	else:
 		return 0.0
 
-func calculate_price(combination_dict_arg:Dictionary)->float:
+func calculate_price(combidict_arg:Dictionary)->float:
 
 	var total_price:float = 0.0
-	for product in combination_dict_arg.keys():
+	for product in combidict_arg.keys():
 		if _prices_dict.has(product):
-			total_price += _prices_dict[product]*combination_dict_arg[product]
+			total_price += _prices_dict[product]*combidict_arg[product]
 	return total_price
 
 func get_products()->Array:

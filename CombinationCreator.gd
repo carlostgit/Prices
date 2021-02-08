@@ -1,7 +1,5 @@
 extends Control
 
-
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -9,13 +7,12 @@ extends Control
 const CombinationList = preload("res://CombinationList.gd")
 const Combination = preload("res://Combination.gd")
 
-
 var _products:Array = ["chocolate","candy"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-#	print(calculate_combinations_old(3))
+#	print(calculate_combidicts_old(3))
 #
 #	print(calculate_combination_list(3))
 	
@@ -28,10 +25,10 @@ func _ready():
 
 func calculate_combination_list(max_num_elements_arg:int)->CombinationList:
 	#Devuelve array de Combination. Por ejemplo:
-	var num_elements_combinations_dict:Dictionary = calculate_num_elem_combinations_dict_old(max_num_elements_arg)
+	var num_elements_combidicts_dict:Dictionary = calculate_num_elem_combidicts_dict_old(max_num_elements_arg)
 	var combinations_array:Array = Array()
-	for key in num_elements_combinations_dict.keys():
-		combinations_array += num_elements_combinations_dict[key]
+	for key in num_elements_combidicts_dict.keys():
+		combinations_array += num_elements_combidicts_dict[key]
 
 	var combination_list:CombinationList = CombinationList.new()
 	for combination_dict in combinations_array:
@@ -41,20 +38,20 @@ func calculate_combination_list(max_num_elements_arg:int)->CombinationList:
 	return combination_list
 
 
-func calculate_combinations_old(max_num_elements_arg:int)->Array:
+func calculate_combidicts_old(max_num_elements_arg:int)->Array:
 	#Devuelve array de diccionarios. Por ejemplo:
 	#[{candy:1, chocolate:0},#1 
 	#{candy:0, chocolate:1},
 	#{candy:2, chocolate:0},#2 
 	#{candy:1, chocolate:1}, 
 	#{candy:0, chocolate:2}]
-	var num_elements_combinations_dict:Dictionary = calculate_num_elem_combinations_dict_old(max_num_elements_arg)
+	var num_elements_combidicts_dict:Dictionary = calculate_num_elem_combidicts_dict_old(max_num_elements_arg)
 	var combinations_array:Array = Array()
-	for key in num_elements_combinations_dict.keys():
-		combinations_array += num_elements_combinations_dict[key]
+	for key in num_elements_combidicts_dict.keys():
+		combinations_array += num_elements_combidicts_dict[key]
 	return combinations_array
 
-func calculate_num_elem_combinations_dict_old(max_num_elements_arg:int)->Dictionary:
+func calculate_num_elem_combidicts_dict_old(max_num_elements_arg:int)->Dictionary:
 	#Devuelve diccionario, de array de diccionarios. Algo como:
 	#{1,[{candy:1, chocolate:0}, 
 		#{candy:0, chocolate:1}]},
@@ -67,14 +64,14 @@ func calculate_num_elem_combinations_dict_old(max_num_elements_arg:int)->Diction
 		#{candy:0, chocolate:3}]}
 	var combination_dict = Dictionary()
 	for num_elem in range(1,max_num_elements_arg+1):
-		var combination_list_of_exact_number_of_elements = calculate_combinations_exact_num_of_elem_old(num_elem,self._products)
+		var combination_list_of_exact_number_of_elements = calculate_combidicts_exact_num_of_elem_old(num_elem,self._products)
 		combination_dict[num_elem] = combination_list_of_exact_number_of_elements;
 		assert(typeof(num_elem)==TYPE_INT)
 		assert(typeof(combination_list_of_exact_number_of_elements) == TYPE_ARRAY)
 	
 	return combination_dict
 
-func calculate_combinations_exact_num_of_elem_old(exact_num_elements_arg:int, list_of_prod:Array)->Array:
+func calculate_combidicts_exact_num_of_elem_old(exact_num_elements_arg:int, list_of_prod:Array)->Array:
 	#Devuelve Array de dictionaries
 	#[{candy:3, chocolate:0}, {candy:2, chocolate:1}, {candy:1, chocolate:2}, {candy:0, chocolate:3}]
 
@@ -94,7 +91,7 @@ func calculate_combinations_exact_num_of_elem_old(exact_num_elements_arg:int, li
 			var subcombination_list = Array()
 			if rest_of_products.size() > 0:
 
-				subcombination_list = calculate_combinations_exact_num_of_elem_old(exact_num_elements_arg-num,rest_of_products)
+				subcombination_list = calculate_combidicts_exact_num_of_elem_old(exact_num_elements_arg-num,rest_of_products)
 
 				for dict in subcombination_list:
 					dict[prod] = num

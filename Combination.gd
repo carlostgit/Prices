@@ -6,7 +6,7 @@ class_name Combination
 # var a = 2
 # var b = "text"
 
-var _thing_quantity_dict:Dictionary = {}
+var _thing_quantity_dict:Dictionary = {} #combidict
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,7 +54,7 @@ func init(thing_quantity_dict_arg:Dictionary)->void:
 		
 	_thing_quantity_dict = thing_quantity_dict_arg
 	
-func get_thing_quantity_dict()->Dictionary:
+func get_combidict()->Dictionary:
 	return _thing_quantity_dict
 	
 func get_quantity_of_thing(thing_arg:String)->float:
@@ -86,7 +86,7 @@ func equals_dict(thing_quantity_dict_arg:Dictionary)->bool:
 	return true
 
 func equals(combination_arg:Combination)->bool:
-	var thing_quantity_dict:Dictionary = combination_arg.get_thing_quantity_dict()
+	var thing_quantity_dict:Dictionary = combination_arg.get_combidict()
 	if (thing_quantity_dict.size() and _thing_quantity_dict.size()):
 		if thing_quantity_dict.keys() == _thing_quantity_dict.keys():
 			for thing in thing_quantity_dict.keys():

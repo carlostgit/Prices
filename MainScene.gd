@@ -30,8 +30,6 @@ func _ready():
 	
 	var combination_value_list:CombinationValueList = CombinationValueList.new()
 	for combination in combinations_array:
-#		var combination_dict = combination.get_thing_quantity_dict()
-#		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
 		var satisf:float = satisfaction_calculator.calculate_satisf_of_combination(combination)
 		combination_value_list.add_combination_value(combination,satisf)
 	
@@ -40,11 +38,11 @@ func _ready():
 #	var combination_dict_array_sorted:Array = combination_value_list.get_combination_dict_array()	
 #	var combination_satisfaction:Dictionary = {}
 #	for combination_dict in combination_dict_array_sorted:
-#		var satisf:float = satisfaction_calculator.calculate_satisf(combination_dict)
+#		var satisf:float = satisfaction_calculator.calculate_satisf_of_combidict(combination_dict)
 #		combination_satisfaction[combination_dict] = satisf
 #
 #	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
-	$CombinationSatisfaction.init_with_combination_value_list(combination_value_list)
+	$CombinationSatisfaction.init(combination_value_list)
 
 	pass # Replace with function body.
 

@@ -13,7 +13,7 @@ const Plotter = preload("res://Plotter.gd")
 func _ready():
 
 #	var test_combination:Dictionary = {"chocolate": 2, "candy": 2}	
-#	print(calculate_satisf(test_combination))
+#	print(calculate_satisf_of_combidict(test_combination))
 
 #	var param_max_satisf:float = 10
 #	var param_quantity:float = 10

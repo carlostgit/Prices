@@ -21,10 +21,10 @@ func _ready():
 	print ("diff: "+ str(combination_result))
 	
 	
-	print("best combi: "+ str(calculate_best_combination(50.0)))
+	print("best combi: "+ str(calculate_best_combidict(50.0)))
 	
 	var bad_combi_too_much_candy:Dictionary = {"chocolate": 2, "candy": 50}
-	var trade_result_too_much_candy:Dictionary = calculate_trade(bad_combi_too_much_candy)
+	var trade_result_too_much_candy:Dictionary = calculate_trade_for_combidict(bad_combi_too_much_candy)
 	print("Too much candy result:")
 	print (trade_result_too_much_candy)
 	
@@ -38,22 +38,22 @@ func _ready():
 func _init(satisf_calc_arg:SatisfactionCalculator=null):
 	_satisfaction_calculator=satisf_calc_arg
 
-func calculate_trade(combination_dict_arg:Dictionary)->Dictionary:
+func calculate_trade_for_combidict(combidict_arg:Dictionary)->Dictionary:
 	
-	var satisfaction:float =_satisfaction_calculator.calculate_satisf(combination_dict_arg)
+	var satisfaction:float =_satisfaction_calculator.calculate_satisf_of_combidict(combidict_arg)
 	#Prices está en autoload, por lo que lo puedo usar en cualquier lado
-	var price:float = Prices.calculate_price(combination_dict_arg)
+	var price:float = Prices.calculate_price(combidict_arg)
 		
-	var best_combination:Dictionary = calculate_best_combination(price)
-	var satisfaction_of_best_combination:float = _satisfaction_calculator.calculate_satisf(best_combination)
+	var best_combination:Dictionary = calculate_best_combidict(price)
+	var satisfaction_of_best_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(best_combination)
 	
 	var combination_diff:Dictionary = {}
 	if (satisfaction_of_best_combination > satisfaction):
-		combination_diff = calculate_combination_difference(best_combination,combination_dict_arg)
+		combination_diff = calculate_combination_difference(best_combination,combidict_arg)
 
 	return combination_diff
 
-func calculate_best_combination(money_arg:float)->Dictionary:
+func calculate_best_combidict(money_arg:float)->Dictionary:
 #	var best_combination:Dictionary = {}
 	var step_length:float = 1.0
 	
@@ -79,10 +79,9 @@ func calculate_best_combination(money_arg:float)->Dictionary:
 		for product in products:
 			var trying_combination:Dictionary = combination.duplicate()
 			trying_combination[product] += step_length
-			var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf(trying_combination)
+			var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(trying_combination)
 			
 			var increment_of_satisfaction:float = satisfaction_of_trying_combination - best_previous_satisfaction
-			
 			
 			var price = Prices.get_price_of_product(product)*step_length
 			

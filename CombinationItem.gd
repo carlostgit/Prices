@@ -45,22 +45,22 @@ func init_default_test():
 	init(default_combination_dict,"combi_name",["lbl1","lbl2"])
 	
 
-func init(combination_dict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
+func init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 #	_canvas_item = canvas_item_arg
-	_combination_dict = combination_dict_arg
+	_combination_dict = combidict_arg
 	#TODO
 	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
-	add_item_list(combination_dict_arg, labels_arg)
+	add_item_list(combidict_arg, labels_arg)
 
 	self.set_label(name_arg)
 
-func _init(combination_dict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
+func _init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 ##	_canvas_item = canvas_item_arg
-#	_combination_dict = combination_dict_arg
+#	_combination_dict = combidict_arg
 #
 #	#TODO
 #	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
-#	add_item_list(combination_dict_arg, labels_arg)
+#	add_item_list(combidict_arg, labels_arg)
 #
 #	self.set_label(name_arg)
 	pass
@@ -77,7 +77,7 @@ func set_label(label_name_arg:String)->void:
 
 	self.add_child(label_name)
 #
-func add_item_list(combination_dict_arg:Dictionary, labels_arg:Array):
+func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 
 	for label in labels_arg:
 		assert(typeof(label)==TYPE_STRING)
@@ -85,8 +85,8 @@ func add_item_list(combination_dict_arg:Dictionary, labels_arg:Array):
 	var item_list:ItemList = ItemList.new()
 	var num_prod=0
 	#var total_height = 0
-	for product in combination_dict_arg.keys():
-		var num_current_prod = combination_dict_arg[product]
+	for product in combidict_arg.keys():
+		var num_current_prod = combidict_arg[product]
 
 		var icon =null
 		if(product == "chocolate"):
@@ -105,7 +105,6 @@ func add_item_list(combination_dict_arg:Dictionary, labels_arg:Array):
 	var parent_x_pos = self.get_position().x
 	var parent_y_pos = self.get_position().y
 
-
 	item_list.set_size(_fixed_icon_size*_scale)
 	item_list.set_fixed_icon_size(_fixed_icon_size)
 	var current_position_x = self.get_position().x+item_list.get_size().x
@@ -113,28 +112,18 @@ func add_item_list(combination_dict_arg:Dictionary, labels_arg:Array):
 	item_list.set_position(this_item_list_pos)
 	item_list.set_auto_height(true)
 	#item_list.set_fixed_column_width(_fixed_icon_size.x*0.3)
-
 	item_list.set_icon_scale(_scale)
-
 	_item_list = item_list
 
 	self.add_child(_item_list)
 
-
 	var label_count = 0
 	for label in labels_arg:
-
 		var label_node:Label = Label.new()
-
-
 		label_node.set_text(label)
-
 		label_node.set_position(this_item_list_pos+Vector2(0,-label_count*30))
-
 		label_node.set_rotation(-PI/2);
-
 		self.add_child(label_node)
-
 		label_count += 1
 	#self.draw_string(_font, this_item_list_pos,String(52),Color(1,1,1))
 

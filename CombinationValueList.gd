@@ -7,7 +7,7 @@ extends Control
 
 const Combination = preload("res://Combination.gd")
 
-var _combination_value_array:Array = []
+var _combination_value_array:Array = [] #Contiene CombinationValue
 
 class CombinationValue:
 	var _combination_value:Dictionary = {}
@@ -72,38 +72,39 @@ func get_combinations()->Array:
 	return combis
 	
 func get_combination_value_array()->Array:
+	 #El array contiene CombinationValue
 	return _combination_value_array
 
-func get_combination_dict_array()->Array:
+func get_combidict_array()->Array:
 	var combination_dict_array:Array = []
 	for combination_value in _combination_value_array:
 		var combination:Combination = combination_value.get_combination()
-		var thing_quantity_dict:Dictionary = combination.get_thing_quantity_dict()
+		var thing_quantity_dict:Dictionary = combination.get_combidict()
 		combination_dict_array.append(thing_quantity_dict)
 
 	return combination_dict_array
 
-func get_thing_quantity_value_array()->Array:
-	var return_array = []
-	for combination_value in _combination_value_array:
-		var combination:Combination = combination_value.get_combination()
-		var thing_quantity_dict:Dictionary = combination.get_thing_quantity_dict()
-		var value:float = combination_value.get_value()
-		
-		var thing_quantity_value_dict:Dictionary = {}
-		thing_quantity_value_dict["thing_quantity"]=thing_quantity_dict
-		thing_quantity_value_dict["value"]=value
-		
-		return_array.append(thing_quantity_value_dict)
-	return return_array
+#func get_thing_quantity_value_array()->Array:
+#	var return_array = []
+#	for combination_value in _combination_value_array:
+#		var combination:Combination = combination_value.get_combination()
+#		var thing_quantity_dict:Dictionary = combination.get_combidict()
+#		var value:float = combination_value.get_value()
+#
+#		var thing_quantity_value_dict:Dictionary = {}
+#		thing_quantity_value_dict["thing_quantity"]=thing_quantity_dict
+#		thing_quantity_value_dict["value"]=value
+#
+#		return_array.append(thing_quantity_value_dict)
+#	return return_array
 
 
-func get_thing_quantity_dict_array()->Array:
-	var return_array = []
-	for combination_value in _combination_value_array:
-		var combination:Combination = combination_value.get_combination()
-		return_array.append(combination.get_thing_quantity_dict())
-	return return_array
+#func get_combidict_array()->Array:
+#	var return_array = []
+#	for combination_value in _combination_value_array:
+#		var combination:Combination = combination_value.get_combination()
+#		return_array.append(combination.get_combidict())
+#	return return_array
 
 func sort()->void:
 	_combination_value_array.sort_custom(CombinationValueSorter,"sort")
