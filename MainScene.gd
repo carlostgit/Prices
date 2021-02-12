@@ -1,8 +1,8 @@
 extends Node2D
 
+const Combination = preload("res://Combination.gd")
 const CombinationCreator = preload("res://CombinationCreator.gd")
 const CombinationList = preload("res://CombinationList.gd")
-const Combination = preload("res://Combination.gd")
 const SatisfactionCalculator = preload("res://SatisfactionCalculator.gd")
 const CombinationValueList = preload("res://CombinationValueList.gd")
 
@@ -28,12 +28,14 @@ func _ready():
 	
 	var combinations_array:Array = combination_list.get_combinations_array()
 	
-	var combination_value_list:CombinationValueList = CombinationValueList.new()
+	var combination_satisfaction_list:CombinationValueList = CombinationValueList.new()
+	var combination_price_list:CombinationValueList = CombinationValueList.new()	
 	for combination in combinations_array:
 		var satisf:float = satisfaction_calculator.calculate_satisf_of_combination(combination)
-		combination_value_list.add_combination_value(combination,satisf)
-	
-	combination_value_list.sort()
+		combination_satisfaction_list.add_combination_value(combination,satisf)
+		var price = Prices.calculate_combination_price(combination)
+		combination_price_list.add_combination_value(combination,price)
+	combination_satisfaction_list.sort()
 	
 #	var combination_dict_array_sorted:Array = combination_value_list.get_combination_dict_array()	
 #	var combination_satisfaction:Dictionary = {}
@@ -42,7 +44,14 @@ func _ready():
 #		combination_satisfaction[combination_dict] = satisf
 #
 #	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
-	$CombinationSatisfaction.init(combination_value_list)
+#	TODO: combination_price_list, meterlo en $CombinationSatisfaction
+	$CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list)
+
+
+	#Voy a resaltar la combinación actual
+	var combination:Combination = $OwnedItems.get_combination()
+	var color:Color = Color( 1, 0.5, 0.31, 1 ) 
+	$CombinationSatisfaction.highlight_combination_with_color(combination,color)
 
 	pass # Replace with function body.
 

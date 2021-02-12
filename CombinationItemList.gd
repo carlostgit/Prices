@@ -2,7 +2,14 @@ extends Node2D
 
 #class_name CombinationItemList
 
+const Combination = preload("res://Combination.gd")
 const CombinationValueList = preload("res://CombinationValueList.gd")
+const CombinationItem = preload("res://CombinationItem.gd")
+#var _combination_item_scene = preload("res://CombinationItem.tscn")
+
+
+
+
 
 var _name:String = ""
 
@@ -34,9 +41,6 @@ var _fixed_icon_size:Vector2 = Vector2(50,50)
 
 var _font = load("res://new_dynamicfont.tres")
 
-var _combination_item_scene = preload("res://CombinationItem.tscn")
-
-const CombinationItem = preload("res://CombinationItem.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,18 +66,26 @@ func init_default_test():
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array, combination_satisfaction_arg:Dictionary = Dictionary()):
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
 
-func init(combination_value_list:CombinationValueList):
-	if (combination_value_list as CombinationValueList):
-		var combinations:Array = combination_value_list.get_combinations()
-		var combination_dicts_array:Array = []
-		var combination_dict_satisfaction:Dictionary = {}
+func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null):
+	if (combination_satisfaction_list as CombinationValueList):
+		var combinations:Array = combination_satisfaction_list.get_combinations()
+		var combidicts_array:Array = []
+		var combidict_satisfaction:Dictionary = {}
+		var combidict_price:Dictionary = {}
 		for combination in combinations:
-			var combination_dict:Dictionary = (combination as Combination).get_combidict()
-			combination_dicts_array.append(combination_dict)
-			var satisf:float = combination_value_list.get_value_of_combination(combination)
-			combination_dict_satisfaction[combination_dict]=satisf
+			var combidict:Dictionary = (combination as Combination).get_combidict()
+			combidicts_array.append(combidict)
+			var satisf:float = combination_satisfaction_list.get_value_of_combination(combination)
+			combidict_satisfaction[combidict]=satisf
 			
-		_init(combination_dicts_array, combination_dict_satisfaction)
+			#price
+			if (null!=combination_price_list):
+				if combination_price_list.has_combination(combination):
+					var price:float = combination_price_list.get_value_of_combination(combination)
+					combidict_price[combidict]=price
+			#
+			
+		_init(combidicts_array, combidict_satisfaction,combidict_price)
 	else:
 		assert(false)
 
@@ -135,11 +147,18 @@ func get_name()->String:
 func get_combidicts()->Array:
 	return self._combidicts
 
-
-func highlight_combination_with_color(combination_to_highlight_arg:Dictionary, color_arg:Color)->void:
+func highlight_combination_with_color(combination_to_highlight_arg:Combination, color_arg:Color)->void:
 	for combination_item in self._combination_items:
-		var combination_dict:Dictionary = combination_item.get_combination_dict()
-		if Utils.compare_dictionaries(combination_dict,combination_to_highlight_arg):
+#		var combination_dict:Dictionary = combination_item.get_combination_dict()
+		var combination:Combination = combination_item.get_combination()
+		if combination.equals(combination_to_highlight_arg):
+			combination_item.highlight(color_arg)
+
+
+func highlight_combidict_with_color(combidict_to_highlight_arg:Dictionary, color_arg:Color)->void:
+	for combination_item in self._combination_items:
+		var combination_dict:Dictionary = combination_item.get_combidict()
+		if Utils.compare_dictionaries(combination_dict,combidict_to_highlight_arg):
 			combination_item.highlight(color_arg)
 
 

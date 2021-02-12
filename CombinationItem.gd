@@ -1,10 +1,10 @@
 extends Control
 
-class_name CombinationItem
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
+const Combination = preload("res://Combination.gd")
 #var _canvas_item:CanvasItem = null
 
 var _dibujo_default:Texture = load("res://icon.png")
@@ -25,6 +25,8 @@ var _arguments:Array = []
 var _combination_dict:Dictionary = Dictionary()
 
 var _item_list:ItemList = null
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -132,8 +134,12 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 func get_width() -> float:
 	return _fixed_icon_size.x*_scale
 
-func get_combination_dict() -> Dictionary:
+func get_combidict() -> Dictionary:
 	return self._combination_dict
+
+func get_combination()->Combination:
+	var combination:Combination = Combination.new(_combination_dict)
+	return combination	
 #
 func highlight(color_arg:Color) -> void:
 	self._item_list.set_item_custom_bg_color(0,color_arg)

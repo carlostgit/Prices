@@ -1,5 +1,7 @@
 extends Control
 
+const Combination = preload("res://Combination.gd")
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -29,7 +31,10 @@ func get_price_of_product(product_arg:String)->float:
 	else:
 		return 0.0
 
-func calculate_price(combidict_arg:Dictionary)->float:
+func calculate_combination_price(combination_arg:Combination)->float:
+	return calculate_combidict_price(combination_arg.get_combidict())
+
+func calculate_combidict_price(combidict_arg:Dictionary)->float:
 
 	var total_price:float = 0.0
 	for product in combidict_arg.keys():

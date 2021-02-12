@@ -1,7 +1,5 @@
 extends Control
 
-class_name Combination
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -85,10 +83,14 @@ func equals_dict(thing_quantity_dict_arg:Dictionary)->bool:
 #	Finished testing
 	return true
 
-func equals(combination_arg:Combination)->bool:
+func equals(combination_arg)->bool:
 	var thing_quantity_dict:Dictionary = combination_arg.get_combidict()
 	if (thing_quantity_dict.size() and _thing_quantity_dict.size()):
-		if thing_quantity_dict.keys() == _thing_quantity_dict.keys():
+		var thing_quantity_dict_sorted:Array = thing_quantity_dict.keys()
+		thing_quantity_dict_sorted.sort()
+		var self_thing_quantity_dict_sorted:Array = _thing_quantity_dict.keys()
+		self_thing_quantity_dict_sorted.sort()
+		if thing_quantity_dict_sorted == self_thing_quantity_dict_sorted:
 			for thing in thing_quantity_dict.keys():
 				if false==(thing in _thing_quantity_dict):
 					return false;

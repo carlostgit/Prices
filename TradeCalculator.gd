@@ -42,7 +42,7 @@ func calculate_trade_for_combidict(combidict_arg:Dictionary)->Dictionary:
 	
 	var satisfaction:float =_satisfaction_calculator.calculate_satisf_of_combidict(combidict_arg)
 	#Prices está en autoload, por lo que lo puedo usar en cualquier lado
-	var price:float = Prices.calculate_price(combidict_arg)
+	var price:float = Prices.calculate_combidict_price(combidict_arg)
 		
 	var best_combination:Dictionary = calculate_best_combidict(price)
 	var satisfaction_of_best_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(best_combination)

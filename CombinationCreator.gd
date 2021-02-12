@@ -4,8 +4,8 @@ extends Control
 # var a = 2
 # var b = "text"
 
-const CombinationList = preload("res://CombinationList.gd")
 const Combination = preload("res://Combination.gd")
+const CombinationList = preload("res://CombinationList.gd")
 
 var _products:Array = ["chocolate","candy"]
 

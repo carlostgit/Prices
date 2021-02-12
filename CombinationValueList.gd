@@ -10,6 +10,8 @@ const Combination = preload("res://Combination.gd")
 var _combination_value_array:Array = [] #Contiene CombinationValue
 
 class CombinationValue:
+	const Combination = preload("res://Combination.gd")
+	
 	var _combination_value:Dictionary = {}
 	func _init(combination_arg:Combination=null, value_arg:float=0):
 		_combination_value["combination"]=combination_arg
@@ -50,6 +52,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func is_empty()->bool:
+	return _combination_value_array.empty()
 
 func add_combination_value(combination_arg:Combination, value_arg:float)->void:
 	var combination_value:CombinationValue = CombinationValue.new(combination_arg,value_arg)

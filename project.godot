@@ -9,24 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Control",
-"class": "Combination",
-"language": "GDScript",
-"path": "res://Combination.gd"
-}, {
-"base": "Control",
-"class": "CombinationItem",
-"language": "GDScript",
-"path": "res://CombinationItem.gd"
-}, {
 "base": "Reference",
 "class": "Utils",
 "language": "GDScript",
 "path": "res://Utils.gd"
 } ]
 _global_script_class_icons={
-"Combination": "",
-"CombinationItem": "",
 "Utils": ""
 }
 
