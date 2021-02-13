@@ -10,6 +10,8 @@ const Combination = preload("res://Combination.gd")
 var _dibujo_default:Texture = load("res://icon.png")
 var _candy:Texture = load("res://candy.png")
 var _chocolate:Texture = load("res://chocolate.png")
+var _part_candy:Texture = load("res://part_candy.png")
+var _part_chocolate:Texture = load("res://part_chocolate.png")
 
 
 # Declare member variables here. Examples:
@@ -28,6 +30,7 @@ var _item_list:ItemList = null
 
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	print ("ready!!")
@@ -41,13 +44,13 @@ func _ready():
 
 func init_default_test():
 #	var default_canvas_item = CanvasItem.new()
-	var default_combination_dict = {"chocolate":1, "candy":2}
-	_combination_dict = default_combination_dict
+	var default_combidict = {"chocolate":1, "candy":2}
+	_combination_dict = default_combidict
 
-	init(default_combination_dict,"combi_name",["lbl1","lbl2"])
+	init_with_combidict(default_combidict,"combi_name",["lbl1","lbl2"])
 	
 
-func init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
+func init_with_combidict(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 #	_canvas_item = canvas_item_arg
 	_combination_dict = combidict_arg
 	#TODO
@@ -85,10 +88,12 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 		assert(typeof(label)==TYPE_STRING)
 
 	var item_list:ItemList = ItemList.new()
-	var num_prod=0
+	var num_item=0
 	#var total_height = 0
 	for product in combidict_arg.keys():
-		var num_current_prod = combidict_arg[product]
+		var num_current_prod:float = combidict_arg[product]
+		var num_int_current_prod:int = floor(num_current_prod)
+		var partial_prod_amount = num_current_prod - num_int_current_prod
 
 		var icon =null
 		if(product == "chocolate"):
@@ -98,11 +103,36 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 		else:
 			icon = _dibujo_default
 			assert(false)
-		for pro in num_current_prod:
+			
+		for pro in num_int_current_prod:
 			#total_height += icon.get_size().y+6 
 			item_list.add_icon_item(icon)
 			#item_list.add_item("bla blaldjaf")
-			num_prod = num_prod + 1
+			num_item +=  1
+			
+		if partial_prod_amount>0:
+#			item_list.add_item(str(partial_prod_amount))
+#			if(product == "chocolate"):
+#				icon = _part_chocolate
+#			elif (product == "candy"):
+#				icon = _part_candy
+#			else:
+#				icon = _dibujo_default
+#				assert(false)
+			
+			var image : Image = icon.get_data()
+			image.lock()
+			for x in image.get_width():
+				partial_prod_amount
+				if partial_prod_amount > (float(x)/float(image.get_width())):
+					for y in image.get_height():						
+						image.set_pixel(x,y,Color(0,0,0,0))
+			image.unlock()
+			var texture = ImageTexture.new()
+			texture.create_from_image(image)
+			item_list.add_icon_item(texture)
+			num_item += 1
+			
 
 	var parent_x_pos = self.get_position().x
 	var parent_y_pos = self.get_position().y

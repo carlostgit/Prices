@@ -199,7 +199,7 @@ func add_item_list(combidict_arg:Dictionary):
 #	Método 2, instanciando escenas
 #	var combination_item = _combination_item_scene.instance()
 	var combination_item:CombinationItem = CombinationItem.new()
-	combination_item.init(combidict_arg, "", combination_labels)
+	combination_item.init_with_combidict(combidict_arg, "", combination_labels)
 	var item_width:float = combination_item.get_width()
 	var current_position_x = self.get_position().x+_combination_items.size()*item_width
 	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+20)

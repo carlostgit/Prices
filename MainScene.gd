@@ -1,6 +1,7 @@
 extends Node2D
 
 const Combination = preload("res://Combination.gd")
+const CombinationItem = preload("res://CombinationItem.gd")
 const CombinationCreator = preload("res://CombinationCreator.gd")
 const CombinationList = preload("res://CombinationList.gd")
 const SatisfactionCalculator = preload("res://SatisfactionCalculator.gd")
@@ -15,7 +16,7 @@ const CombinationValueList = preload("res://CombinationValueList.gd")
 func _ready():
 #	Owned items
 	var owned_items_dict = {"chocolate":1, "candy":2}
-	$OwnedItems.init(owned_items_dict,"owned",["",""])
+	$OwnedItems.init_with_combidict(owned_items_dict,"owned",["",""])
 
 #	CombinationSatisfactionList
 	
@@ -52,6 +53,13 @@ func _ready():
 	var combination:Combination = $OwnedItems.get_combination()
 	var color:Color = Color( 1, 0.5, 0.31, 1 ) 
 	$CombinationSatisfaction.highlight_combination_with_color(combination,color)
+	
+	#Precios
+	var combination_prices:CombinationItem = CombinationItem.new()
+	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
+	combination_prices.set_position(Vector2(300,100))
+	self.add_child(combination_prices)
+	#
 
 	pass # Replace with function body.
 

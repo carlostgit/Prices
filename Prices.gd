@@ -44,3 +44,6 @@ func calculate_combidict_price(combidict_arg:Dictionary)->float:
 
 func get_products()->Array:
 	return _products
+
+func get_combidict()->Dictionary:
+	return _prices_dict
