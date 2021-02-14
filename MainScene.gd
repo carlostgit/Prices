@@ -60,7 +60,11 @@ func _ready():
 #	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
 #	combination_prices.set_position(Vector2(300,100))
 #	self.add_child(combination_prices)
-	$LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
+	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
+	var candy_price:float = Prices.get_price_of_product("candy")
+	var chocolate_price:float = Prices.get_price_of_product("chocolate")
+	$Prices/CandyPrice.set_value(candy_price)
+	$Prices/ChocolatePrice.set_value(chocolate_price)
 	#
 	
 	var value_of_owned:float = Prices.calculate_combidict_price(owned_items_dict)
