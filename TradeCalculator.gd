@@ -56,6 +56,8 @@ func calculate_trade_for_combidict(combidict_arg:Dictionary)->Dictionary:
 	return combination_diff
 
 func calculate_best_combidict(money_arg:float)->Dictionary:
+#	Debería hacer una versión de este método, que solo recorriese una lista de combinaciones precalculadas
+	
 #	var best_combination:Dictionary = {}
 	var step_length:float = 1.0
 	

@@ -20,7 +20,6 @@ func _ready():
 	$OwnedItems.init_with_combidict(owned_items_dict,"owned",["",""])
 
 #	CombinationSatisfactionList
-	
 	var satisfaction_calculator:SatisfactionCalculator = SatisfactionCalculator.new()
 	satisfaction_calculator.init_default_satisfaction()
 
@@ -50,26 +49,39 @@ func _ready():
 	$CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list, "Ranking of preferences")
 
 
-	#Voy a resaltar la combinación actual
+	#Satisfaction of owned combination
 	var owned_combination:Combination = $OwnedItems.get_combination()
 	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
 	$CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
-	
+	var satisf_of_owned:float = satisfaction_calculator.calculate_satisf_of_combination(owned_combination)
+	$OwnedItems/LabelSatisfaction.set_text("Satisfaction of owned: " + String(satisf_of_owned).pad_decimals(2))
 	#Precios
-	var combination_prices:CombinationItem = CombinationItem.new()
-	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
-	combination_prices.set_position(Vector2(300,100))
-	self.add_child(combination_prices)
+#	var combination_prices:CombinationItem = CombinationItem.new()
+#	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
+#	combination_prices.set_position(Vector2(300,100))
+#	self.add_child(combination_prices)
+	$LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
 	#
 	
 	var value_of_owned:float = Prices.calculate_combidict_price(owned_items_dict)
-	$LabelValueOfOwned.set_text(String(value_of_owned).pad_decimals(2)+ "$")
+	$OwnedItems/LabelValueOfOwned.set_text("Value of owned: "+String(value_of_owned).pad_decimals(2)+ "$")
 
+#	Best combination
 	var trade_calculator:TradeCalculator = TradeCalculator.new(satisfaction_calculator)
 	var best_combidict:Dictionary = trade_calculator.calculate_best_combidict(value_of_owned)
 	var best_combination:Combination = Combination.new(best_combidict)
 	var best_color:Color = Color( 0, 0.5, 0.5, 1 ) 
 	$CombinationSatisfaction.highlight_combination_with_color(best_combination,best_color)
+	$BestCombination/LabelBestCombination.set_text("Best combination: " + str(best_combidict))
+	var satisf_of_best_combi:float = satisfaction_calculator.calculate_satisf_of_combination(best_combination)
+	$BestCombination/LabelSatisfaction.set_text("Satisfaction of best combi: " + String(satisf_of_best_combi).pad_decimals(2))
+	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
+#	
+#	Trade calculation
+	var trade_combidict:Dictionary = trade_calculator.calculate_trade_for_combidict(owned_items_dict)
+	$LabelTrade.set_text("Trade: "+str(trade_combidict))
+#
+
 	
 
 	pass # Replace with function body.

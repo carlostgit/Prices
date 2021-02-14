@@ -13,14 +13,65 @@ margin_top = 46.0
 margin_right = 97.0
 margin_bottom = 46.0
 
-[node name="CombinationSatisfaction" parent="." instance=ExtResource( 3 )]
-position = Vector2( 99, 150.719 )
-
-[node name="LabelValueOfOwned" type="Label" parent="."]
-margin_left = 29.0
-margin_top = 148.0
-margin_right = 69.0
-margin_bottom = 162.0
+[node name="LabelValueOfOwned" type="Label" parent="OwnedItems"]
+margin_left = 167.0
+margin_top = 100.0
+margin_right = 207.0
+margin_bottom = 114.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LabelSatisfaction" type="Label" parent="OwnedItems"]
+margin_left = 165.0
+margin_top = 148.0
+margin_right = 205.0
+margin_bottom = 162.0
+
+[node name="CombinationSatisfaction" parent="." instance=ExtResource( 3 )]
+position = Vector2( 99, 150.719 )
+
+[node name="LabelTrade" type="Label" parent="."]
+margin_left = 379.0
+margin_top = 51.0
+margin_right = 419.0
+margin_bottom = 65.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelPrices" type="Label" parent="."]
+margin_left = 365.0
+margin_top = 91.0
+margin_right = 405.0
+margin_bottom = 105.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestCombination" type="Control" parent="."]
+margin_left = 562.0
+margin_top = 73.0
+margin_right = 602.0
+margin_bottom = 113.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelBestCombination" type="Label" parent="BestCombination"]
+margin_left = 150.0
+margin_top = 39.0
+margin_right = 190.0
+margin_bottom = 53.0
+
+[node name="LabelSatisfaction" type="Label" parent="BestCombination"]
+margin_left = 159.0
+margin_top = 84.0
+margin_right = 199.0
+margin_bottom = 98.0
+
+[node name="LabelCost" type="Label" parent="BestCombination"]
+margin_left = 174.0
+margin_top = 124.0
+margin_right = 214.0
+margin_bottom = 138.0
