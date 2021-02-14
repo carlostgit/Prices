@@ -13,20 +13,22 @@ var _satisfaction_calculator:SatisfactionCalculator = null
 func _ready():
 #	testeo de calculate_combination_difference
 	_satisfaction_calculator = SatisfactionCalculator.new()
+	_satisfaction_calculator.init_default_satisfaction()
+	
+#	var combination_1:Dictionary = {"chocolate": 0, "candy": 0}
+#	var combination_2:Dictionary = {"chocolate": 2, "candy": 1}
+#	var combination_result = calculate_combination_difference(combination_1,combination_2)
+#	print ("diff: "+ str(combination_result))
 	
 	
-	var combination_1:Dictionary = {"chocolate": 0, "candy": 0}
-	var combination_2:Dictionary = {"chocolate": 2, "candy": 1}
-	var combination_result = calculate_combination_difference(combination_1,combination_2)
-	print ("diff: "+ str(combination_result))
+	print("best combi: "+ str(calculate_best_combidict(2.0)))
+	
+#	var bad_combi_too_much_candy:Dictionary = {"chocolate": 2, "candy": 50}
+#	var trade_result_too_much_candy:Dictionary = calculate_trade_for_combidict(bad_combi_too_much_candy)
+#	print("Too much candy result:")
+#	print (trade_result_too_much_candy)
 	
 	
-	print("best combi: "+ str(calculate_best_combidict(50.0)))
-	
-	var bad_combi_too_much_candy:Dictionary = {"chocolate": 2, "candy": 50}
-	var trade_result_too_much_candy:Dictionary = calculate_trade_for_combidict(bad_combi_too_much_candy)
-	print("Too much candy result:")
-	print (trade_result_too_much_candy)
 	
 	pass # Replace with function body.
 
@@ -88,7 +90,7 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 #			print("product: "+ product)
 #			print("satisf: "+ str(satisfaction_of_trying_combination))
 			
-			if price<left_money and increment_of_satisfaction > 0.0:
+			if price<=left_money and increment_of_satisfaction > 0.0:
 				product_found = true
 				
 #				var satisfacton_of_trying_combination_for_price = satisfaction_of_trying_combination/price
@@ -107,6 +109,7 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 		
 		
 		if false==product_found:
+			
 			break
 		
 		left_money -= best_product_price
@@ -114,7 +117,31 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 		best_previous_satisfaction = best_product_satisfaction
 		count += 1
 			
+	if left_money > 0:
+#		Ya no se puede añadir ningún producto, pero puede que quede dinero para intercambiar productos
+		var change_made = false
+		for product_in_combi in products:
+			for new_product in products:
+				if new_product!=product_in_combi:
+					if combination[product_in_combi]>=step_length:
+						var trying_combination:Dictionary = combination.duplicate()
+					
+						trying_combination[product_in_combi] -= step_length
+						trying_combination[new_product] += step_length
+						var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(trying_combination)
 		
+						var increment_of_satisfaction:float = satisfaction_of_trying_combination - best_previous_satisfaction
+						
+						var price = (Prices.get_price_of_product(new_product)-Prices.get_price_of_product(product_in_combi))*step_length
+						
+						if price<=left_money and increment_of_satisfaction > 0.0:
+							combination = trying_combination
+							change_made = true
+				if change_made:
+					break
+			if change_made:
+				break	
+				
 	
 	return combination
 	

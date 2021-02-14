@@ -6,6 +6,7 @@ const CombinationCreator = preload("res://CombinationCreator.gd")
 const CombinationList = preload("res://CombinationList.gd")
 const SatisfactionCalculator = preload("res://SatisfactionCalculator.gd")
 const CombinationValueList = preload("res://CombinationValueList.gd")
+const TradeCalculator = preload("res://TradeCalculator.gd")
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -46,13 +47,13 @@ func _ready():
 #
 #	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
 #	TODO: combination_price_list, meterlo en $CombinationSatisfaction
-	$CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list)
+	$CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list, "Ranking of preferences")
 
 
 	#Voy a resaltar la combinación actual
-	var combination:Combination = $OwnedItems.get_combination()
-	var color:Color = Color( 1, 0.5, 0.31, 1 ) 
-	$CombinationSatisfaction.highlight_combination_with_color(combination,color)
+	var owned_combination:Combination = $OwnedItems.get_combination()
+	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
+	$CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
 	
 	#Precios
 	var combination_prices:CombinationItem = CombinationItem.new()
@@ -60,6 +61,16 @@ func _ready():
 	combination_prices.set_position(Vector2(300,100))
 	self.add_child(combination_prices)
 	#
+	
+	var value_of_owned:float = Prices.calculate_combidict_price(owned_items_dict)
+	$LabelValueOfOwned.set_text(String(value_of_owned).pad_decimals(2)+ "$")
+
+	var trade_calculator:TradeCalculator = TradeCalculator.new(satisfaction_calculator)
+	var best_combidict:Dictionary = trade_calculator.calculate_best_combidict(value_of_owned)
+	var best_combination:Combination = Combination.new(best_combidict)
+	var best_color:Color = Color( 0, 0.5, 0.5, 1 ) 
+	$CombinationSatisfaction.highlight_combination_with_color(best_combination,best_color)
+	
 
 	pass # Replace with function body.
 

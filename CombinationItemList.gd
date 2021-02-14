@@ -57,7 +57,7 @@ func init_default_test():
 	var default_combidicts = [default_combination_1,default_combination_2,default_combination_3]
 	
 	
-	_init(default_combidicts)
+	init_with_combidicts(default_combidicts)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,7 +66,7 @@ func init_default_test():
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array, combination_satisfaction_arg:Dictionary = Dictionary()):
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
 
-func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null):
+func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null, name_arg:String = "no name" ):
 	if (combination_satisfaction_list as CombinationValueList):
 		var combinations:Array = combination_satisfaction_list.get_combinations()
 		var combidicts_array:Array = []
@@ -85,14 +85,14 @@ func init(combination_satisfaction_list:CombinationValueList, combination_price_
 					combidict_price[combidict]=price
 			#
 			
-		_init(combidicts_array, combidict_satisfaction,combidict_price)
+		init_with_combidicts(combidicts_array, combidict_satisfaction,combidict_price,name_arg)
 	else:
 		assert(false)
 
 #func init(combidicts_arg:Array, combidict_satisfaction_dict_arg:Dictionary):
 #	_init(combidicts_arg, combidict_satisfaction_dict_arg)
 
-func _init(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
+func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
 #	_canvas_item = canvas_item_arg
 	#_combidicts = combinations_arg
 	_combidict_satisfaction = combidict_satisfaction_dict_arg
@@ -106,7 +106,7 @@ func _init(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dicti
 		add_item_list(combidict)
 	
 	self.set_name(name_arg)
-	print("label_name is")
+#	print("label_name is")
 	var label_name:Label = Label.new()
 	label_name.set_scale(Vector2(1.5,1.5))
 	label_name.set_text(self.get_name())
@@ -115,7 +115,7 @@ func _init(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dicti
 	#print(self.get_name())
 	label_name.set_position(self.get_position()+Vector2(0,0))
 	#print ("position is")
-	print (label_name.get_position())
+#	print (label_name.get_position())
 	self.add_child(label_name)
 	
 	#Label 2
@@ -192,7 +192,7 @@ func add_item_list(combidict_arg:Dictionary):
 	
 	var combination_labels:Array = []
 	combination_labels.append(String(satisf).pad_decimals(1))
-	combination_labels.append(String(price).pad_decimals(1))	
+	combination_labels.append(String(price).pad_decimals(2) + "$")	
 #	Método 1, mediante clases
 #	var combination_item:CombinationItem = CombinationItem.new(combidict_arg, "", combination_labels)
 #	Pruebo a hacer lo anterior con instancias de escenas, en vez de clases
@@ -202,13 +202,12 @@ func add_item_list(combidict_arg:Dictionary):
 	combination_item.init_with_combidict(combidict_arg, "", combination_labels)
 	var item_width:float = combination_item.get_width()
 	var current_position_x = self.get_position().x+_combination_items.size()*item_width
-	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+20)
+	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+40)
 	combination_item.set_position(this_item_list_pos)
 	self._combination_items.append(combination_item)
 	self.add_child(combination_item)
+
 	
-		
-		
-	
+
 	pass
 
