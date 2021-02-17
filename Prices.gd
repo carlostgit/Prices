@@ -11,6 +11,7 @@ var _currency = "candy"
 var _prices_dict = {"chocolate": 1.0, "candy":0.5}
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -24,6 +25,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func set_price_of_product(product_arg:String, price_arg:float)->void:
+	if _products.has(product_arg):
+		_prices_dict[product_arg]=price_arg
 
 func get_price_of_product(product_arg:String)->float:
 	if _products.has(product_arg):
@@ -40,7 +45,12 @@ func calculate_combidict_price(combidict_arg:Dictionary)->float:
 	for product in combidict_arg.keys():
 		if _prices_dict.has(product):
 			total_price += _prices_dict[product]*combidict_arg[product]
-	return total_price
+
+	var price_of_currency:float = _prices_dict[_currency]
+	
+	var total_price_for_currency = total_price/price_of_currency
+	
+	return total_price_for_currency
 
 func get_products()->Array:
 	return _products
