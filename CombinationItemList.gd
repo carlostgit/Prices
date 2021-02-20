@@ -93,6 +93,15 @@ func init(combination_satisfaction_list:CombinationValueList, combination_price_
 #	_init(combidicts_arg, combidict_satisfaction_dict_arg)
 
 func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
+
+	for child in self.get_children():
+		self.remove_child(child)
+		child.queue_free()
+#		print("deleting child")
+#		print(child)
+	
+
+	_combination_items.clear()	
 #	_canvas_item = canvas_item_arg
 	#_combidicts = combinations_arg
 	_combidict_satisfaction = combidict_satisfaction_dict_arg
@@ -104,7 +113,9 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 	for combidict in _combidicts:
 		assert(typeof(combidict)==TYPE_DICTIONARY)
 		add_item_list(combidict)
-	
+#		print("adding combidict")
+#		print(combidict)
+#
 	self.set_name(name_arg)
 #	print("label_name is")
 	var label_name:Label = Label.new()
@@ -135,6 +146,7 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 			var satisf_posit = self.get_position()+Vector2(right_end_position_x+20,50-30*label_count)
 			satisf_label.set_position(satisf_posit)
 			self.add_child(satisf_label)
+			
 			label_count += 1
 		
 
@@ -206,6 +218,9 @@ func add_item_list(combidict_arg:Dictionary):
 	combination_item.set_position(this_item_list_pos)
 	self._combination_items.append(combination_item)
 	self.add_child(combination_item)
+#	print("current pos: "+str(current_position_x))
+#	print("adding combination_item")
+#	print(combination_item)
 
 	
 

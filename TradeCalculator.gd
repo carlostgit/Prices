@@ -20,8 +20,14 @@ func _ready():
 #	var combination_result = calculate_combination_difference(combination_1,combination_2)
 #	print ("diff: "+ str(combination_result))
 	
+	Prices.set_amount_of_product("candy",10.0)
+	Prices.set_amount_of_product("chocolate",1.0)
+	Prices.set_currency("candy")
 	
-	print("best combi: "+ str(calculate_best_combidict(2.0)))
+	var best_combidict:Dictionary = calculate_best_combidict(2.0)
+	print("best combi: "+ str(best_combidict))
+	print("cost: "+ str(Prices.calculate_combidict_price(best_combidict)))
+	
 	
 #	var bad_combi_too_much_candy:Dictionary = {"chocolate": 2, "candy": 50}
 #	var trade_result_too_much_candy:Dictionary = calculate_trade_for_combidict(bad_combi_too_much_candy)

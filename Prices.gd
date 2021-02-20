@@ -8,7 +8,7 @@ const Combination = preload("res://Combination.gd")
 
 var _products = ["chocolate","candy"]
 var _currency = "candy"
-var _prices_dict = {"chocolate": 1.0, "candy":0.5}
+var _amounts_dict = {"chocolate": 1.0, "candy":0.5}
 
 
 
@@ -26,15 +26,23 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func set_price_of_product(product_arg:String, price_arg:float)->void:
+func set_amount_of_product(product_arg:String, price_arg:float)->void:
 	if _products.has(product_arg):
-		_prices_dict[product_arg]=price_arg
+		_amounts_dict[product_arg]=price_arg
 
 func get_price_of_product(product_arg:String)->float:
+	var amount_of_currency:float = _amounts_dict[_currency]
 	if _products.has(product_arg):
-		return _prices_dict[product_arg]
+		return _amounts_dict[product_arg]/amount_of_currency
 	else:
 		return 0.0
+
+func get_amount_of_product(product_arg:String)->float:
+	if _products.has(product_arg):
+		return _amounts_dict[product_arg]
+	else:
+		return 0.0
+
 
 func calculate_combination_price(combination_arg:Combination)->float:
 	return calculate_combidict_price(combination_arg.get_combidict())
@@ -43,12 +51,12 @@ func calculate_combidict_price(combidict_arg:Dictionary)->float:
 
 	var total_price:float = 0.0
 	for product in combidict_arg.keys():
-		if _prices_dict.has(product):
-			total_price += _prices_dict[product]*combidict_arg[product]
+		if _amounts_dict.has(product):
+			total_price += _amounts_dict[product]*combidict_arg[product]
 
-	var price_of_currency:float = _prices_dict[_currency]
+	var amount_of_currency:float = _amounts_dict[_currency]
 	
-	var total_price_for_currency = total_price/price_of_currency
+	var total_price_for_currency = total_price/amount_of_currency
 	
 	return total_price_for_currency
 
@@ -56,4 +64,12 @@ func get_products()->Array:
 	return _products
 
 func get_combidict()->Dictionary:
-	return _prices_dict
+	return _amounts_dict
+
+func set_currency(currency_arg:String)->void:
+	self._currency = currency_arg
+
+func get_currency()->String:
+	return self._currency
+	
+	

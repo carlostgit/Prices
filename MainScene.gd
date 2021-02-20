@@ -31,12 +31,13 @@ func init()->void:
 	$OwnedItems.init_with_combidict(_owned_items_dict,"owned",["",""])
 	_satisfaction_calculator = create_satisfaction_calculator()
 	_trade_calculator = TradeCalculator.new(_satisfaction_calculator)
-	update_ranking_of_preferences()
+	
 	update_prices()
 	update_after_prices_changed()
 	
 	
 func update_after_prices_changed()->void:
+	update_ranking_of_preferences()
 	update_of_owned_combination()
 	update_best_combination()
 	update_trade()
@@ -95,8 +96,8 @@ func update_prices()->void:
 #	combination_prices.set_position(Vector2(300,100))
 #	self.add_child(combination_prices)
 	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
-	var candy_price:float = Prices.get_price_of_product("candy")
-	var chocolate_price:float = Prices.get_price_of_product("chocolate")
+	var candy_price:float = Prices.get_amount_of_product("candy")
+	var chocolate_price:float = Prices.get_amount_of_product("chocolate")
 	$Prices/CandyPrice.set_value(candy_price)
 	$Prices/ChocolatePrice.set_value(chocolate_price)
 	#
@@ -120,12 +121,12 @@ func update_trade()->void:
 
 
 func _on_CandyPrice_value_changed(value):
-	Prices.set_price_of_product("candy",value)
+	Prices.set_amount_of_product("candy",value)
 	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
 	update_after_prices_changed()
 
 
 func _on_ChocolatePrice_value_changed(value):
-	Prices.set_price_of_product("chocolate",value)
+	Prices.set_amount_of_product("chocolate",value)
 	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
 	update_after_prices_changed()
