@@ -127,30 +127,33 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 			
 	if left_money > 0:
 #		Ya no se puede añadir ningún producto, pero puede que quede dinero para intercambiar productos
-		var change_made = false
-		for product_in_combi in products:
-			for new_product in products:
-				if new_product!=product_in_combi:
-					if combination[product_in_combi]>=step_length:
-						var trying_combination:Dictionary = combination.duplicate()
-					
-						trying_combination[product_in_combi] -= step_length
-						trying_combination[new_product] += step_length
-						var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(trying_combination)
-		
-						var increment_of_satisfaction:float = satisfaction_of_trying_combination - best_previous_satisfaction
+		while true:
+			var change_made = false
+			for product_in_combi in products:
+				for new_product in products:
+					if new_product!=product_in_combi:
+						if combination[product_in_combi]>=step_length:
+							var trying_combination:Dictionary = combination.duplicate()
 						
-						var price = (Prices.get_price_of_product(new_product)-Prices.get_price_of_product(product_in_combi))*step_length
-						
-						if price<=left_money and increment_of_satisfaction > 0.0:
-							combination = trying_combination
-							change_made = true
+							trying_combination[product_in_combi] -= step_length
+							trying_combination[new_product] += step_length
+							var satisfaction_of_trying_combination:float = _satisfaction_calculator.calculate_satisf_of_combidict(trying_combination)
+			
+							var increment_of_satisfaction:float = satisfaction_of_trying_combination - best_previous_satisfaction
+							
+							var price = (Prices.get_price_of_product(new_product)-Prices.get_price_of_product(product_in_combi))*step_length
+							var almost_zero = 0.000001 
+							if left_money-price >= -almost_zero and increment_of_satisfaction > 0.0:
+								combination = trying_combination
+								change_made = true
+					if change_made:
+						break
 				if change_made:
-					break
-			if change_made:
-				break	
-				
-	
+					break	
+			
+			if false==change_made:
+				break
+		
 	return combination
 	
 	
