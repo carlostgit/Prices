@@ -173,5 +173,31 @@ margin_left = -11.0652
 margin_top = 42.8216
 margin_right = -11.0652
 margin_bottom = 42.8216
+
+[node name="TODO" type="Label" parent="OwnedItems"]
+margin_left = 52.0
+margin_top = 83.0
+margin_right = 170.0
+margin_bottom = 131.0
+text = "Añadir controles
+para cambiar la 
+combinación"
+
+[node name="CandyAmount" type="SpinBox" parent="OwnedItems"]
+margin_left = 61.4489
+margin_top = 135.611
+margin_right = 135.449
+margin_bottom = 159.611
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChocolateAmount" type="SpinBox" parent="OwnedItems"]
+margin_left = 61.4489
+margin_top = 166.336
+margin_right = 135.449
+margin_bottom = 190.336
 [connection signal="value_changed" from="Prices/CandyPrice" to="." method="_on_CandyPrice_value_changed"]
 [connection signal="value_changed" from="Prices/ChocolatePrice" to="." method="_on_ChocolatePrice_value_changed"]
+[connection signal="value_changed" from="OwnedItems/CandyAmount" to="." method="_on_CandyAmount_value_changed"]
+[connection signal="value_changed" from="OwnedItems/ChocolateAmount" to="." method="_on_ChocolateAmount_value_changed"]

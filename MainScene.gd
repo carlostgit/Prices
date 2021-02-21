@@ -28,13 +28,20 @@ func _ready():
 #	pass
 
 func init()->void:
-	$OwnedItems/CombinationItem.init_with_combidict(_owned_items_dict,"owned",["",""])
+	
 	_satisfaction_calculator = create_satisfaction_calculator()
 	_trade_calculator = TradeCalculator.new(_satisfaction_calculator)
+	
+	var candy_amount:float = _owned_items_dict.get("candy")
+	var chocolate_amount:float = _owned_items_dict.get("chocolate")
+	$OwnedItems/CandyAmount.set_value(candy_amount)
+	$OwnedItems/ChocolateAmount.set_value(chocolate_amount)
 	
 	update_prices()
 	update_after_prices_changed()
 	
+func get_owned_items()->Dictionary:
+	return $OwnedItems/CombinationItem.get_combidict()
 	
 func update_after_prices_changed()->void:
 	update_ranking_of_preferences()
@@ -42,6 +49,10 @@ func update_after_prices_changed()->void:
 	update_best_combination()
 	update_trade()
 
+func update_after_owned_combination_changed()->void:
+	update_of_owned_combination()
+	update_trade()
+	update_best_combination()
 
 func create_satisfaction_calculator()->SatisfactionCalculator:
 	var satisfaction_calculator:SatisfactionCalculator = SatisfactionCalculator.new()
@@ -76,6 +87,8 @@ func update_ranking_of_preferences()->void:
 
 func update_of_owned_combination()->void:
 		#Satisfaction of owned combination
+	$OwnedItems/CombinationItem.init_with_combidict(_owned_items_dict,"owned",["",""])
+	
 	var owned_combination:Combination = $OwnedItems/CombinationItem.get_combination()
 	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
@@ -127,8 +140,16 @@ func _on_CandyPrice_value_changed(value):
 	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
 	update_after_prices_changed()
 
-
 func _on_ChocolatePrice_value_changed(value):
 	Prices.set_amount_of_product("chocolate",value)
 	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
 	update_after_prices_changed()
+
+func _on_CandyAmount_value_changed(value):
+	_owned_items_dict["candy"] = float(value)
+	self.update_after_owned_combination_changed()
+
+func _on_ChocolateAmount_value_changed(value):
+	_owned_items_dict["chocolate"] = float(value)
+	self.update_after_owned_combination_changed()
+	

@@ -54,6 +54,13 @@ func init_with_combidict(combidict_arg:Dictionary = Dictionary(), name_arg:Strin
 #	_canvas_item = canvas_item_arg
 	_combination_dict = combidict_arg
 	#TODO
+	
+	for child in self.get_children():
+		self.remove_child(child)
+		child.queue_free()
+	
+	_item_list = null
+	
 	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
 	add_item_list(combidict_arg, labels_arg)
 
