@@ -159,6 +159,13 @@ func get_name()->String:
 func get_combidicts()->Array:
 	return self._combidicts
 
+func reset_combinations_color()->void:
+	for combination_item in self._combination_items:
+#		var combination_dict:Dictionary = combination_item.get_combination_dict()
+		var combination:Combination = combination_item.get_combination()
+		combination_item.highlight(Color(0,0,0,0))
+
+
 func highlight_combination_with_color(combination_to_highlight_arg:Combination, color_arg:Color)->void:
 	for combination_item in self._combination_items:
 #		var combination_dict:Dictionary = combination_item.get_combination_dict()

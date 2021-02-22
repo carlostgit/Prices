@@ -44,12 +44,14 @@ func get_owned_items()->Dictionary:
 	return $OwnedItems/CombinationItem.get_combidict()
 	
 func update_after_prices_changed()->void:
+	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
 	update_ranking_of_preferences()
 	update_of_owned_combination()
 	update_best_combination()
 	update_trade()
 
 func update_after_owned_combination_changed()->void:
+	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
 	update_of_owned_combination()
 	update_trade()
 	update_best_combination()
@@ -90,6 +92,8 @@ func update_of_owned_combination()->void:
 	$OwnedItems/CombinationItem.init_with_combidict(_owned_items_dict,"owned",["",""])
 	
 	var owned_combination:Combination = $OwnedItems/CombinationItem.get_combination()
+	
+
 	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
 	var satisf_of_owned:float = _satisfaction_calculator.calculate_satisf_of_combination(owned_combination)
@@ -121,6 +125,7 @@ func update_best_combination()->void:
 	var best_combidict:Dictionary = _trade_calculator.calculate_best_combidict(get_value_of_owned_combination())
 	var best_combination:Combination = Combination.new(best_combidict)
 	var best_color:Color = Color( 0, 0.5, 0.5, 1 ) 
+	
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(best_combination,best_color)
 	$BestCombination/LabelBestCombination.set_text("Best combination: " + str(best_combidict))
 	var satisf_of_best_combi:float = _satisfaction_calculator.calculate_satisf_of_combination(best_combination)

@@ -146,6 +146,7 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 							if left_money-price >= -almost_zero and increment_of_satisfaction > 0.0:
 								combination = trying_combination
 								change_made = true
+								left_money -= price
 					if change_made:
 						break
 				if change_made:
