@@ -127,7 +127,11 @@ func calculate_best_combidict(money_arg:float)->Dictionary:
 			
 	if left_money > 0:
 #		Ya no se puede añadir ningún producto, pero puede que quede dinero para intercambiar productos
+		var count2:int = 0
 		while true:
+			count2 += 1
+			if count2>100:
+				break			
 			var change_made = false
 			for product_in_combi in products:
 				for new_product in products:

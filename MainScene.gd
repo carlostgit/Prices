@@ -113,11 +113,13 @@ func update_prices()->void:
 #	combination_prices.set_position(Vector2(300,100))
 #	self.add_child(combination_prices)
 	$Prices/LabelCurrency.set_text("Currency: "+Prices.get_currency())
-	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
+	$Prices/LabelAmounts.set_text("Prices: "+str(Prices.get_combidict()))
 	var candy_price:float = Prices.get_amount_of_product("candy")
 	var chocolate_price:float = Prices.get_amount_of_product("chocolate")
-	$Prices/CandyPrice.set_value(candy_price)
-	$Prices/ChocolatePrice.set_value(chocolate_price)
+	$Prices/CandyAmountForPrice.set_value(candy_price)
+	$Prices/ChocolateAmountForPrice.set_value(chocolate_price)
+	
+	update_price_labels()
 	#
 func update_best_combination()->void:
 	#	Best combination
@@ -133,21 +135,37 @@ func update_best_combination()->void:
 	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
 	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$")
 
+	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"best",["",""])
+	
 func update_trade()->void:
 	var trade_combidict:Dictionary = _trade_calculator.calculate_trade_for_combidict(_owned_items_dict)
 	$Trade/LabelTrade.set_text("Trade: "+str(trade_combidict))
+	
 
+func update_price_labels()->void:
+	var price_of_candies:float = Prices.get_price_of_product("candy")
+	var price_of_candies_2_dec:String = String(price_of_candies).pad_decimals(2)
+	$Prices/LabelCandyPrice.set_text(price_of_candies_2_dec + " candies")
+	
+	var price_of_chocolate:float = Prices.get_price_of_product("chocolate")
+	var price_of_chocolate_2_dec:String = String(price_of_chocolate).pad_decimals(2)
+	$Prices/LabelChocolatePrice.set_text(price_of_chocolate_2_dec + " chocolate")
+	
 
-
-
-func _on_CandyPrice_value_changed(value):
+func _on_CandyAmountForPrice_value_changed(value):
 	Prices.set_amount_of_product("candy",value)
-	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
+	$Prices/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
+	
+	update_price_labels()
+	
 	update_after_prices_changed()
 
-func _on_ChocolatePrice_value_changed(value):
+func _on_ChocolateAmountForPrice_value_changed(value):
 	Prices.set_amount_of_product("chocolate",value)
-	$Prices/LabelPrices.set_text("Prices: "+str(Prices.get_combidict()))
+	$Prices/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
+	
+	update_price_labels()
+	
 	update_after_prices_changed()
 
 func _on_CandyAmount_value_changed(value):
