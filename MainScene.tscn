@@ -57,10 +57,10 @@ __meta__ = {
 }
 
 [node name="CombinationItem" parent="BestCombination" instance=ExtResource( 2 )]
-margin_left = 40.0
-margin_top = 56.0
-margin_right = 88.0
-margin_bottom = 208.0
+margin_left = 16.0
+margin_top = 72.0
+margin_right = 64.0
+margin_bottom = 224.0
 
 [node name="Prices" type="Control" parent="."]
 margin_left = 768.0
@@ -133,6 +133,9 @@ margin_top = 136.0
 margin_right = 153.0
 margin_bottom = 152.0
 text = "LabelChocolatePrice"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Candy" type="TextureRect" parent="Prices"]
 margin_left = 8.0
@@ -159,8 +162,8 @@ __meta__ = {
 [node name="Trade" type="Control" parent="."]
 margin_left = 384.0
 margin_top = 16.0
-margin_right = 536.0
-margin_bottom = 184.0
+margin_right = 688.0
+margin_bottom = 288.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -195,13 +198,25 @@ __meta__ = {
 
 [node name="LabelSellingGoods" type="Label" parent="Trade"]
 margin_left = 8.0
-margin_top = 56.0
-margin_right = 133.0
-margin_bottom = 70.0
+margin_top = 128.0
+margin_right = 168.0
+margin_bottom = 142.0
 text = "TODO LabelSellingGoods"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CombinationItemBuyingGoods" parent="Trade" instance=ExtResource( 2 )]
+margin_left = 176.0
+margin_top = 40.0
+margin_right = 200.0
+margin_bottom = 120.0
+
+[node name="CombinationItemSellingGoods" parent="Trade" instance=ExtResource( 2 )]
+margin_left = 184.0
+margin_top = 128.0
+margin_right = 208.0
+margin_bottom = 200.0
 
 [node name="RankingOfPreferences" type="Control" parent="."]
 margin_left = 64.0

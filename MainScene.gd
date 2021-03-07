@@ -89,7 +89,7 @@ func update_ranking_of_preferences()->void:
 
 func update_of_owned_combination()->void:
 		#Satisfaction of owned combination
-	$OwnedItems/CombinationItem.init_with_combidict(_owned_items_dict,"owned",["",""])
+	$OwnedItems/CombinationItem.init_with_combidict(_owned_items_dict,"owned",[])
 	
 	var owned_combination:Combination = $OwnedItems/CombinationItem.get_combination()
 	
@@ -135,21 +135,35 @@ func update_best_combination()->void:
 	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
 	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$")
 
-	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"best",["",""])
+	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"best",[])
 	
 func update_trade()->void:
 	var trade_combidict:Dictionary = _trade_calculator.calculate_trade_for_combidict(_owned_items_dict)
 	$Trade/LabelTrade.set_text("Trade: "+str(trade_combidict))
 	
+	var trade_combination:Combination = Combination.new(trade_combidict)
+	var positive_combidict:Dictionary = trade_combination.get_positive_combination()
 
+	var negative_combidict:Dictionary = trade_combination.get_negative_combination()
+
+	$Trade/LabelBuyingGoods.set_text("Buying: "+str(positive_combidict))
+	
+	var negative_combination:Combination = Combination.new(negative_combidict)
+	negative_combination.set_positive()
+	$Trade/LabelSellingGoods.set_text("Selling: "+str(negative_combination.get_combidict()))
+
+	$Trade/CombinationItemBuyingGoods.init_with_combidict(positive_combidict, "in", [])
+
+	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
+	
 func update_price_labels()->void:
 	var price_of_candies:float = Prices.get_price_of_product("candy")
 	var price_of_candies_2_dec:String = String(price_of_candies).pad_decimals(2)
-	$Prices/LabelCandyPrice.set_text(price_of_candies_2_dec + " candies")
+	$Prices/LabelCandyPrice.set_text("="+price_of_candies_2_dec + " candies")
 	
 	var price_of_chocolate:float = Prices.get_price_of_product("chocolate")
 	var price_of_chocolate_2_dec:String = String(price_of_chocolate).pad_decimals(2)
-	$Prices/LabelChocolatePrice.set_text(price_of_chocolate_2_dec + " chocolate")
+	$Prices/LabelChocolatePrice.set_text("="+price_of_chocolate_2_dec + " candies")
 	
 
 func _on_CandyAmountForPrice_value_changed(value):

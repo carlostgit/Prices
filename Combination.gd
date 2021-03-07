@@ -103,3 +103,22 @@ func equals(combination_arg)->bool:
 		return false
 #	Finished testing
 	return true
+
+func get_positive_combination()->Dictionary:
+	var positive_dict:Dictionary = {}
+	for prod in _thing_quantity_dict.keys():
+		if _thing_quantity_dict.get(prod) > 0.0:
+			positive_dict[prod] = _thing_quantity_dict.get(prod)			
+	return positive_dict
+	
+func get_negative_combination()->Dictionary:
+	
+	var negative_dict:Dictionary = {}
+	for prod in _thing_quantity_dict.keys():
+		if _thing_quantity_dict.get(prod) < 0.0:
+			negative_dict[prod] = _thing_quantity_dict.get(prod)			
+	return negative_dict
+	
+func set_positive()->void:
+	for prod in _thing_quantity_dict.keys():
+		_thing_quantity_dict[prod] = abs(_thing_quantity_dict.get(prod))

@@ -22,14 +22,14 @@ var _products = ["chocolate","candy"]
 var _scale:float = 0.5
 var _fixed_icon_size:Vector2 = Vector2(50,50)
 
-var _arguments:Array = []
+#var _arguments:Array = []
 
 var _combination_dict:Dictionary = Dictionary()
 
 var _item_list:ItemList = null
 
-
-
+var _combination_name_label:String = ""
+var _combination_extra_labels:Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,6 +61,9 @@ func init_with_combidict(combidict_arg:Dictionary = Dictionary(), name_arg:Strin
 	
 	_item_list = null
 	
+	_combination_name_label = name_arg
+	_combination_extra_labels = labels_arg
+	
 	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
 	add_item_list(combidict_arg, labels_arg)
 
@@ -80,12 +83,12 @@ func _init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels
 func set_label(label_name_arg:String)->void:
 #	print("label_name is")
 	var label_name:Label = Label.new()
-	label_name.set_scale(Vector2(1.5,1.5))
+	label_name.set_scale(Vector2(1.0,1.0))
 	label_name.set_text(label_name_arg)
 	label_name.set("custom_colors/font_color", Color(1,0,0))
 	#label_name.set_text("Pruebita")
 	#print(self.get_name())
-	label_name.set_position(self.get_position()+Vector2(0,0))
+	label_name.set_position(Vector2(0,0))
 
 	self.add_child(label_name)
 #
@@ -94,6 +97,10 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 	for label in labels_arg:
 		assert(typeof(label)==TYPE_STRING)
 
+	var with_extra_labels:bool = false
+	if false==labels_arg.empty():
+		with_extra_labels = true
+			
 	var item_list:ItemList = ItemList.new()
 	var num_item=0
 	#var total_height = 0
@@ -146,8 +153,17 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 
 	item_list.set_size(_fixed_icon_size*_scale)
 	item_list.set_fixed_icon_size(_fixed_icon_size)
-	var current_position_x = self.get_position().x+item_list.get_size().x
-	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+50)
+#	var current_position_x = self.get_position().x+item_list.get_size().x
+#	var current_position_x = 0
+	
+	var space_for_labels:float = 50.0
+	if false==with_extra_labels:
+		if _combination_name_label == "":
+			space_for_labels = 0.0
+		else:
+			space_for_labels = 20.0
+	
+	var this_item_list_pos=Vector2(0, 0 + space_for_labels)
 	item_list.set_position(this_item_list_pos)
 	item_list.set_auto_height(true)
 	#item_list.set_fixed_column_width(_fixed_icon_size.x*0.3)
