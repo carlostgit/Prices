@@ -191,7 +191,7 @@ margin_left = 8.0
 margin_top = 40.0
 margin_right = 128.0
 margin_bottom = 56.0
-text = "TODO LabelBuyingGoods"
+text = "LabelBuyingGoods"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -201,7 +201,7 @@ margin_left = 8.0
 margin_top = 128.0
 margin_right = 168.0
 margin_bottom = 142.0
-text = "TODO LabelSellingGoods"
+text = "LabelSellingGoods"
 __meta__ = {
 "_edit_use_anchors_": false
 }
