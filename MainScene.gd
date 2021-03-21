@@ -96,11 +96,16 @@ func update_of_owned_combination()->void:
 
 	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
+	
+	#focus ranking on owned combination
+	$RankingOfPreferences/CombinationSatisfaction.focus_on_combination(owned_combination)
+	
 	var satisf_of_owned:float = _satisfaction_calculator.calculate_satisf_of_combination(owned_combination)
 	$OwnedItems/LabelSatisfaction.set_text("Satisfaction of owned: " + String(satisf_of_owned).pad_decimals(2))
 
 	var value_of_owned:float = Prices.calculate_combidict_price(_owned_items_dict)
 	$OwnedItems/LabelValueOfOwned.set_text("Value of owned: "+String(value_of_owned).pad_decimals(2)+ "$")
+
 
 func get_value_of_owned_combination()->float:
 	var value_of_owned:float = Prices.calculate_combidict_price(_owned_items_dict)
