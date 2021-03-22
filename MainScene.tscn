@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://CombinationItem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://CombinationItemList.tscn" type="PackedScene" id=3]
 [ext_resource path="res://candy.png" type="Texture" id=4]
 [ext_resource path="res://chocolate.png" type="Texture" id=5]
+[ext_resource path="res://PricesInfo.gd" type="Script" id=6]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -62,16 +63,17 @@ margin_top = 72.0
 margin_right = 64.0
 margin_bottom = 224.0
 
-[node name="Prices" type="Control" parent="."]
+[node name="PricesInfo" type="Control" parent="."]
 margin_left = 768.0
 margin_top = 24.0
 margin_right = 920.0
 margin_bottom = 208.0
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelAmounts" type="Label" parent="Prices"]
+[node name="LabelAmounts" type="Label" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 32.0
 margin_right = 89.0
@@ -81,7 +83,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CandyAmountForPrice" type="SpinBox" parent="Prices"]
+[node name="CandyAmountForPrice" type="SpinBox" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 56.0
 margin_right = 82.0
@@ -93,7 +95,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChocolateAmountForPrice" type="SpinBox" parent="Prices"]
+[node name="ChocolateAmountForPrice" type="SpinBox" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 88.0
 margin_right = 82.0
@@ -102,14 +104,14 @@ min_value = 0.1
 step = 0.1
 value = 0.1
 
-[node name="LabelCurrency" type="Label" parent="Prices"]
+[node name="LabelCurrency" type="Label" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 16.0
 margin_right = 104.0
 margin_bottom = 32.0
 text = "LabelCurrency"
 
-[node name="LabelTitle" type="Label" parent="Prices"]
+[node name="LabelTitle" type="Label" parent="PricesInfo"]
 margin_right = 48.0
 margin_bottom = 16.0
 text = "Prices"
@@ -117,7 +119,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelCandyPrice" type="Label" parent="Prices"]
+[node name="LabelCandyPrice" type="Label" parent="PricesInfo"]
 margin_left = 24.0
 margin_top = 120.0
 margin_right = 128.0
@@ -127,7 +129,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelChocolatePrice" type="Label" parent="Prices"]
+[node name="LabelChocolatePrice" type="Label" parent="PricesInfo"]
 margin_left = 24.0
 margin_top = 136.0
 margin_right = 153.0
@@ -137,7 +139,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Candy" type="TextureRect" parent="Prices"]
+[node name="Candy" type="TextureRect" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 120.0
 margin_right = 72.0
@@ -148,7 +150,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="Prices"]
+[node name="TextureRect" type="TextureRect" parent="PricesInfo"]
 margin_left = 8.0
 margin_top = 136.0
 margin_right = 72.0
@@ -295,7 +297,9 @@ margin_left = 128.0
 margin_top = 88.0
 margin_right = 202.0
 margin_bottom = 112.0
-[connection signal="value_changed" from="Prices/CandyAmountForPrice" to="." method="_on_CandyAmountForPrice_value_changed"]
-[connection signal="value_changed" from="Prices/ChocolateAmountForPrice" to="." method="_on_ChocolateAmountForPrice_value_changed"]
+[connection signal="ready" from="." to="PricesInfo" method="_on_MainScene_ready"]
+[connection signal="prices_changed" from="PricesInfo" to="." method="_on_PricesInfo_prices_changed"]
+[connection signal="value_changed" from="PricesInfo/CandyAmountForPrice" to="PricesInfo" method="_on_CandyAmountForPrice_value_changed"]
+[connection signal="value_changed" from="PricesInfo/ChocolateAmountForPrice" to="PricesInfo" method="_on_ChocolateAmountForPrice_value_changed"]
 [connection signal="value_changed" from="OwnedItems/CandyAmount" to="." method="_on_CandyAmount_value_changed"]
 [connection signal="value_changed" from="OwnedItems/ChocolateAmount" to="." method="_on_ChocolateAmount_value_changed"]

@@ -15,11 +15,13 @@ var _satisfaction_calculator:SatisfactionCalculator = null
 var _owned_items_dict = {"chocolate":1, "candy":2}
 var _trade_calculator:TradeCalculator = null
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	Owned items
-#	var owned_items_dict = {"chocolate":1, "candy":2}
+#	var owned_items_dict = {"chocolate":1, "candy":2}	
 	init()
+	
 	pass # Replace with function body.
 
 
@@ -37,8 +39,8 @@ func init()->void:
 	$OwnedItems/CandyAmount.set_value(candy_amount)
 	$OwnedItems/ChocolateAmount.set_value(chocolate_amount)
 	
-	update_prices()
-	update_after_prices_changed()
+#	update_prices()
+#	update_after_prices_changed()
 	
 func get_owned_items()->Dictionary:
 	return $OwnedItems/CombinationItem.get_combidict()
@@ -69,7 +71,7 @@ func update_ranking_of_preferences()->void:
 	var combinations_array:Array = combination_list.get_combinations_array()
 	
 	var combination_satisfaction_list:CombinationValueList = CombinationValueList.new()
-	var combination_price_list:CombinationValueList = CombinationValueList.new()	
+	var combination_price_list:CombinationValueList = CombinationValueList.new()
 	for combination in combinations_array:
 		var satisf:float = _satisfaction_calculator.calculate_satisf_of_combination(combination)
 		combination_satisfaction_list.add_combination_value(combination,satisf)
@@ -94,7 +96,7 @@ func update_of_owned_combination()->void:
 	var owned_combination:Combination = $OwnedItems/CombinationItem.get_combination()
 	
 
-	var owned_color:Color = Color( 1, 0.5, 0.31, 1 ) 
+	var owned_color:Color = Color( 1, 0.5, 0.31, 1 )
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(owned_combination,owned_color)
 	
 	#focus ranking on owned combination
@@ -111,27 +113,27 @@ func get_value_of_owned_combination()->float:
 	var value_of_owned:float = Prices.calculate_combidict_price(_owned_items_dict)
 	return value_of_owned
 
-func update_prices()->void:
-	#Precios
-#	var combination_prices:CombinationItem = CombinationItem.new()
-#	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
-#	combination_prices.set_position(Vector2(300,100))
-#	self.add_child(combination_prices)
-	$Prices/LabelCurrency.set_text("Currency: "+Prices.get_currency())
-	$Prices/LabelAmounts.set_text("Prices: "+str(Prices.get_combidict()))
-	var candy_price:float = Prices.get_amount_of_product("candy")
-	var chocolate_price:float = Prices.get_amount_of_product("chocolate")
-	$Prices/CandyAmountForPrice.set_value(candy_price)
-	$Prices/ChocolateAmountForPrice.set_value(chocolate_price)
-	
-	update_price_labels()
+#func update_prices()->void:
+#	#Precios
+##	var combination_prices:CombinationItem = CombinationItem.new()
+##	combination_prices.init_with_combidict(Prices.get_combidict(),"Prices",[str(Prices.get_combidict())])
+##	combination_prices.set_position(Vector2(300,100))
+##	self.add_child(combination_prices)
+#	$PricesInfo/LabelCurrency.set_text("Currency: "+Prices.get_currency())
+#	$PricesInfo/LabelAmounts.set_text("Prices: "+str(Prices.get_combidict()))
+#	var candy_price:float = Prices.get_amount_of_product("candy")
+#	var chocolate_price:float = Prices.get_amount_of_product("chocolate")
+#	$PricesInfo/CandyAmountForPrice.set_value(candy_price)
+#	$PricesInfo/ChocolateAmountForPrice.set_value(chocolate_price)
+#
+#	update_price_labels()
 	#
 func update_best_combination()->void:
 	#	Best combination
 	
 	var best_combidict:Dictionary = _trade_calculator.calculate_best_combidict(get_value_of_owned_combination())
 	var best_combination:Combination = Combination.new(best_combidict)
-	var best_color:Color = Color( 0, 0.5, 0.5, 1 ) 
+	var best_color:Color = Color( 0, 0.5, 0.5, 1 )
 	
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(best_combination,best_color)
 	$BestCombination/LabelBestCombination.set_text("Best combination: " + str(best_combidict))
@@ -161,31 +163,31 @@ func update_trade()->void:
 
 	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
 	
-func update_price_labels()->void:
-	var price_of_candies:float = Prices.get_price_of_product("candy")
-	var price_of_candies_2_dec:String = String(price_of_candies).pad_decimals(2)
-	$Prices/LabelCandyPrice.set_text("="+price_of_candies_2_dec + " candies")
-	
-	var price_of_chocolate:float = Prices.get_price_of_product("chocolate")
-	var price_of_chocolate_2_dec:String = String(price_of_chocolate).pad_decimals(2)
-	$Prices/LabelChocolatePrice.set_text("="+price_of_chocolate_2_dec + " candies")
+#func update_price_labels()->void:
+#	var price_of_candies:float = Prices.get_price_of_product("candy")
+#	var price_of_candies_2_dec:String = String(price_of_candies).pad_decimals(2)
+#	$PricesInfo/LabelCandyPrice.set_text("="+price_of_candies_2_dec + " candies")
+#
+#	var price_of_chocolate:float = Prices.get_price_of_product("chocolate")
+#	var price_of_chocolate_2_dec:String = String(price_of_chocolate).pad_decimals(2)
+#	$PricesInfo/LabelChocolatePrice.set_text("="+price_of_chocolate_2_dec + " candies")
 	
 
-func _on_CandyAmountForPrice_value_changed(value):
-	Prices.set_amount_of_product("candy",value)
-	$Prices/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
-	
-	update_price_labels()
-	
-	update_after_prices_changed()
-
-func _on_ChocolateAmountForPrice_value_changed(value):
-	Prices.set_amount_of_product("chocolate",value)
-	$Prices/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
-	
-	update_price_labels()
-	
-	update_after_prices_changed()
+#func _on_CandyAmountForPrice_value_changed(value):
+#	Prices.set_amount_of_product("candy",value)
+#	$PricesInfo/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
+#
+#	update_price_labels()
+#
+#	update_after_prices_changed()
+#
+#func _on_ChocolateAmountForPrice_value_changed(value):
+#	Prices.set_amount_of_product("chocolate",value)
+#	$PricesInfo/LabelAmounts.set_text("Amounts: "+str(Prices.get_combidict()))
+#
+#	update_price_labels()
+#
+#	update_after_prices_changed()
 
 func _on_CandyAmount_value_changed(value):
 	_owned_items_dict["candy"] = float(value)
@@ -195,3 +197,8 @@ func _on_ChocolateAmount_value_changed(value):
 	_owned_items_dict["chocolate"] = float(value)
 	self.update_after_owned_combination_changed()
 	
+
+
+func _on_PricesInfo_prices_changed():
+	update_after_prices_changed()
+	pass # Replace with function body.
