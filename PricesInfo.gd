@@ -67,6 +67,7 @@ func update_after_prices_changed():
 
 
 func _on_MainScene_ready():
+#	La tendré que reconectar
 	update_prices()
 	update_after_prices_changed()
 	pass # Replace with function body.
