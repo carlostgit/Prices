@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://chocolate.png" type="Texture" id=1]
+[ext_resource path="res://candy.png" type="Texture" id=2]
+[ext_resource path="res://PricesInfo.gd" type="Script" id=3]
+
+[node name="PricesInfo" type="Control"]
+margin_left = 768.0
+margin_top = 24.0
+margin_right = 920.0
+margin_bottom = 208.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelAmounts" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 32.0
+margin_right = 89.0
+margin_bottom = 48.0
+text = "LabelPrices"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CandyAmountForPrice" type="SpinBox" parent="."]
+margin_left = 8.0
+margin_top = 56.0
+margin_right = 82.0
+margin_bottom = 80.0
+min_value = 0.1
+step = 0.1
+value = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChocolateAmountForPrice" type="SpinBox" parent="."]
+margin_left = 8.0
+margin_top = 88.0
+margin_right = 82.0
+margin_bottom = 112.0
+min_value = 0.1
+step = 0.1
+value = 0.1
+
+[node name="LabelCurrency" type="Label" parent="."]
+margin_left = 8.0
+margin_top = 16.0
+margin_right = 104.0
+margin_bottom = 32.0
+text = "LabelCurrency"
+
+[node name="LabelTitle" type="Label" parent="."]
+margin_right = 48.0
+margin_bottom = 16.0
+text = "Prices"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelCandyPrice" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 120.0
+margin_right = 128.0
+margin_bottom = 136.0
+text = "LabelCandyPrice"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelChocolatePrice" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 136.0
+margin_right = 153.0
+margin_bottom = 152.0
+text = "LabelChocolatePrice"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Candy" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 120.0
+margin_right = 72.0
+margin_bottom = 184.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 136.0
+margin_right = 72.0
+margin_bottom = 200.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="CandyAmountForPrice" to="." method="_on_CandyAmountForPrice_value_changed"]
+[connection signal="value_changed" from="ChocolateAmountForPrice" to="." method="_on_ChocolateAmountForPrice_value_changed"]
