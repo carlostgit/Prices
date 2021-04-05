@@ -42,15 +42,16 @@ func _ready():
 #func _process(delta):
 #	pass
 #
-func _init(thing_quantity_dict_arg={}): #Sin ={}, me aparece un error al lanzar la escena
+func _init(thing_quantity_dict_arg={}): #Sin ={}, me aparece un error al lanzar la escena	
 	init(thing_quantity_dict_arg)
 	
 func init(thing_quantity_dict_arg:Dictionary)->void:
-	for thing in thing_quantity_dict_arg.keys():
+	var duplicate_of_arg:Dictionary = thing_quantity_dict_arg.duplicate() #Hago un duplicado para q no se modifique el diccionario pasado como argumento
+	for thing in duplicate_of_arg.keys():
 		assert(typeof(thing)==TYPE_STRING)
-		assert(typeof(thing_quantity_dict_arg[thing])==TYPE_REAL or typeof(thing_quantity_dict_arg[thing])==TYPE_INT)
+		assert(typeof(duplicate_of_arg[thing])==TYPE_REAL or typeof(duplicate_of_arg[thing])==TYPE_INT)
 		
-	_thing_quantity_dict = thing_quantity_dict_arg
+	_thing_quantity_dict = duplicate_of_arg
 	
 func get_combidict()->Dictionary:
 	return _thing_quantity_dict
