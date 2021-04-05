@@ -119,6 +119,25 @@ func get_negative_combination()->Dictionary:
 			negative_dict[prod] = _thing_quantity_dict.get(prod)			
 	return negative_dict
 	
-func set_positive()->void:
+func set_absolute()->void:
 	for prod in _thing_quantity_dict.keys():
 		_thing_quantity_dict[prod] = abs(_thing_quantity_dict.get(prod))
+
+func set_negative()->void:
+	for prod in _thing_quantity_dict.keys():
+		_thing_quantity_dict[prod] = -_thing_quantity_dict.get(prod)
+		
+func sum(combination_arg)->void:
+	var combidict_arg:Dictionary = combination_arg.get_combidict()
+#	for prod in _thing_quantity_dict.keys():
+	for prod in combidict_arg.keys():
+		if prod in _thing_quantity_dict.keys():
+			_thing_quantity_dict[prod] = _thing_quantity_dict.get(prod) + combidict_arg.get(prod)
+		else:
+			_thing_quantity_dict[prod] = combidict_arg.get(prod)
+
+func subtract(combination_arg)->void:
+	combination_arg.set_negative()
+	self.sum(combination_arg)
+	
+	

@@ -15,6 +15,7 @@ var _satisfaction_calculator:SatisfactionCalculator = null
 var _owned_items_dict = {"chocolate":1, "candy":2}
 var _trade_calculator:TradeCalculator = null
 
+signal trade_updated(origin_node,trade_combidict)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -156,12 +157,22 @@ func update_trade()->void:
 	$Trade/LabelBuyingGoods.set_text("Buying: "+str(positive_combidict))
 	
 	var negative_combination:Combination = Combination.new(negative_combidict)
-	negative_combination.set_positive()
+	negative_combination.set_absolute()
 	$Trade/LabelSellingGoods.set_text("Selling: "+str(negative_combination.get_combidict()))
 
 	$Trade/CombinationItemBuyingGoods.init_with_combidict(positive_combidict, "in", [])
 
 	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
+
+	
+	emit_signal("trade_updated",self,trade_combidict)
+
+func get_trade_out()->Dictionary:
+	var trade_combination_out:Combination = $Trade/CombinationItemSellingGoods.get_combination()
+	var trade_combination_in:Combination = $Trade/CombinationItemBuyingGoods.get_combination()
+	trade_combination_out.subtract(trade_combination_in)
+	var combidict:Dictionary = trade_combination_out.get_combidict()
+	return combidict
 	
 #func update_price_labels()->void:
 #	var price_of_candies:float = Prices.get_price_of_product("candy")
