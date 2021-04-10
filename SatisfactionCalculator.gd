@@ -81,6 +81,23 @@ func calculate_satifaction_of_sweets(quantity_arg:float) -> float:
 func _init():
 	init_default_satisfaction()
 	
+func reset()->void:
+	_product_satisf_curve_dict.clear()
+	_combo_satisf_curve_dict.clear()
+
+func set_preference_for_chocolate():
+	reset()
+	init_chocolate_satisfaction()
+
+func set_preference_for_candy():
+	reset()
+	init_candy_satisfaction()
+
+func set_default_preference():
+	reset()
+	init_default_satisfaction()
+
+	
 func init_default_satisfaction():
 	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
 	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,14)
@@ -89,6 +106,25 @@ func init_default_satisfaction():
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
 	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+
+func init_candy_satisfaction():
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,8)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,18)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
+	
+	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
+	_product_satisf_curve_dict["candy"]=satis_curve_candy
+	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+
+func init_chocolate_satisfaction():
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.4,20)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,10)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
+	
+	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
+	_product_satisf_curve_dict["candy"]=satis_curve_candy
+	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
+
 	
 func calculate_satisf_of_combination(combination_arg:Combination):
 	if combination_arg as Combination:
