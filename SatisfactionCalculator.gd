@@ -52,7 +52,8 @@ func _ready():
 #	_product_satisf_curve_dict["candy"]=satis_curve_candy
 #	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
 
-	init_default_satisfaction()
+	#init_default_satisfaction()
+	init_candy_satisfaction()
 	
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_chocolate"),"chocolate")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_candy"),"candy")
@@ -109,7 +110,7 @@ func init_default_satisfaction():
 
 func init_candy_satisfaction():
 	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,8)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,18)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(4.2,18)
 	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate

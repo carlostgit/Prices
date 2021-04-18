@@ -223,3 +223,12 @@ func _on_ChocolateAmount_value_changed(value):
 func _on_PricesInfo_prices_changed():
 	update_after_prices_changed()
 	pass # Replace with function body.
+
+
+func _on_ShowInfoRanking_pressed():
+	if false==$RankingOfPreferences.is_visible():
+		$BestCombination.show()
+		$RankingOfPreferences.show()
+	else:
+		$BestCombination.hide()
+		$RankingOfPreferences.hide()
