@@ -62,9 +62,9 @@ margin_right = 64.0
 margin_bottom = 224.0
 
 [node name="Trade" type="Control" parent="."]
-margin_left = 288.0
+margin_left = 272.0
 margin_top = 16.0
-margin_right = 592.0
+margin_right = 576.0
 margin_bottom = 288.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -119,6 +119,24 @@ margin_left = 184.0
 margin_top = 128.0
 margin_right = 208.0
 margin_bottom = 200.0
+
+[node name="ItemListBuyingGoods" type="ItemList" parent="Trade"]
+margin_left = 8.0
+margin_top = 64.0
+margin_right = 176.0
+margin_bottom = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemListSellingGoods" type="ItemList" parent="Trade"]
+margin_left = 8.0
+margin_top = 144.0
+margin_right = 176.0
+margin_bottom = 200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RankingOfPreferences" type="Control" parent="."]
 margin_left = 8.0

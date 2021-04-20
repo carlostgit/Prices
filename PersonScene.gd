@@ -15,6 +15,9 @@ var _satisfaction_calculator:SatisfactionCalculator = null
 var _owned_items_dict = {"chocolate":1, "candy":2}
 var _trade_calculator:TradeCalculator = null
 
+var _candy:Texture = load("res://candy.png")
+var _chocolate:Texture = load("res://chocolate.png")
+
 signal trade_updated(origin_node,trade_combidict)
 
 # Called when the node enters the scene tree for the first time.
@@ -174,6 +177,38 @@ func update_trade()->void:
 
 	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
 
+#TODO. Probando a poner lo de los productos que se compran y se venden de una manera
+#que ocupe menos.
+#Igual lo mejor es pintar unas flechas unos iconos y poner un label
+#y solo mostrar el icono y flechas cuando toque
+#	Prueba
+	
+	var candy_image:Image = _candy.get_data()
+	var chocolate_image:Image = _chocolate.get_data()
+	candy_image.resize(20, 20)
+	chocolate_image.resize(20, 20)
+	var reduced_candy_tex:Texture = ImageTexture.new()
+	var reduced_chocolate_tex:Texture = ImageTexture.new()
+	reduced_candy_tex.create_from_image(candy_image)
+	reduced_chocolate_tex.create_from_image(chocolate_image)
+	
+	#Mejor quitar los ItemList y poner imágenes (ocultables) y labels
+	$Trade/ItemListBuyingGoods.clear()
+	$Trade/ItemListSellingGoods.clear()
+	if positive_combidict.has("candy"):
+		var num_candy:float =positive_combidict.get("candy")
+		$Trade/ItemListBuyingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
+	if positive_combidict.has("chocolate"):
+		var num_chocolate:float =positive_combidict.get("chocolate")
+		$Trade/ItemListBuyingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
+	if negative_combidict.has("candy"):
+		var num_candy:float =abs(negative_combidict.get("candy"))
+		$Trade/ItemListSellingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
+	if negative_combidict.has("chocolate"):
+		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
+		$Trade/ItemListSellingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
+		
+# fin Prueba	
 	
 	emit_signal("trade_updated",self,trade_combidict)
 
