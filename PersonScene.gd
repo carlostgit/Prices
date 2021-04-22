@@ -208,6 +208,28 @@ func update_trade()->void:
 		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
 		$Trade/ItemListSellingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
 		
+	if positive_combidict.has("candy"):
+		var num_candy:float =positive_combidict.get("candy")
+		$Trade/LabelCandyBuying.set_text(str(num_candy))
+	else:
+		$Trade/LabelCandyBuying.set_text("0")
+	
+	if positive_combidict.has("chocolate"):
+		var num_chocolate:float =positive_combidict.get("chocolate")
+		$Trade/LabelChocolateBuying.set_text(str(num_chocolate))
+	else:
+		$Trade/LabelChocolateBuying.set_text("0")
+		
+	if negative_combidict.has("candy"):
+		var num_candy:float =abs(negative_combidict.get("candy"))
+		$Trade/LabelCandySelling.set_text(str(num_candy))	
+	
+	if negative_combidict.has("chocolate"):
+		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
+		$Trade/LabelChocolateSelling.set_text(str(num_chocolate))
+	
+		
+	
 # fin Prueba	
 	
 	emit_signal("trade_updated",self,trade_combidict)
