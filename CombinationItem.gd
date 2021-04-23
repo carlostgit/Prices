@@ -85,7 +85,7 @@ func set_label(label_name_arg:String)->void:
 	var label_name:Label = Label.new()
 	label_name.set_scale(Vector2(1.0,1.0))
 	label_name.set_text(label_name_arg)
-	label_name.set("custom_colors/font_color", Color(1,0,0))
+	label_name.set("custom_colors/font_color", Color(1,0.5,0.5))
 	#label_name.set_text("Pruebita")
 	#print(self.get_name())
 	label_name.set_position(Vector2(0,0))

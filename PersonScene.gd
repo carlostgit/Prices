@@ -160,86 +160,127 @@ func update_best_combination()->void:
 	
 func update_trade()->void:
 	var trade_combidict:Dictionary = _trade_calculator.calculate_trade_for_combidict(_owned_items_dict)
+	
+#	$Trade.trade_combidict = trade_combidict
+	
+	$Trade.set_trade_combidict(trade_combidict)
+	
 	$Trade/LabelTrade.set_text("Trade: "+str(trade_combidict))
 	
 	var trade_combination:Combination = Combination.new(trade_combidict)
 	var positive_combidict:Dictionary = trade_combination.get_positive_combination()
-
+##	$Trade.trade_in_combidict = positive_combidict
+#
 	var negative_combidict:Dictionary = trade_combination.get_negative_combination()
+##	$Trade.trade_in_combidict = negative_combidict
 
-	$Trade/LabelBuyingGoods.set_text("Buying: "+str(positive_combidict))
+##	$Trade/LabelBuyingGoods.set_text("Buying: "+str(positive_combidict))
+#
+#	var negative_combination:Combination = Combination.new(negative_combidict)
+#	negative_combination.set_absolute()
+#	$Trade/LabelSellingGoods.set_text("Selling: "+str(negative_combination.get_combidict()))
+
+#	$Trade/CombinationItemBuyingGoods.init_with_combidict(positive_combidict, "in", [])
 	
-	var negative_combination:Combination = Combination.new(negative_combidict)
-	negative_combination.set_absolute()
-	$Trade/LabelSellingGoods.set_text("Selling: "+str(negative_combination.get_combidict()))
 
-	$Trade/CombinationItemBuyingGoods.init_with_combidict(positive_combidict, "in", [])
-
-	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
+#	$Trade/CombinationItemSellingGoods.init_with_combidict(negative_combination.get_combidict(), "out", [])
 
 #TODO. Probando a poner lo de los productos que se compran y se venden de una manera
 #que ocupe menos.
 #Igual lo mejor es pintar unas flechas unos iconos y poner un label
 #y solo mostrar el icono y flechas cuando toque
 #	Prueba
-	
-	var candy_image:Image = _candy.get_data()
-	var chocolate_image:Image = _chocolate.get_data()
-	candy_image.resize(20, 20)
-	chocolate_image.resize(20, 20)
-	var reduced_candy_tex:Texture = ImageTexture.new()
-	var reduced_chocolate_tex:Texture = ImageTexture.new()
-	reduced_candy_tex.create_from_image(candy_image)
-	reduced_chocolate_tex.create_from_image(chocolate_image)
-	
-	#Mejor quitar los ItemList y poner imágenes (ocultables) y labels
-	$Trade/ItemListBuyingGoods.clear()
-	$Trade/ItemListSellingGoods.clear()
-	if positive_combidict.has("candy"):
-		var num_candy:float =positive_combidict.get("candy")
-		$Trade/ItemListBuyingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
-	if positive_combidict.has("chocolate"):
-		var num_chocolate:float =positive_combidict.get("chocolate")
-		$Trade/ItemListBuyingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
-	if negative_combidict.has("candy"):
-		var num_candy:float =abs(negative_combidict.get("candy"))
-		$Trade/ItemListSellingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
-	if negative_combidict.has("chocolate"):
-		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
-		$Trade/ItemListSellingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
-		
+#
+#	var candy_image:Image = _candy.get_data()
+#	var chocolate_image:Image = _chocolate.get_data()
+#	candy_image.resize(20, 20)
+#	chocolate_image.resize(20, 20)
+#	var reduced_candy_tex:Texture = ImageTexture.new()
+#	var reduced_chocolate_tex:Texture = ImageTexture.new()
+#	reduced_candy_tex.create_from_image(candy_image)
+#	reduced_chocolate_tex.create_from_image(chocolate_image)
+#
+#	#Mejor quitar los ItemList y poner imágenes (ocultables) y labels
+#	$Trade/ItemListBuyingGoods.clear()
+#	$Trade/ItemListSellingGoods.clear()
+#	if positive_combidict.has("candy"):
+#		var num_candy:float =positive_combidict.get("candy")
+#		$Trade/ItemListBuyingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
+#	if positive_combidict.has("chocolate"):
+#		var num_chocolate:float =positive_combidict.get("chocolate")
+#		$Trade/ItemListBuyingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
+#	if negative_combidict.has("candy"):
+#		var num_candy:float =abs(negative_combidict.get("candy"))
+#		$Trade/ItemListSellingGoods.add_item(str(num_candy),reduced_candy_tex,false)	
+#	if negative_combidict.has("chocolate"):
+#		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
+#		$Trade/ItemListSellingGoods.add_item(str(num_chocolate),reduced_chocolate_tex,false)
+
+
 	if positive_combidict.has("candy"):
 		var num_candy:float =positive_combidict.get("candy")
 		$Trade/LabelCandyBuying.set_text(str(num_candy))
+		$Trade/LabelCandyBuying.set_visible(true)
+		$Trade/candyBuying.set_visible(true)
 	else:
 		$Trade/LabelCandyBuying.set_text("0")
-	
+		$Trade/LabelCandyBuying.set_visible(false)
+		$Trade/candyBuying.set_visible(false)
+
 	if positive_combidict.has("chocolate"):
 		var num_chocolate:float =positive_combidict.get("chocolate")
 		$Trade/LabelChocolateBuying.set_text(str(num_chocolate))
+		$Trade/LabelChocolateBuying.set_visible(true)
+		$Trade/chocolateBuying.set_visible(true)
 	else:
 		$Trade/LabelChocolateBuying.set_text("0")
-		
+		$Trade/LabelChocolateBuying.set_visible(false)
+		$Trade/chocolateBuying.set_visible(false)
+
 	if negative_combidict.has("candy"):
 		var num_candy:float =abs(negative_combidict.get("candy"))
 		$Trade/LabelCandySelling.set_text(str(num_candy))	
-	
+		$Trade/LabelCandySelling.set_visible(true)
+		$Trade/candySelling.set_visible(true)
+	else:
+		$Trade/LabelCandySelling.set_visible(false)
+		$Trade/candySelling.set_visible(false)
+
 	if negative_combidict.has("chocolate"):
 		var num_chocolate:float =abs(negative_combidict.get("chocolate"))
 		$Trade/LabelChocolateSelling.set_text(str(num_chocolate))
-	
+		$Trade/LabelChocolateSelling.set_visible(true)
+		$Trade/chocolateSelling.set_visible(true)
+	else:
+		$Trade/LabelChocolateSelling.set_visible(false)
+		$Trade/chocolateSelling.set_visible(false)
 		
+	if positive_combidict.size()>0:
+		$Trade/Polygon2DBuying.set_visible(true)
+	else:
+		$Trade/Polygon2DBuying.set_visible(false)
+	
+	if negative_combidict.size()>0:
+		$Trade/Polygon2DSelling.set_visible(true)
+	else:
+		$Trade/Polygon2DSelling.set_visible(false)
+	
 	
 # fin Prueba	
 	
 	emit_signal("trade_updated",self,trade_combidict)
 
-func get_trade_out()->Dictionary:
-	var trade_combination_out:Combination = $Trade/CombinationItemSellingGoods.get_combination()
-	var trade_combination_in:Combination = $Trade/CombinationItemBuyingGoods.get_combination()
-	trade_combination_out.subtract(trade_combination_in)
-	var combidict:Dictionary = trade_combination_out.get_combidict()
-	return combidict
+#func get_trade_out()->Dictionary:
+###	var trade_combination_out:Combination = $Trade/CombinationItemSellingGoods.get_combination()
+##	var trade_combination_out:Combination = Combination.new($Trade.trade_out_combidict)
+###	var trade_combination_in:Combination = $Trade/CombinationItemBuyingGoods.get_combination()
+##	var trade_combination_in:Combination =  Combination.new($Trade.trade_in_combidict)
+##
+##	trade_combination_out.subtract(trade_combination_in)
+##	var combidict:Dictionary = trade_combination_out.get_combidict()
+##	return combidict
+#
+#	return $Trade.trade_out_combidict
 	
 #func update_price_labels()->void:
 #	var price_of_candies:float = Prices.get_price_of_product("candy")

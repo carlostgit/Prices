@@ -65,5 +65,5 @@ __meta__ = {
 [connection signal="ready" from="." to="PricesInfo" method="_on_MainScene_ready"]
 [connection signal="trade_updated" from="PersonScene1" to="TradeSum" method="_on_PersonScene1_trade_updated"]
 [connection signal="trade_updated" from="PersonScene2" to="TradeSum" method="_on_PersonScene2_trade_updated"]
-[connection signal="prices_changed" from="PricesInfo" to="PersonScene1" method="_on_PricesInfo_prices_changed"]
 [connection signal="prices_changed" from="PricesInfo" to="PersonScene2" method="_on_PricesInfo_prices_changed"]
+[connection signal="prices_changed" from="PricesInfo" to="PersonScene1" method="_on_PricesInfo_prices_changed"]

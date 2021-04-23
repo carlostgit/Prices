@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PersonScene.gd" type="Script" id=1]
 [ext_resource path="res://ranking.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://CombinationItemList.tscn" type="PackedScene" id=4]
 [ext_resource path="res://chocolate.png" type="Texture" id=5]
 [ext_resource path="res://candy.png" type="Texture" id=6]
+[ext_resource path="res://Trade.gd" type="Script" id=7]
 
 [node name="PersonScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -68,6 +69,7 @@ margin_left = 272.0
 margin_top = 16.0
 margin_right = 576.0
 margin_bottom = 288.0
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
