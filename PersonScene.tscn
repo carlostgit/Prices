@@ -92,62 +92,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelBuyingGoods" type="Label" parent="Trade"]
-visible = false
-margin_left = 248.0
-margin_top = 192.0
-margin_right = 368.0
-margin_bottom = 208.0
-text = "LabelBuyingGoods"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LabelSellingGoods" type="Label" parent="Trade"]
-visible = false
-margin_left = 248.0
-margin_top = 288.0
-margin_right = 408.0
-margin_bottom = 302.0
-text = "LabelSellingGoods"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CombinationItemBuyingGoods" parent="Trade" instance=ExtResource( 3 )]
-visible = false
-margin_left = 424.0
-margin_top = 216.0
-margin_right = 448.0
-margin_bottom = 296.0
-
-[node name="CombinationItemSellingGoods" parent="Trade" instance=ExtResource( 3 )]
-visible = false
-margin_left = 432.0
-margin_top = 320.0
-margin_right = 456.0
-margin_bottom = 392.0
-
-[node name="ItemListBuyingGoods" type="ItemList" parent="Trade"]
-visible = false
-margin_left = 248.0
-margin_top = 216.0
-margin_right = 416.0
-margin_bottom = 272.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ItemListSellingGoods" type="ItemList" parent="Trade"]
-visible = false
-margin_left = 248.0
-margin_top = 312.0
-margin_right = 416.0
-margin_bottom = 368.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Polygon2DBuying" type="Polygon2D" parent="Trade"]
 position = Vector2( -16, 64 )
 polygon = PoolVector2Array( -8, 8, 24, 40, 24, 16, 80, 16, 80, 0, 24, 0, 24, -24 )
