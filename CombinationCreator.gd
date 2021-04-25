@@ -12,9 +12,9 @@ var _products:Array = ["chocolate","candy"]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-#	print(calculate_combidicts_old(3))
-#
-#	print(calculate_combination_list(3))
+#	print(calculate_combidicts_old(10))
+
+#	print(calculate_combination_list(10))
 	
 	pass # Replace with function body.
 

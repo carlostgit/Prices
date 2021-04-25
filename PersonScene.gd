@@ -82,7 +82,7 @@ func set_preference_for_candy()->void:
 
 func update_ranking_of_preferences()->void:
 	var combination_creator = CombinationCreator.new() #Pasar mejor esto a auto load, o como estático
-	var combination_list:CombinationList = combination_creator.calculate_combination_list(5)
+	var combination_list:CombinationList = combination_creator.calculate_combination_list(10)
 #	print(combination_list.get_thing_quantity_dict_array())
 	
 	var combinations_array:Array = combination_list.get_combinations_array()

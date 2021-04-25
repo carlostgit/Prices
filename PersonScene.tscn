@@ -330,7 +330,6 @@ __meta__ = {
 }
 
 [node name="CombinationSatisfaction" parent="RankingOfPreferences" instance=ExtResource( 4 )]
-position = Vector2( 0, 8 )
 
 [node name="LabelTitle" type="Label" parent="RankingOfPreferences"]
 margin_right = 152.0

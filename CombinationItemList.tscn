@@ -14,7 +14,7 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="ScrollContainer"]
-margin_right = 700.0
-margin_bottom = 250.0
-rect_min_size = Vector2( 700, 250 )
+margin_right = 2000.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 2000, 500 )
 mouse_filter = 1
