@@ -159,7 +159,7 @@ func update_best_combination()->void:
 	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
 	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$")
 
-	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"best",[])
+	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"",[])
 	
 func update_trade()->void:
 	var trade_combidict:Dictionary = _trade_calculator.calculate_trade_for_combidict(_owned_items_dict)
@@ -328,19 +328,15 @@ func _on_PricesInfo_prices_changed():
 
 func _on_ShowInfoRanking_pressed():
 	if false==$RankingOfPreferences.is_visible():
-		$BestCombination.show()
 		$RankingOfPreferences.show()
-		$OwnedItems.hide()
 	else:
-		$BestCombination.hide()
 		$RankingOfPreferences.hide()
 		$OwnedItems.show()
 
+
 func _on_Button_pressed():
-	$BestCombination.hide()
 	$RankingOfPreferences.hide()
 	$OwnedItems.show()
-
 
 func _on_OwnedItems_signal_owned_candy_changed(num):
 	_owned_items_dict["candy"] = float(num)
