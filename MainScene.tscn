@@ -9,11 +9,9 @@
 script = ExtResource( 4 )
 
 [node name="PersonScene1" parent="." instance=ExtResource( 1 )]
-scale = Vector2( 0.75, 0.75 )
 
 [node name="PersonScene2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 416, 0 )
-scale = Vector2( 0.75, 0.75 )
 
 [node name="PricesInfo" parent="." instance=ExtResource( 2 )]
 margin_left = 816.0
