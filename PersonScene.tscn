@@ -68,7 +68,8 @@ __meta__ = {
 margin_left = 48.0
 margin_right = 168.0
 margin_bottom = 16.0
-text = "Best combination"
+text = "Best combination
+TODO: Hacer una versión del bestcombination que solo busque en la lista de combinaciones del RankingOfPreferences"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -322,6 +323,7 @@ __meta__ = {
 }
 
 [node name="RankingOfPreferences" type="Control" parent="."]
+visible = false
 margin_right = 432.0
 margin_bottom = 216.0
 mouse_filter = 1
