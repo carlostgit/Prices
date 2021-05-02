@@ -172,3 +172,23 @@ func calculate_combination_difference(combination_1_arg:Dictionary, combination_
 			return_dict[product_2] =  - combination_2_arg[product_2]
 
 	return return_dict
+
+
+func calculate_best_combidict_from_list(money_available_arg:float, combidicts_arg:Array,combidict_satisfaction_arg:Dictionary, combidict_price_arg:Dictionary)->Dictionary:
+
+	var best_satisfaction = -1.0
+	var best_combidict:Dictionary = {}
+	
+	for combidict in combidict_satisfaction_arg.keys():
+		var satisfaction:float = combidict_satisfaction_arg[combidict]
+		if combidict_price_arg.has(combidict):
+
+			var price:float = combidict_price_arg[combidict]
+			if (money_available_arg >= price):
+				if (satisfaction > best_satisfaction):
+					best_combidict = combidict
+					best_satisfaction = satisfaction
+	
+#	assert("falta esto")
+	return best_combidict
+

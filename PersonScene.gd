@@ -82,8 +82,17 @@ func set_preference_for_candy()->void:
 
 func update_ranking_of_preferences()->void:
 	var combination_creator = CombinationCreator.new() #Pasar mejor esto a auto load, o como estático
+	
+	var time_start = OS.get_ticks_msec()
+
 	var combination_list:CombinationList = combination_creator.calculate_combination_list(10)
 #	print(combination_list.get_thing_quantity_dict_array())
+
+	var after_creation = OS.get_ticks_msec()
+	
+	var elapsed_time = after_creation - time_start
+	print ("Elapsed time combi creation: "+ str(elapsed_time))
+	
 	
 	var combinations_array:Array = combination_list.get_combinations_array()
 	
@@ -94,7 +103,18 @@ func update_ranking_of_preferences()->void:
 		combination_satisfaction_list.add_combination_value(combination,satisf)
 		var price = Prices.calculate_combination_price(combination)
 		combination_price_list.add_combination_value(combination,price)
+	
+	var after_satisfaction_and_price_creation = OS.get_ticks_msec()
+	print ("Elapsed time satisf and price calc: "+str(after_satisfaction_and_price_creation-after_creation))
 	combination_satisfaction_list.sort()
+	var after_sort = OS.get_ticks_msec()
+	print ("Elapsed sort: "+str(after_sort-after_satisfaction_and_price_creation))
+	
+	
+#	print ("Elapsed sort: "+str(after_satisfaction_and_price_creation))
+	
+	
+#	print ("Elapsed time satisf and price calc: "+str(after_satisfaction_and_price_creation))
 	
 #	var combination_dict_array_sorted:Array = combination_value_list.get_combination_dict_array()	
 #	var combination_satisfaction:Dictionary = {}
@@ -149,15 +169,24 @@ func update_best_combination()->void:
 	#	Best combination
 	
 	var best_combidict:Dictionary = _trade_calculator.calculate_best_combidict(get_value_of_owned_combination())
+	#TODO hacer versión de calculate_best_combidict que busque dentro solo del ranking of preferences
+	var combidicts:Array = $RankingOfPreferences/CombinationSatisfaction.get_combidicts()
+	var combidict_satisfaction:Dictionary = $RankingOfPreferences/CombinationSatisfaction.get_combidict_satisfaction()
+	var combidict_price:Dictionary = $RankingOfPreferences/CombinationSatisfaction.get_combidict_price()
+	var best_combidict_from_list:Dictionary = _trade_calculator.calculate_best_combidict_from_list(get_value_of_owned_combination(), combidicts, combidict_satisfaction, combidict_price)
+	var price_of_combidict_from_list = combidict_price[best_combidict_from_list]
+	var satisfaction_of_combidict_from_list = combidict_satisfaction[best_combidict_from_list]
+	#
+	
 	var best_combination:Combination = Combination.new(best_combidict)
 	var best_color:Color = Color( 0, 0.5, 0.5, 1 )
 	
 	$RankingOfPreferences/CombinationSatisfaction.highlight_combination_with_color(best_combination,best_color)
-	$BestCombination/LabelBestCombination.set_text("Best combination: " + str(best_combidict))
+	$BestCombination/LabelBestCombination.set_text("Best combination: " + str(best_combidict) + "\n From list: " + str(best_combidict_from_list))
 	var satisf_of_best_combi:float = _satisfaction_calculator.calculate_satisf_of_combination(best_combination)
-	$BestCombination/LabelSatisfaction.set_text("Satisfaction of best combi: " + String(satisf_of_best_combi).pad_decimals(2))
+	$BestCombination/LabelSatisfaction.set_text("Satisfaction of best combi: " + String(satisf_of_best_combi).pad_decimals(2)+ "\nFrom list: "+str(satisfaction_of_combidict_from_list))
 	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
-	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$")
+	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$"+ "\nFrom list: "+str(price_of_combidict_from_list))
 
 	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"",[])
 	

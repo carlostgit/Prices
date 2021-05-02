@@ -257,3 +257,6 @@ func reset_combidicts()->void:
 
 func get_combidict_satisfaction()->Dictionary:
 	return _combidict_satisfaction
+
+func get_combidict_price()->Dictionary:
+	return _combidict_price
