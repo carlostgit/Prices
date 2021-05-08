@@ -16,8 +16,8 @@ var _part_chocolate:Texture = load("res://part_chocolate.png")
 
 # Declare member variables here. Examples:
 #var _persons = ["Pepe", "Paco"]
-var _products = ["chocolate","candy"]
-
+#var _products = ["chocolate","candy"]
+var _products = Globals._products
 
 var _scale:float = 0.5
 var _fixed_icon_size:Vector2 = Vector2(50,50)

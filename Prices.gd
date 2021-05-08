@@ -6,7 +6,8 @@ const Combination = preload("res://Combination.gd")
 # var a = 2
 # var b = "text"
 
-var _products = ["chocolate","candy"]
+#var _products = ["chocolate","candy"]
+var _products = Globals._products
 var _currency = "candy"
 var _amounts_dict = {"chocolate": 1.0, "candy":0.5}
 

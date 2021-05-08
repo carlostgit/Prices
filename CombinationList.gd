@@ -4,9 +4,14 @@ extends Control
 # var a = 2
 # var b = "text"
 
+#Creo que esta clase debería desaparecer!!!!
+#Es mejor no guardar objetos Combination en arrays
+#Es mejor tener arrays o diccionarios de Combidicts
+
 const Combination = preload("res://Combination.gd")
 #var character_node = Character.new()
 
+var _combidicts_set:Dictionary = {} #A falta de std::set, voy a usar un Dictionary
 var _combinations_array:Array = []
 
 # Called when the node enters the scene tree for the first time.
@@ -37,14 +42,20 @@ func add_combination(combination_arg:Combination)->void:
 #		var class_of_combination_arg = combination_arg.get_class()
 #		assert(class_of_combination_arg=="Combination")
 		_combinations_array.append(combination_arg)
+		_combidicts_set[combination_arg.get_combidict()] = 0
 	else:
 		assert(false)
 		
-func has_combination(combination_arg:Combination)->bool:
+func has_combination_old(combination_arg:Combination)->bool:
+	#Este metodo es muy lento
 	for combination in _combinations_array:
 		if combination.equals(combination_arg):
 			return true
 	return false
+
+func has_combination(combination_arg:Combination)->bool:
+	return _combidicts_set.has(combination_arg.get_combidict())
+	
 	
 func get_combinations_array()->Array:
 	return _combinations_array

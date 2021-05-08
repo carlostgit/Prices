@@ -7,8 +7,8 @@ extends Control
 const Combination = preload("res://Combination.gd")
 const CombinationList = preload("res://CombinationList.gd")
 
-var _products:Array = ["chocolate","candy"]
-
+#var _products:Array = ["chocolate","candy"]
+var _products = Globals._products
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -47,8 +47,8 @@ func calculate_combidicts_old(max_num_elements_arg:int)->Array:
 	#{candy:0, chocolate:2}]
 	var num_elements_combidicts_dict:Dictionary = calculate_num_elem_combidicts_dict_old(max_num_elements_arg)
 	var combinations_array:Array = Array()
-	for key in num_elements_combidicts_dict.keys():
-		combinations_array += num_elements_combidicts_dict[key]
+	for max_num in num_elements_combidicts_dict.keys():
+		combinations_array += num_elements_combidicts_dict[max_num]
 	return combinations_array
 
 func calculate_num_elem_combidicts_dict_old(max_num_elements_arg:int)->Dictionary:
@@ -65,6 +65,14 @@ func calculate_num_elem_combidicts_dict_old(max_num_elements_arg:int)->Dictionar
 	var combination_dict = Dictionary()
 	for num_elem in range(1,max_num_elements_arg+1):
 		var combination_list_of_exact_number_of_elements = calculate_combidicts_exact_num_of_elem_old(num_elem,self._products)
+		
+		#Rehago el diccionario, para asegurarme de que sus elementos se hayan añadido en el orden correcto
+		#A la hora de comparar diccionarios se tiene en cuenta el orden de los elementos
+		#Para GDScript no es lo mismo {candy:0, chocolate:1} que {chocolate:1, candy:0}
+		#Si no ordeno todos los elementos de la misma manera, no podré buscar elementos en diccionarios
+		for combdict in combination_list_of_exact_number_of_elements:
+			Globals.sort_combdict(combdict)
+		#		
 		combination_dict[num_elem] = combination_list_of_exact_number_of_elements;
 		assert(typeof(num_elem)==TYPE_INT)
 		assert(typeof(combination_list_of_exact_number_of_elements) == TYPE_ARRAY)

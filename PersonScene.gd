@@ -54,10 +54,23 @@ func get_owned_items()->Dictionary:
 	
 func update_after_prices_changed()->void:
 	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
+	var after_0 = OS.get_ticks_msec()
 	update_ranking_of_preferences()
+	var after_1 = OS.get_ticks_msec()
+	print ("Elapsed update_ranking_of_preferences: "+str( after_1 - after_0))
+
 	update_of_owned_combination()
+	var after_2 = OS.get_ticks_msec()
+	print ("Elapsed update_of_owned_combination: "+str( after_2 - after_1))
+
 	update_best_combination()
+	var after_3 = OS.get_ticks_msec()
+	print ("Elapsed update_best_combination: "+str( after_3 - after_2))
+
 	update_trade()
+
+	var after_4 = OS.get_ticks_msec()
+	print ("Elapsed update_trade: "+str( after_4 - after_3))
 
 func update_after_owned_combination_changed()->void:
 	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
@@ -125,6 +138,9 @@ func update_ranking_of_preferences()->void:
 #	$CombinationSatisfaction.init(combination_dict_array_sorted,combination_satisfaction)
 #	TODO: combination_price_list, meterlo en $CombinationSatisfaction
 	$RankingOfPreferences/CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list, "Ranking of preferences")
+	
+	var after_init = OS.get_ticks_msec()
+	print ("Elapsed init: "+str( after_init - after_sort))
 
 func update_of_owned_combination()->void:
 		#Satisfaction of owned combination

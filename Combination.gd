@@ -9,6 +9,9 @@ var _thing_quantity_dict:Dictionary = {} #combidict
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+#	Globals._empty_combidict.duplicate()
+#Es importante que los elementos key de los diccionarios se añadan en 
+#el mismo orden, para que se puedan comparar correctamente
 	var dict1 = {"chocolate":2.2,"candy":1.1 }
 	var dict2 = {"chocolate":2.2,"candy":1.1 }
 	var dict3 = {"chocolate":2.21,"candy":1.1 }
@@ -84,26 +87,36 @@ func equals_dict(thing_quantity_dict_arg:Dictionary)->bool:
 #	Finished testing
 	return true
 
-func equals(combination_arg)->bool:
+func equals_old(combination_arg)->bool:
 	var thing_quantity_dict:Dictionary = combination_arg.get_combidict()
-	if (thing_quantity_dict.size() and _thing_quantity_dict.size()):
-		var thing_quantity_dict_sorted:Array = thing_quantity_dict.keys()
-		thing_quantity_dict_sorted.sort()
-		var self_thing_quantity_dict_sorted:Array = _thing_quantity_dict.keys()
-		self_thing_quantity_dict_sorted.sort()
-		if thing_quantity_dict_sorted == self_thing_quantity_dict_sorted:
-			for thing in thing_quantity_dict.keys():
-				if false==(thing in _thing_quantity_dict):
-					return false;
-				else:
-					if thing_quantity_dict[thing] != _thing_quantity_dict[thing]:
-						return false
-		else:
-			return false			
+	return equals_dict(thing_quantity_dict)
+	
+#	if (thing_quantity_dict.size() and _thing_quantity_dict.size()):
+#		var thing_quantity_dict_sorted:Array = thing_quantity_dict.keys()
+#		thing_quantity_dict_sorted.sort()
+#		var self_thing_quantity_dict_sorted:Array = _thing_quantity_dict.keys()
+#		self_thing_quantity_dict_sorted.sort()
+#		if thing_quantity_dict_sorted == self_thing_quantity_dict_sorted:
+#			for thing in thing_quantity_dict.keys():
+#				if false==(thing in _thing_quantity_dict):
+#					return false;
+#				else:
+#					if thing_quantity_dict[thing] != _thing_quantity_dict[thing]:
+#						return false
+#		else:
+#			return false			
+#	else:
+#		return false
+##	Finished testing
+#	return true
+
+func equals(combination_arg)->bool:
+	var combidict_from_arg:Dictionary = combination_arg.get_combidict()
+	var self_combidict:Dictionary = self.get_combidict()
+	if (combidict_from_arg.hash() == self_combidict.hash()):
+		return true
 	else:
 		return false
-#	Finished testing
-	return true
 
 func get_positive_combination()->Dictionary:
 	var positive_dict:Dictionary = {}

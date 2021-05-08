@@ -7,6 +7,8 @@ extends Control
 
 const Combination = preload("res://Combination.gd")
 
+var _combidict_value_dict:Dictionary = {}
+
 var _combination_value_array:Array = [] #Contiene CombinationValue
 
 class CombinationValue:
@@ -61,13 +63,18 @@ func add_combination_value(combination_arg:Combination, value_arg:float)->void:
 #	combination_value["combination"] = combination_arg
 #	combination_value["value"] = value_arg
 	_combination_value_array.append(combination_value)
+	_combidict_value_dict[combination_arg.get_combidict()]=value_arg
 	
-func has_combination(combination_arg:Combination)->bool:
+func has_combination_old(combination_arg:Combination)->bool:
+	#Este método es muy lento
 	for combination_value in _combination_value_array:
 		var combination:Combination = combination_value.get_combination()
 		if combination.equals(combination_arg):
 			return true
 	return false
+
+func has_combination(combination_arg:Combination)->bool:
+	return _combidict_value_dict.has(combination_arg.get_combidict())
 	
 func get_combinations()->Array:
 	var combis:Array = []
@@ -114,10 +121,25 @@ func get_combidict_array()->Array:
 func sort()->void:
 	_combination_value_array.sort_custom(CombinationValueSorter,"sort")
 
-func get_value_of_combination(combination_arg:Combination)->float:
+func get_value_of_combination_old(combination_arg:Combination)->float:
+	#Este método es muy lento
 	for combination_value in _combination_value_array:
 		var combination:Combination = (combination_value as CombinationValue).get_combination()
 		if (combination_arg.equals(combination)):
 			return (combination_value as CombinationValue).get_value()
 
 	return 0.0
+
+func get_value_of_combination(combination_arg:Combination)->float:
+	var combidict = combination_arg.get_combidict()
+	if _combidict_value_dict.has(combidict):
+		return _combidict_value_dict[combidict]
+	else:
+		return 0.0
+	
+#	for combination_value in _combination_value_array:
+#		var combination:Combination = (combination_value as CombinationValue).get_combination()
+#		if (combination_arg.equals(combination)):
+#			return (combination_value as CombinationValue).get_value()
+#
+#	return 0.0

@@ -17,8 +17,8 @@ var _candy:Texture = load("res://candy.png")
 var _chocolate:Texture = load("res://chocolate.png")
 
 # Declare member variables here. Examples:
-var _products = ["chocolate","candy"]
-
+#var _products = ["chocolate","candy"]
+var _products = Globals._products
 var _utils = load("res://Utils.gd")
 
 var _combidicts:Array = Array()
@@ -63,16 +63,27 @@ func init_default_test():
 
 
 func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null, name_arg:String = "no name" ):
+	var time_1:float = OS.get_ticks_msec()
 	if (combination_satisfaction_list as CombinationValueList):
 		var combinations:Array = combination_satisfaction_list.get_combinations()
+		var time_1a:float = OS.get_ticks_msec()
+		print ("elaped_time_1a = "+ str(time_1a-time_1))
+		var elaped_time_1a:float = time_1a-time_1
 		var combidicts_array:Array = []
 		var combidict_satisfaction:Dictionary = {}
 		var combidict_price:Dictionary = {}
+		
+		var elaped_time_1:float = 0.0
+		var elaped_time_2:float = 0.0
 		for combination in combinations:
+			var time_1_1:float = OS.get_ticks_msec()
 			var combidict:Dictionary = (combination as Combination).get_combidict()
 			combidicts_array.append(combidict)
+			#El método sospechoso de tardar mucho es get_value_of_combination
 			var satisf:float = combination_satisfaction_list.get_value_of_combination(combination)
+			#
 			combidict_satisfaction[combidict]=satisf
+			var time_1_2:float = OS.get_ticks_msec()
 			
 			#price
 			if (null!=combination_price_list):
@@ -80,17 +91,30 @@ func init(combination_satisfaction_list:CombinationValueList, combination_price_
 					var price:float = combination_price_list.get_value_of_combination(combination)
 					combidict_price[combidict]=price
 			#
+			var time_1_3:float = OS.get_ticks_msec()
+			
+			elaped_time_1 += time_1_2-time_1_1
+			
+			elaped_time_2 += time_1_3-time_1_2
+		print ("elaped_time_1 = "+ str(elaped_time_1))
+		
+		print ("elaped_time_2 = "+ str(elaped_time_2))
 			
 		init_with_combidicts(combidicts_array, combidict_satisfaction,combidict_price,name_arg)
 	else:
 		assert(false)
 
+	var time_2:float = OS.get_ticks_msec()
+	print ("Time 1a = "+ str(time_2-time_1))
+	
 #func init(combidicts_arg:Array, combidict_satisfaction_dict_arg:Dictionary):
 #	_init(combidicts_arg, combidict_satisfaction_dict_arg)
 
 
 func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no_name"):
-
+	
+	var time_1:float = OS.get_ticks_msec()
+	
 	remove_combination_items()	#Se borran los nodos CombinationItem
 	reset_combidicts() #Se borra la info de cominaciones
 		
@@ -101,6 +125,8 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 	for combidict in _combidicts:
 		assert(typeof(combidict)==TYPE_DICTIONARY)
 		add_item_list(combidict)
+	
+	var time_2:float = OS.get_ticks_msec()
 
 	#Label 1
 	self.set_name(name_arg)
@@ -138,7 +164,11 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 			
 			label_count += 1
 
+	var time_3:float = OS.get_ticks_msec()
+	print ("Time 1 = "+ str(time_2-time_1))
+	print ("Time 2 = "+ str(time_3-time_2))
 
+	
 func set_name(name_arg:String)->void:
 	_name = name_arg
 

@@ -14,8 +14,8 @@ var _combos:Dictionary = {"sweets":["chocolate","candy"]}
 #var _param_combo_preference_at_0 = {"sweets":10.8}
 #var _param_combo_maximum_quantity_satisf = {"sweets":3.0}
 
-var _products = ["chocolate","candy"]
-
+#var _products = ["chocolate","candy"]
+var _products = Globals._products
 const Plotter = preload("res://Plotter.gd")
 const SatisfactionCurve = preload("res://SatisfactionCurve.gd")
 
