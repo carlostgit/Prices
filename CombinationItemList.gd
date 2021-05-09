@@ -25,7 +25,11 @@ var _combidicts:Array = Array()
 var _combidict_satisfaction:Dictionary = Dictionary()
 var _combidict_price:Dictionary = Dictionary()
 
+#var _combidict_satisflabel:Dictionary = {}
+#var _combidict_pricelabel:Dictionary = {}
+
 var _combination_items:Array = Array()
+var _combidict_combinationitem:Dictionary = {}
 
 var _scale:float = 0.5
 var _fixed_icon_size:Vector2 = Vector2(50,50)
@@ -246,10 +250,18 @@ func add_item_list(combidict_arg:Dictionary):
 	var price:float = 0
 	if(_combidict_price.size()>0):
 		price = _combidict_price[combidict_arg]
-	
+
+	var satisf_label:String = String(satisf).pad_decimals(1)
+	var price_label:String = String(price).pad_decimals(2) + "$"
+#	_combidict_satisflabel[combidict_arg] = satisf_label
+#	_combidict_pricelabel[combidict_arg] = price_label
+#
 	var combination_labels:Array = []
-	combination_labels.append(String(satisf).pad_decimals(1))
-	combination_labels.append(String(price).pad_decimals(2) + "$")	
+	combination_labels.append(satisf_label)
+	combination_labels.append(price_label)	
+
+
+
 #	Método 1, mediante clases
 #	var combination_item:CombinationItem = CombinationItem.new(combidict_arg, "", combination_labels)
 #	Pruebo a hacer lo anterior con instancias de escenas, en vez de clases
@@ -262,13 +274,16 @@ func add_item_list(combidict_arg:Dictionary):
 	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+40)
 	combination_item.set_position(this_item_list_pos)
 	self._combination_items.append(combination_item)
+	_combidict_combinationitem[combidict_arg]=combination_item
 	combination_item.add_to_group("removable")
 	$ScrollContainer/Panel.call_deferred("add_child",combination_item)
 
 	pass
+	
 
 func remove_combination_items()->void:
 	_combination_items.clear()
+	_combidict_combinationitem.clear()
 	
 	for child in $ScrollContainer/Panel.get_children():
 		if child.is_in_group("removable"):
@@ -290,3 +305,19 @@ func get_combidict_satisfaction()->Dictionary:
 
 func get_combidict_price()->Dictionary:
 	return _combidict_price
+
+func update_price(combidict_arg:Dictionary,price_arg:float):
+	if (_combidict_combinationitem.has(combidict_arg)):
+		
+		self._combidict_price[combidict_arg] = price_arg
+		update_labels(combidict_arg)
+
+func update_labels(combidict_arg):
+	if (_combidict_combinationitem.has(combidict_arg)):
+		var combination_item:CombinationItem = _combidict_combinationitem[combidict_arg]
+		var satisf:float = self._combidict_satisfaction[combidict_arg]
+		var price:float = self._combidict_price[combidict_arg]
+		var satisf_label:String = String(satisf).pad_decimals(1)
+		var price_label:String = String(price).pad_decimals(2) + "$"
+		combination_item.update_labels("",[satisf_label,price_label])
+		

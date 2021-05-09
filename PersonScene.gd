@@ -42,6 +42,8 @@ func init()->void:
 	var chocolate_amount:float = _owned_items_dict.get("chocolate")
 	$OwnedItems.set_num_candy(candy_amount)
 	$OwnedItems.set_num_chocolate(chocolate_amount)
+	
+	update_ranking_of_preferences()
 
 #	$OwnedItems/CandyAmount.set_value(candy_amount)
 #	$OwnedItems/ChocolateAmount.set_value(chocolate_amount)
@@ -55,7 +57,8 @@ func get_owned_items()->Dictionary:
 func update_after_prices_changed()->void:
 	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
 	var after_0 = OS.get_ticks_msec()
-	update_ranking_of_preferences()
+#	update_ranking_of_preferences()
+	self.update_prices_in_ranking_of_preferences()
 	var after_1 = OS.get_ticks_msec()
 	print ("Elapsed update_ranking_of_preferences: "+str( after_1 - after_0))
 
@@ -92,7 +95,17 @@ func set_default_preference()->void:
 func set_preference_for_candy()->void:
 	_satisfaction_calculator.set_preference_for_candy()
 
-
+func update_prices_in_ranking_of_preferences()->void:
+	
+	#TOO: Cambiar los CombinationItem y los CombinationItemList, para poder cambiar
+#	los labels, sin tener que rehacer las combinaciones
+	var combidicts:Array = $RankingOfPreferences/CombinationSatisfaction.get_combidicts()
+	
+#	$RankingOfPreferences/CombinationSatisfaction.update_prices(combidict_prices)
+	for combidict in combidicts:
+		var price = Prices.calculate_combidict_price(combidict)
+		$RankingOfPreferences/CombinationSatisfaction.update_price(combidict,price)
+		
 func update_ranking_of_preferences()->void:
 	var combination_creator = CombinationCreator.new() #Pasar mejor esto a auto load, o como estático
 	
@@ -190,8 +203,12 @@ func update_best_combination()->void:
 	var combidict_satisfaction:Dictionary = $RankingOfPreferences/CombinationSatisfaction.get_combidict_satisfaction()
 	var combidict_price:Dictionary = $RankingOfPreferences/CombinationSatisfaction.get_combidict_price()
 	var best_combidict_from_list:Dictionary = _trade_calculator.calculate_best_combidict_from_list(get_value_of_owned_combination(), combidicts, combidict_satisfaction, combidict_price)
-	var price_of_combidict_from_list = combidict_price[best_combidict_from_list]
-	var satisfaction_of_combidict_from_list = combidict_satisfaction[best_combidict_from_list]
+	
+	var price_of_combidict_from_list:float = 0.0
+	var satisfaction_of_combidict_from_list:float = 0.0
+	if (best_combidict_from_list.empty()==false):
+		price_of_combidict_from_list = combidict_price[best_combidict_from_list]
+		satisfaction_of_combidict_from_list = combidict_satisfaction[best_combidict_from_list]
 	#
 	
 	var best_combination:Combination = Combination.new(best_combidict)

@@ -28,8 +28,11 @@ var _combination_dict:Dictionary = Dictionary()
 
 var _item_list:ItemList = null
 
-var _combination_name_label:String = ""
+var _combination_name_label:Label
 var _combination_extra_labels:Array = []
+
+const _param_space_for_name:float = 10.0
+const _param_space_for_extra_label:float = 40.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,13 +64,13 @@ func init_with_combidict(combidict_arg:Dictionary = Dictionary(), name_arg:Strin
 	
 	_item_list = null
 	
-	_combination_name_label = name_arg
-	_combination_extra_labels = labels_arg
+#	_combination_name_label = name_arg
+#	_combination_extra_labels = labels_arg
 	
 	#Dibujar una combinación, con la posibilidad de acompañarla de un valor
-	add_item_list(combidict_arg, labels_arg)
+	add_items_and_labels(combidict_arg, name_arg, labels_arg)
 
-	self.set_label(name_arg)
+	
 
 func _init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels_arg:Array = Array()):
 ##	_canvas_item = canvas_item_arg
@@ -80,7 +83,7 @@ func _init(combidict_arg:Dictionary = Dictionary(), name_arg:String = "", labels
 #	self.set_label(name_arg)
 	pass
 	
-func set_label(label_name_arg:String)->void:
+func add_name_label(label_name_arg:String)->void:
 #	print("label_name is")
 	var label_name:Label = Label.new()
 	label_name.set_scale(Vector2(1.0,1.0))
@@ -91,15 +94,15 @@ func set_label(label_name_arg:String)->void:
 	label_name.set_position(Vector2(0,0))
 
 	self.add_child(label_name)
+	_combination_name_label = label_name
+
+
 #
-func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
+func add_items_and_labels(combidict_arg:Dictionary, label_name_arg:String, labels_arg:Array):
 
 	for label in labels_arg:
 		assert(typeof(label)==TYPE_STRING)
 
-	var with_extra_labels:bool = false
-	if false==labels_arg.empty():
-		with_extra_labels = true
 			
 	var item_list:ItemList = ItemList.new()
 	var num_item=0
@@ -156,12 +159,7 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 #	var current_position_x = self.get_position().x+item_list.get_size().x
 #	var current_position_x = 0
 	
-	var space_for_labels:float = 50.0
-	if false==with_extra_labels:
-		if _combination_name_label == "":
-			space_for_labels = 0.0
-		else:
-			space_for_labels = 20.0
+	var space_for_labels = calculate_space_for_labels(label_name_arg,labels_arg)
 	
 	var this_item_list_pos=Vector2(0, 0 + space_for_labels)
 	item_list.set_position(this_item_list_pos)
@@ -172,18 +170,57 @@ func add_item_list(combidict_arg:Dictionary, labels_arg:Array):
 
 	self.add_child(_item_list)
 
-	var label_count = 0
-	for label in labels_arg:
-		var label_node:Label = Label.new()
-		label_node.set_text(label)
-		label_node.set_position(this_item_list_pos+Vector2(0,-label_count*30))
-		label_node.set_rotation(-PI/2);
-		self.add_child(label_node)
-		label_count += 1
+	#TODO: Hacer método independiente para establecer los labels
+	#Pq quiero que se puedan cambiar los label, sin tener que rehacer el resto de items.
+#	add_labels(labels_arg,space_for_labels)
+	
+	add_labels(label_name_arg,labels_arg,space_for_labels)
+	
+	
 	#self.draw_string(_font, this_item_list_pos,String(52),Color(1,1,1))
 
 	pass
-#
+
+
+func calculate_space_for_labels(label_name_arg:String, extra_labels_arg:Array) ->float:
+	
+	
+	var space_for_labels:float = 0
+	if label_name_arg != "":
+		space_for_labels += _param_space_for_name
+		
+	space_for_labels += extra_labels_arg.size()*_param_space_for_extra_label
+	
+	return space_for_labels
+
+func add_labels(label_name_arg:String, extra_labels_arg:Array,space_for_labels_arg:float) -> void:
+	
+	self.add_name_label(label_name_arg)
+	
+	var label_count = 0
+	var this_item_list_pos=Vector2(0, 0 + space_for_labels_arg)
+	for label in extra_labels_arg:
+		var label_node:Label = Label.new()
+		label_node.set_text(label)
+		
+		label_node.set_position(this_item_list_pos+Vector2(0,-label_count*self._param_space_for_extra_label))
+		label_node.set_rotation(-PI/2);
+		self.add_child(label_node)
+		label_count += 1
+		_combination_extra_labels.append(label_node)	
+
+func update_labels(label_name_arg:String, extra_labels_arg:Array) -> void:
+	
+	_combination_name_label.queue_free()
+	for extra_label in _combination_extra_labels:
+		extra_label.queue_free()
+	_combination_extra_labels.clear()
+		
+	var space_for_labels:float = calculate_space_for_labels(label_name_arg, extra_labels_arg)
+	self.add_name_label(label_name_arg)
+	add_labels(label_name_arg, extra_labels_arg,space_for_labels)
+
+
 func get_width() -> float:
 	return _fixed_icon_size.x*_scale
 

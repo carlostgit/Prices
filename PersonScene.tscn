@@ -68,7 +68,7 @@ margin_left = 48.0
 margin_right = 168.0
 margin_bottom = 16.0
 text = "Best combination
-TODO: Hacer una versión del bestcombination que solo busque en la lista de combinaciones del RankingOfPreferences"
+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
