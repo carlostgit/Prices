@@ -67,27 +67,27 @@ func init_default_test():
 
 
 func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null, name_arg:String = "no name" ):
-	var time_1:float = OS.get_ticks_msec()
+#	var time_1:float = OS.get_ticks_msec()
 	if (combination_satisfaction_list as CombinationValueList):
 		var combinations:Array = combination_satisfaction_list.get_combinations()
-		var time_1a:float = OS.get_ticks_msec()
-		print ("elaped_time_1a = "+ str(time_1a-time_1))
-		var elaped_time_1a:float = time_1a-time_1
+#		var time_1a:float = OS.get_ticks_msec()
+#		print ("elaped_time_1a = "+ str(time_1a-time_1))
+#		var elaped_time_1a:float = time_1a-time_1
 		var combidicts_array:Array = []
 		var combidict_satisfaction:Dictionary = {}
 		var combidict_price:Dictionary = {}
 		
-		var elaped_time_1:float = 0.0
-		var elaped_time_2:float = 0.0
+#		var elaped_time_1:float = 0.0
+#		var elaped_time_2:float = 0.0
 		for combination in combinations:
-			var time_1_1:float = OS.get_ticks_msec()
+#			var time_1_1:float = OS.get_ticks_msec()
 			var combidict:Dictionary = (combination as Combination).get_combidict()
 			combidicts_array.append(combidict)
 			#El método sospechoso de tardar mucho es get_value_of_combination
 			var satisf:float = combination_satisfaction_list.get_value_of_combination(combination)
 			#
 			combidict_satisfaction[combidict]=satisf
-			var time_1_2:float = OS.get_ticks_msec()
+#			var time_1_2:float = OS.get_ticks_msec()
 			
 			#price
 			if (null!=combination_price_list):
@@ -95,21 +95,21 @@ func init(combination_satisfaction_list:CombinationValueList, combination_price_
 					var price:float = combination_price_list.get_value_of_combination(combination)
 					combidict_price[combidict]=price
 			#
-			var time_1_3:float = OS.get_ticks_msec()
-			
-			elaped_time_1 += time_1_2-time_1_1
-			
-			elaped_time_2 += time_1_3-time_1_2
-		print ("elaped_time_1 = "+ str(elaped_time_1))
-		
-		print ("elaped_time_2 = "+ str(elaped_time_2))
+#			var time_1_3:float = OS.get_ticks_msec()
+#
+#			elaped_time_1 += time_1_2-time_1_1
+#
+#			elaped_time_2 += time_1_3-time_1_2
+#		print ("elaped_time_1 = "+ str(elaped_time_1))
+#
+#		print ("elaped_time_2 = "+ str(elaped_time_2))
 			
 		init_with_combidicts(combidicts_array, combidict_satisfaction,combidict_price,name_arg)
 	else:
 		assert(false)
 
-	var time_2:float = OS.get_ticks_msec()
-	print ("Time 1a = "+ str(time_2-time_1))
+#	var time_2:float = OS.get_ticks_msec()
+#	print ("Time 1a = "+ str(time_2-time_1))
 	
 #func init(combidicts_arg:Array, combidict_satisfaction_dict_arg:Dictionary):
 #	_init(combidicts_arg, combidict_satisfaction_dict_arg)
@@ -117,11 +117,22 @@ func init(combination_satisfaction_list:CombinationValueList, combination_price_
 
 func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction_dict_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no_name"):
 	
-	var time_1:float = OS.get_ticks_msec()
+#	var time_1:float = OS.get_ticks_msec()
+#
+#	print("self.get_child_count(): "+ str(self.get_child_count()))
+#	print("$ScrollContainer.get_child_count(): "+ str($ScrollContainer.get_child_count()))
+#	print("$ScrollContainer/Panel.get_child_count(): "+ str($ScrollContainer/Panel.get_child_count()))
+
+	for child in $ScrollContainer.get_children():
+		print(str(child))
 	
 	remove_combination_items()	#Se borran los nodos CombinationItem
 	reset_combidicts() #Se borra la info de cominaciones
-		
+	
+#	print("after remove self.get_child_count(): "+ str(self.get_child_count()))
+#	print("after remove $ScrollContainer.get_child_count(): "+ str($ScrollContainer.get_child_count()))
+#	print("after remove $ScrollContainer/Panel.get_child_count(): "+ str($ScrollContainer/Panel.get_child_count()))
+	
 	_combidict_satisfaction = combidict_satisfaction_dict_arg
 	_combidict_price = combidict_price_arg	
 	_combidicts = combidicts_arg
@@ -130,7 +141,7 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 		assert(typeof(combidict)==TYPE_DICTIONARY)
 		add_item_list(combidict)
 	
-	var time_2:float = OS.get_ticks_msec()
+#	var time_2:float = OS.get_ticks_msec()
 
 	#Label 1
 	self.set_name(name_arg)
@@ -168,9 +179,9 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 			
 			label_count += 1
 
-	var time_3:float = OS.get_ticks_msec()
-	print ("Time 1 = "+ str(time_2-time_1))
-	print ("Time 2 = "+ str(time_3-time_2))
+#	var time_3:float = OS.get_ticks_msec()
+#	print ("Time 1 = "+ str(time_2-time_1))
+#	print ("Time 2 = "+ str(time_3-time_2))
 
 	
 func set_name(name_arg:String)->void:
@@ -276,7 +287,11 @@ func add_item_list(combidict_arg:Dictionary):
 	self._combination_items.append(combination_item)
 	_combidict_combinationitem[combidict_arg]=combination_item
 	combination_item.add_to_group("removable")
-	$ScrollContainer/Panel.call_deferred("add_child",combination_item)
+	$ScrollContainer/Panel.add_child(combination_item)
+#	$ScrollContainer/Panel.call_deferred("add_child",combination_item)
+#	Nota importante. Hay un problema si se usa el call_deferred. Con el call_deferred, acaba habiendo items duplicados
+#	Creo que lo que ocurre es que se vueve a crear otro item del mismo tipo, antes de que se cree este item con el call_deferred
+#
 
 	pass
 	
@@ -290,6 +305,12 @@ func remove_combination_items()->void:
 			$ScrollContainer/Panel.remove_child(child)
 			child.queue_free()
 			
+	for child in $ScrollContainer.get_children():
+		if child.is_in_group("removable"):
+			$ScrollContainer.remove_child(child)
+			child.queue_free()
+	
+			
 	for child in self.get_children():
 		if child.is_in_group("removable"):
 			self.remove_child(child)
@@ -299,6 +320,8 @@ func reset_combidicts()->void:
 	_combidict_satisfaction = {}
 	_combidict_price = {}	
 	_combidicts = []
+	_combination_items = []
+	_combidict_combinationitem = {}
 
 func get_combidict_satisfaction()->Dictionary:
 	return _combidict_satisfaction

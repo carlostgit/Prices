@@ -100,6 +100,8 @@ func add_name_label(label_name_arg:String)->void:
 #
 func add_items_and_labels(combidict_arg:Dictionary, label_name_arg:String, labels_arg:Array):
 
+#	print("add_items_and_labels"+ str(combidict_arg))
+
 	for label in labels_arg:
 		assert(typeof(label)==TYPE_STRING)
 
@@ -172,7 +174,7 @@ func add_items_and_labels(combidict_arg:Dictionary, label_name_arg:String, label
 
 	#TODO: Hacer método independiente para establecer los labels
 	#Pq quiero que se puedan cambiar los label, sin tener que rehacer el resto de items.
-#	add_labels(labels_arg,space_for_labels)
+
 	
 	add_labels(label_name_arg,labels_arg,space_for_labels)
 	
@@ -211,13 +213,21 @@ func add_labels(label_name_arg:String, extra_labels_arg:Array,space_for_labels_a
 
 func update_labels(label_name_arg:String, extra_labels_arg:Array) -> void:
 	
-	_combination_name_label.queue_free()
+#	print ("child count in Combination item:" + str(self.get_child_count()))
+	
+	if _combination_name_label != null:
+		self.remove_child(_combination_name_label)
+		_combination_name_label.queue_free()
 	for extra_label in _combination_extra_labels:
 		extra_label.queue_free()
+		self.remove_child(extra_label)
+		
 	_combination_extra_labels.clear()
+	
+#	print ("child count in Combination item After Removing:" + str(self.get_child_count()))
 		
 	var space_for_labels:float = calculate_space_for_labels(label_name_arg, extra_labels_arg)
-	self.add_name_label(label_name_arg)
+#	self.add_name_label(label_name_arg)
 	add_labels(label_name_arg, extra_labels_arg,space_for_labels)
 
 

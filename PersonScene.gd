@@ -43,7 +43,8 @@ func init()->void:
 	$OwnedItems.set_num_candy(candy_amount)
 	$OwnedItems.set_num_chocolate(chocolate_amount)
 	
-	update_ranking_of_preferences()
+#	update_ranking_of_preferences()
+	self.call_deferred("update_ranking_of_preferences")
 
 #	$OwnedItems/CandyAmount.set_value(candy_amount)
 #	$OwnedItems/ChocolateAmount.set_value(chocolate_amount)
@@ -56,24 +57,24 @@ func get_owned_items()->Dictionary:
 	
 func update_after_prices_changed()->void:
 	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
-	var after_0 = OS.get_ticks_msec()
+#	var after_0 = OS.get_ticks_msec()
 #	update_ranking_of_preferences()
 	self.update_prices_in_ranking_of_preferences()
-	var after_1 = OS.get_ticks_msec()
-	print ("Elapsed update_ranking_of_preferences: "+str( after_1 - after_0))
+#	var after_1 = OS.get_ticks_msec()
+#	print ("Elapsed update_ranking_of_preferences: "+str( after_1 - after_0))
 
 	update_of_owned_combination()
-	var after_2 = OS.get_ticks_msec()
-	print ("Elapsed update_of_owned_combination: "+str( after_2 - after_1))
+#	var after_2 = OS.get_ticks_msec()
+#	print ("Elapsed update_of_owned_combination: "+str( after_2 - after_1))
 
 	update_best_combination()
-	var after_3 = OS.get_ticks_msec()
-	print ("Elapsed update_best_combination: "+str( after_3 - after_2))
+#	var after_3 = OS.get_ticks_msec()
+#	print ("Elapsed update_best_combination: "+str( after_3 - after_2))
 
 	update_trade()
 
-	var after_4 = OS.get_ticks_msec()
-	print ("Elapsed update_trade: "+str( after_4 - after_3))
+#	var after_4 = OS.get_ticks_msec()
+#	print ("Elapsed update_trade: "+str( after_4 - after_3))
 
 func update_after_owned_combination_changed()->void:
 	$RankingOfPreferences/CombinationSatisfaction.reset_combinations_color()
@@ -88,12 +89,16 @@ func create_satisfaction_calculator()->SatisfactionCalculator:
 	
 func set_preference_for_chocolate()->void:
 	_satisfaction_calculator.set_preference_for_chocolate()
+	self.update_ranking_of_preferences()
 
 func set_default_preference()->void:
 	_satisfaction_calculator.set_default_preference()
+	self.update_ranking_of_preferences()
 
 func set_preference_for_candy()->void:
 	_satisfaction_calculator.set_preference_for_candy()
+	self.call_deferred("update_ranking_of_preferences")
+#	self.update_ranking_of_preferences()
 
 func update_prices_in_ranking_of_preferences()->void:
 	
@@ -109,15 +114,15 @@ func update_prices_in_ranking_of_preferences()->void:
 func update_ranking_of_preferences()->void:
 	var combination_creator = CombinationCreator.new() #Pasar mejor esto a auto load, o como estático
 	
-	var time_start = OS.get_ticks_msec()
+#	var time_start = OS.get_ticks_msec()
 
 	var combination_list:CombinationList = combination_creator.calculate_combination_list(10)
 #	print(combination_list.get_thing_quantity_dict_array())
 
-	var after_creation = OS.get_ticks_msec()
+#	var after_creation = OS.get_ticks_msec()
 	
-	var elapsed_time = after_creation - time_start
-	print ("Elapsed time combi creation: "+ str(elapsed_time))
+#	var elapsed_time = after_creation - time_start
+#	print ("Elapsed time combi creation: "+ str(elapsed_time))
 	
 	
 	var combinations_array:Array = combination_list.get_combinations_array()
@@ -130,11 +135,11 @@ func update_ranking_of_preferences()->void:
 		var price = Prices.calculate_combination_price(combination)
 		combination_price_list.add_combination_value(combination,price)
 	
-	var after_satisfaction_and_price_creation = OS.get_ticks_msec()
-	print ("Elapsed time satisf and price calc: "+str(after_satisfaction_and_price_creation-after_creation))
+#	var after_satisfaction_and_price_creation = OS.get_ticks_msec()
+#	print ("Elapsed time satisf and price calc: "+str(after_satisfaction_and_price_creation-after_creation))
 	combination_satisfaction_list.sort()
-	var after_sort = OS.get_ticks_msec()
-	print ("Elapsed sort: "+str(after_sort-after_satisfaction_and_price_creation))
+#	var after_sort = OS.get_ticks_msec()
+#	print ("Elapsed sort: "+str(after_sort-after_satisfaction_and_price_creation))
 	
 	
 #	print ("Elapsed sort: "+str(after_satisfaction_and_price_creation))
@@ -152,8 +157,8 @@ func update_ranking_of_preferences()->void:
 #	TODO: combination_price_list, meterlo en $CombinationSatisfaction
 	$RankingOfPreferences/CombinationSatisfaction.init(combination_satisfaction_list, combination_price_list, "Ranking of preferences")
 	
-	var after_init = OS.get_ticks_msec()
-	print ("Elapsed init: "+str( after_init - after_sort))
+#	var after_init = OS.get_ticks_msec()
+#	print ("Elapsed init: "+str( after_init - after_sort))
 
 func update_of_owned_combination()->void:
 		#Satisfaction of owned combination

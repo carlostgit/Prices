@@ -220,7 +220,7 @@ __meta__ = {
 [node name="LabelTitle" type="Label" parent="OwnedItems"]
 margin_right = 96.0
 margin_bottom = 16.0
-text = "Owned items"
+text = "Owned items "
 __meta__ = {
 "_edit_use_anchors_": false
 }
