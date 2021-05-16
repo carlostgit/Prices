@@ -342,10 +342,41 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="RankingOfPreferences"]
-margin_left = 192.0
-margin_right = 224.0
+margin_left = 168.0
+margin_right = 200.0
 margin_bottom = 24.0
 text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="RankingOfPreferences"]
+margin_left = 232.0
+margin_right = 264.0
+margin_bottom = 32.0
+texture_normal = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="RankingOfPreferences"]
+margin_left = 400.0
+margin_right = 432.0
+margin_bottom = 32.0
+texture_normal = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CandyChocolatePrefSlider" type="HSlider" parent="RankingOfPreferences"]
+margin_left = 272.0
+margin_top = 8.0
+margin_right = 392.0
+margin_bottom = 24.0
+max_value = 10.0
+value = 5.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -357,3 +388,4 @@ __meta__ = {
 [connection signal="pressed" from="OwnedItems/ButtonChocolateMinus" to="OwnedItems" method="_on_ButtonChocolateMinus_pressed"]
 [connection signal="pressed" from="ShowInfoRanking" to="." method="_on_ShowInfoRanking_pressed"]
 [connection signal="pressed" from="RankingOfPreferences/Button" to="." method="_on_Button_pressed"]
+[connection signal="value_changed" from="RankingOfPreferences/CandyChocolatePrefSlider" to="." method="_on_CandyChocolatePrefSlider_value_changed"]

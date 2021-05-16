@@ -18,6 +18,8 @@ var _trade_calculator:TradeCalculator = null
 var _candy:Texture = load("res://candy.png")
 var _chocolate:Texture = load("res://chocolate.png")
 
+var _param_max_products_in_ranking:int = 10
+
 signal trade_updated(origin_node,trade_combidict)
 
 # Called when the node enters the scene tree for the first time.
@@ -116,7 +118,7 @@ func update_ranking_of_preferences()->void:
 	
 #	var time_start = OS.get_ticks_msec()
 
-	var combination_list:CombinationList = combination_creator.calculate_combination_list(10)
+	var combination_list:CombinationList = combination_creator.calculate_combination_list(_param_max_products_in_ranking)
 #	print(combination_list.get_thing_quantity_dict_array())
 
 #	var after_creation = OS.get_ticks_msec()
@@ -415,3 +417,13 @@ func _on_OwnedItems_signal_owned_chocolate_changed(num):
 	_owned_items_dict["chocolate"] = float(num)
 	self.update_after_owned_combination_changed()
 	
+
+
+func _on_CandyChocolatePrefSlider_value_changed(value):
+#	TODO
+	var candy_max_satisf:float = 10-value
+	var chocolate_max_satisf:float = value
+	_satisfaction_calculator.set_max_satisfaction_of_product("chocolate", chocolate_max_satisf)
+	_satisfaction_calculator.set_max_satisfaction_of_product("candy", candy_max_satisf)
+	update_ranking_of_preferences()
+

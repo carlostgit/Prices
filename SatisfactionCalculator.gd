@@ -53,7 +53,8 @@ func _ready():
 #	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
 
 	#init_default_satisfaction()
-	init_candy_satisfaction()
+#	init_candy_satisfaction()
+	init_chocolate_satisfaction()
 	
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_chocolate"),"chocolate")
 	plotter.add_func_ref(funcref( self, "calculate_satifaction_of_candy"),"candy")
@@ -98,7 +99,49 @@ func set_default_preference():
 	reset()
 	init_default_satisfaction()
 
+func get_product_max_satisfaction(product_arg:String):
+	if _product_satisf_curve_dict.has(product_arg):
+		return _product_satisf_curve_dict[product_arg].get_maximum_satisf()	
+	return 0
 	
+func get_combo_max_satisfaction(combo_arg:String):
+	if _combo_satisf_curve_dict.has(combo_arg):
+		return _combo_satisf_curve_dict[combo_arg].get_maximum_satisf()	
+	return 0
+	
+func get_product_preference_at_0(product_arg:String):
+	if _product_satisf_curve_dict.has(product_arg):
+		return _product_satisf_curve_dict[product_arg].get_preference_at_0()
+	return 0
+	
+func get_combo_preference_at_0(combo_arg:String):
+	if _combo_satisf_curve_dict.has(combo_arg):
+		return _combo_satisf_curve_dict[combo_arg].get_preference_at_0()	
+	return 0
+
+func increase_max_satisfaction_of_product(product_arg:String):
+	if _product_satisf_curve_dict.has(product_arg):
+		var current_max_satisf = _product_satisf_curve_dict[product_arg].get_maximum_satisf()	
+		current_max_satisf += 1
+		_product_satisf_curve_dict[product_arg].set_maximum_satisf(current_max_satisf)
+
+func increase_max_satisfaction_of_combo(combo_arg:String):
+	if _combo_satisf_curve_dict.has(combo_arg):
+		var current_max_satisf = _combo_satisf_curve_dict[combo_arg].get_maximum_satisf()	
+		current_max_satisf += 1
+		_combo_satisf_curve_dict[combo_arg].set_maximum_satisf(current_max_satisf)
+
+
+func set_max_satisfaction_of_product(product_arg:String,max_satisf_arg:float):
+	if _product_satisf_curve_dict.has(product_arg):
+		_product_satisf_curve_dict[product_arg].set_maximum_satisf(max_satisf_arg)
+
+func set_max_satisfaction_of_combo(combo_arg:String,max_satisf_arg:float):
+	if _combo_satisf_curve_dict.has(combo_arg):
+		_combo_satisf_curve_dict[combo_arg].set_maximum_satisf(max_satisf_arg)
+
+
+
 func init_default_satisfaction():
 	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,10)
 	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,14)
@@ -109,18 +152,18 @@ func init_default_satisfaction():
 	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
 
 func init_candy_satisfaction():
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.16,8)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(4.2,18)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2,5)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2,30)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(2, 3)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy
 	_combo_satisf_curve_dict["sweets"]=satis_curve_sweets
 
 func init_chocolate_satisfaction():
-	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2.4,20)
-	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2.2,10)
-	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(1.8, 1)
+	var satis_curve_chocolate:SatisfactionCurve = SatisfactionCurve.new(2,30)
+	var satis_curve_candy:SatisfactionCurve = SatisfactionCurve.new(2,5)
+	var satis_curve_sweets:SatisfactionCurve = SatisfactionCurve.new(2, 3)
 	
 	_product_satisf_curve_dict["chocolate"]=satis_curve_chocolate
 	_product_satisf_curve_dict["candy"]=satis_curve_candy

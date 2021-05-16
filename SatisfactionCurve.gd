@@ -76,3 +76,13 @@ func calculate_satifaction(quantity_arg:float) -> float:
 	ret_satisf = max_satisf*get_diminishing_returns_factor(quantity_arg*pref_at_0/max_satisf)
 	
 	return ret_satisf
+
+
+func get_preference_at_0() -> float:
+	return _param_preference_at_0
+
+func get_maximum_satisf() -> float:
+	return _maximum_satisf
+
+func set_maximum_satisf(maximum_satisf_arg:float):
+	_maximum_satisf = maximum_satisf_arg
