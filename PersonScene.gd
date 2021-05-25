@@ -421,8 +421,8 @@ func _on_OwnedItems_signal_owned_chocolate_changed(num):
 
 func _on_CandyChocolatePrefSlider_value_changed(value):
 #	TODO
-	var candy_max_satisf:float = 10-value
-	var chocolate_max_satisf:float = value
+	var candy_max_satisf:float = 11-value
+	var chocolate_max_satisf:float = 1+value
 	_satisfaction_calculator.set_max_satisfaction_of_product("chocolate", chocolate_max_satisf)
 	_satisfaction_calculator.set_max_satisfaction_of_product("candy", candy_max_satisf)
 	update_ranking_of_preferences()

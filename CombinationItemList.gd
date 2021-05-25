@@ -32,7 +32,7 @@ var _combination_items:Array = Array()
 var _combidict_combinationitem:Dictionary = {}
 
 var _scale:float = 0.5
-var _fixed_icon_size:Vector2 = Vector2(50,50)
+#var _fixed_icon_size:Vector2 = Vector2(50,50)
 
 var _font = load("res://new_dynamicfont.tres")
 
@@ -41,7 +41,7 @@ var _font = load("res://new_dynamicfont.tres")
 func _ready():
 	#self.set_size(Vector2(40,40))
 	#comentar lo siguiente cundo esté debugeado
-	#init_default_test()
+#	init_default_test()
 	#$Label.set_text(str($ScrollContainer/Panel))
 	
 	#
