@@ -71,3 +71,7 @@ func _on_MainScene_ready():
 	update_prices()
 	update_after_prices_changed()
 	pass # Replace with function body.
+
+#TODO:
+#func increase_chocolate_price():
+#	pass
