@@ -21,7 +21,7 @@ margin_right = 1000.0
 margin_left = 816.0
 margin_top = 216.0
 margin_right = 984.0
-margin_bottom = 416.0
+margin_bottom = 448.0
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -94,9 +94,25 @@ text = "Reset"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TestPricesButton" type="Button" parent="TradeSum"]
+margin_left = 8.0
+margin_top = 200.0
+margin_right = 56.0
+margin_bottom = 224.0
+text = "Test prices"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerTestPrices" type="Timer" parent="TradeSum"]
 [connection signal="ready" from="." to="PricesInfo" method="_on_MainScene_ready"]
 [connection signal="trade_updated" from="PersonScene1" to="TradeSum" method="_on_PersonScene1_trade_updated"]
 [connection signal="trade_updated" from="PersonScene2" to="TradeSum" method="_on_PersonScene2_trade_updated"]
 [connection signal="prices_changed" from="PricesInfo" to="PersonScene1" method="_on_PricesInfo_prices_changed"]
 [connection signal="prices_changed" from="PricesInfo" to="PersonScene2" method="_on_PricesInfo_prices_changed"]
+[connection signal="decrease_chocolate_price" from="TradeSum" to="PricesInfo" method="_on_TradeSum_decrease_chocolate_price"]
+[connection signal="increase_chocolate_price" from="TradeSum" to="PricesInfo" method="_on_TradeSum_increase_chocolate_price"]
 [connection signal="pressed" from="TradeSum/ResetButton" to="TradeSum" method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="TradeSum/TestPricesButton" to="TradeSum" method="_on_TestPricesButton_pressed"]
+[connection signal="timeout" from="TradeSum/TimerTestPrices" to="TradeSum" method="_on_TimerTestPrices_timeout"]

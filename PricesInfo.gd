@@ -75,3 +75,15 @@ func _on_MainScene_ready():
 #TODO:
 #func increase_chocolate_price():
 #	pass
+
+
+func _on_TradeSum_decrease_chocolate_price():
+	var price_of_chocolate:float = Prices.get_amount_of_product("chocolate")
+	$ChocolateAmountForPrice.set_value(price_of_chocolate-0.1)
+	pass # Replace with function body.
+
+
+func _on_TradeSum_increase_chocolate_price():
+	var price_of_chocolate:float = Prices.get_amount_of_product("chocolate")
+	$ChocolateAmountForPrice.set_value(price_of_chocolate+0.1)
+	pass # Replace with function body.

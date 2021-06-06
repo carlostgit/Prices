@@ -23,6 +23,11 @@ var _max_price_of_chocolate:float = 0.0
 
 var _persons_trade_updated:Array = []
 var _num_of_persons = 2
+
+var _testing_prices:bool = false
+
+signal decrease_chocolate_price
+signal increase_chocolate_price
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_person1 = get_node(node_path1)
@@ -115,6 +120,9 @@ func person_trade_updated(person_node_arg:Node):
 		_persons_trade_updated.clear()
 
 func _on_ResetButton_pressed():
+	reset_prices_info()
+	
+func reset_prices_info():
 	_min_price_of_chocolate_found = false
 	_min_price_of_chocolate = 0.0
 	_max_price_of_chocolate_found = false
@@ -128,4 +136,31 @@ func _on_ResetButton_pressed():
 	$SumTradePerson1Label.set_text("SumTradePerson1Label")
 	
 	_persons_trade_updated.clear()
+
+func _on_TestPricesButton_pressed():
+	#TODO:
+#	Mi idea es hacer un test de precios, para encontrar el precio mínimo y máximo
+#	Mandar señales de establecimiento de precios,
+#	que tendrá que recoger PricesInfo para cambiar precios
+#	Dejar de mandar las señales de cambio de precios cuando se haya encontrado la información
+	reset_prices_info()
+	_testing_prices = true
+	$TimerTestPrices.start()
+
+	pass # Replace with function body.
+
+
+func _on_TimerTestPrices_timeout():
+	if (_testing_prices):
+		var price_of_chocolate = Prices.get_amount_of_product("chocolate")
+		var price_of_candy = Prices.get_amount_of_product("candy")
+		if (false == _min_price_of_chocolate_found):
+			emit_signal("decrease_chocolate_price")
+		elif (false == _max_price_of_chocolate_found):
+			emit_signal("increase_chocolate_price")
+			
+		if(_min_price_of_chocolate_found and _max_price_of_chocolate_found):
+			_testing_prices = false
+			$TimerTestPrices.stop()
+		
 	pass # Replace with function body.
