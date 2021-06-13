@@ -99,7 +99,8 @@ func set_default_preference()->void:
 
 func set_preference_for_candy()->void:
 	_satisfaction_calculator.set_preference_for_candy()
-	self.call_deferred("update_ranking_of_preferences")
+#	self.call_deferred("update_ranking_of_preferences")
+	self.update_ranking_of_preferences()
 #	self.update_ranking_of_preferences()
 
 func update_prices_in_ranking_of_preferences()->void:
@@ -211,6 +212,10 @@ func update_best_combination()->void:
 	var combidict_price:Dictionary = $RankingOfPreferences/CombinationSatisfaction.get_combidict_price()
 	var best_combidict_from_list:Dictionary = _trade_calculator.calculate_best_combidict_from_list(get_value_of_owned_combination(), combidicts, combidict_satisfaction, combidict_price)
 	
+#	_satisfaction_calculator.calculate_satisf_of_combination(owned_combination)
+	var satisf_of_owned:float = _satisfaction_calculator.calculate_satisf_of_combidict(self._owned_items_dict)
+	var better_combidicts_from_list:Array = _trade_calculator.calculate_better_combidicts_from_list(get_value_of_owned_combination(), combidicts, combidict_satisfaction, combidict_price, satisf_of_owned)
+	
 	var price_of_combidict_from_list:float = 0.0
 	var satisfaction_of_combidict_from_list:float = 0.0
 	if (best_combidict_from_list.empty()==false):
@@ -228,7 +233,15 @@ func update_best_combination()->void:
 	var value_of_best_combi:float = Prices.calculate_combination_price(best_combination)
 	$BestCombination/LabelCost.set_text("Cost: "+ String(value_of_best_combi).pad_decimals(2)+"$"+ "\nFrom list: "+str(price_of_combidict_from_list))
 
-	$BestCombination/CombinationItem.init_with_combidict(best_combidict,"",[])
+	$BestCombination/CombinationItem.init_with_combidict(best_combidict_from_list,"",[])
+
+#	TODO: Sacar array de todas las combinaciones mejores, y que estén dentro del precio
+#	$BestCombination/BetterCombinations.init_with_combidicts([best_combidict_from_list])
+#	todo: cambiar lo anterior por:
+	$BestCombination/BetterCombinations.init_with_combidicts(better_combidicts_from_list)
+
+	$BestCombination/BetterCombinations.set_panel_size(Vector2(100,200))
+	$BestCombination/BetterCombinations.set_scroll_container_size(Vector2(100,200))
 	
 func update_trade()->void:
 	var trade_combidict:Dictionary = _trade_calculator.calculate_trade_for_combidict(_owned_items_dict)

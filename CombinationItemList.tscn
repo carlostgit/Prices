@@ -3,6 +3,7 @@
 [ext_resource path="res://CombinationItemList.gd" type="Script" id=1]
 
 [node name="CombinationItemList" type="Node2D"]
+position = Vector2( 56, 16 )
 script = ExtResource( 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]

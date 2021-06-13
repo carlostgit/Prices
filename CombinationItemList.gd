@@ -58,12 +58,20 @@ func init_default_test():
 	
 	init_with_combidicts(default_combidicts)
 
+	$ScrollContainer.set_size(Vector2(100,250))
+	$ScrollContainer/Panel.set_custom_minimum_size(Vector2(100,250))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array, combination_satisfaction_arg:Dictionary = Dictionary()):
 #func _init(canvas_item_arg:CanvasItem, combinations_arg:Array = Array(), combination_satisfaction_arg:Dictionary = Dictionary(),combidict_price_arg:Dictionary = Dictionary(),name_arg:String = "no name"):
+
+func set_panel_size(panel_size_arg:Vector2):
+	$ScrollContainer/Panel.set_custom_minimum_size(panel_size_arg)
+
+func set_scroll_container_size(scroll_size_arg:Vector2):
+	$ScrollContainer.set_size(scroll_size_arg)
 
 
 func init(combination_satisfaction_list:CombinationValueList, combination_price_list:CombinationValueList=null, name_arg:String = "no name" ):
@@ -161,8 +169,8 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 	#Label 2
 	if _combination_items.size()>0:
 		var item_width:float = _combination_items.back().get_width()   #.get_width()
-		var right_end_position_x = self.get_position().x+_combination_items.size()*item_width
-		
+#		var right_end_position_x = self.get_position().x+_combination_items.size()*item_width
+		var right_end_position_x = _combination_items.size()*item_width		
 		var label_count = 0
 		var labels:Array =["Satisfaction","Price"]
 		for label in labels:
@@ -172,7 +180,8 @@ func init_with_combidicts(combidicts_arg:Array = Array(), combidict_satisfaction
 			satisf_label.set_scale(Vector2(1.0,1.0))
 			satisf_label.set_text(label)
 			satisf_label.set("custom_colors/font_color", Color(1,0,0))
-			var satisf_posit = self.get_position()+Vector2(right_end_position_x+20,50-30*label_count)
+#			var satisf_posit = self.get_position()+Vector2(right_end_position_x+20,50-30*label_count)
+			var satisf_posit = Vector2(right_end_position_x+20,50-30*label_count)
 			satisf_label.set_position(satisf_posit)
 			satisf_label.add_to_group("removable")
 			$ScrollContainer/Panel.add_child(satisf_label)
@@ -281,8 +290,10 @@ func add_item_list(combidict_arg:Dictionary):
 	var combination_item:CombinationItem = CombinationItem.new()
 	combination_item.init_with_combidict(combidict_arg, "", combination_labels)
 	var item_width:float = combination_item.get_width()
-	var current_position_x = self.get_position().x+_combination_items.size()*item_width
-	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+40)
+#	var current_position_x = self.get_position().x+_combination_items.size()*item_width
+	var current_position_x = _combination_items.size()*item_width
+#	var this_item_list_pos=Vector2(current_position_x,self.get_position().y+40)
+	var this_item_list_pos=Vector2(current_position_x, 0)
 	combination_item.set_position(this_item_list_pos)
 	self._combination_items.append(combination_item)
 	_combidict_combinationitem[combidict_arg]=combination_item

@@ -191,4 +191,26 @@ func calculate_best_combidict_from_list(money_available_arg:float, combidicts_ar
 	
 #	assert("falta esto")
 	return best_combidict
+	
+
+func calculate_better_combidicts_from_list(money_available_arg:float, combidicts_arg:Array,combidict_satisfaction_arg:Dictionary, combidict_price_arg:Dictionary, satisf_of_owned_arg:float)->Array:
+
+#	var best_satisfaction = -1.0
+#	var best_combidict:Dictionary = {}
+	var better_combidicts:Array = []
+	
+	for combidict in combidict_satisfaction_arg.keys():
+		var satisfaction:float = combidict_satisfaction_arg[combidict]
+		if combidict_price_arg.has(combidict):
+
+			var price:float = combidict_price_arg[combidict]
+			if (money_available_arg >= price):
+				if (satisfaction > satisf_of_owned_arg):
+					better_combidicts.append(combidict)
+#					best_combidict = combidict
+#					best_satisfaction = satisfaction
+	
+#	assert("falta esto")
+	return better_combidicts
+
 
