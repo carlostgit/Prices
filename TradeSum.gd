@@ -6,14 +6,15 @@ const Combination = preload("res://Combination.gd")
 # var a = 2
 # var b = "text"
 
-export(NodePath) var node_path1
-export(NodePath) var node_path2
+#export(NodePath) var node_path1
+#export(NodePath) var node_path2
+#
+#var _person1:Node = null
+#var _person2:Node = null
 
-var _person1:Node = null
-var _person2:Node = null
-
-var _person1_trade_combidict = {}
-var _person2_trade_combidict = {}
+#var _person1_trade_combidict = {}
+#var _person2_trade_combidict = {}
+var _array_of_person_trade_combidict = []
 var _sum_of_trade_combidict = {}
 
 var _min_price_of_chocolate_found:bool = false
@@ -30,8 +31,8 @@ signal decrease_chocolate_price
 signal increase_chocolate_price
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_person1 = get_node(node_path1)
-	_person2 = get_node(node_path2)
+#	_person1 = get_node(node_path1)
+#	_person2 = get_node(node_path2)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -40,11 +41,17 @@ func _ready():
 
 
 func update_sum_trades()->void:
-	var trade1_combination:Combination = Combination.new(_person1_trade_combidict)
-	var trade2_combination:Combination = Combination.new(_person2_trade_combidict)
+#	var trade1_combination:Combination = Combination.new(_person1_trade_combidict)
+#	var trade2_combination:Combination = Combination.new(_person2_trade_combidict)
+	var trade_combination_sum:Combination = Combination.new()
+	for person_trade_combidict in self._array_of_person_trade_combidict:
+		var trade_combination:Combination = Combination.new(person_trade_combidict)
+		trade_combination_sum.sum(trade_combination)
 	
-	trade1_combination.sum(trade2_combination)
-	_sum_of_trade_combidict = trade1_combination.get_combidict()
+	_sum_of_trade_combidict = trade_combination_sum.get_combidict()
+	
+#	trade1_combination.sum(trade2_combination)
+#	_sum_of_trade_combidict = trade1_combination.get_combidict()
 	
 	$SumOfAllTrades.set_text(str(_sum_of_trade_combidict))
 	
@@ -100,15 +107,23 @@ func sum_of_all_trades_updated(sum_of_trade_combidict_arg:Dictionary)->void:
 		var old_text:String = $PricesResult.get_text()
 		$PricesResult.set_text(old_text + " error")
 
-func _on_PersonScene1_trade_updated(origin_node, trade_combidict):
-	_person1_trade_combidict = trade_combidict
-	$SumTradePerson1Label.set_text(str(trade_combidict))
-#	update_sum_trades()
-	person_trade_updated(origin_node)
+#func _on_PersonScene1_trade_updated(origin_node, trade_combidict):
+#	_person1_trade_combidict = trade_combidict
+#	$SumTradePerson1Label.set_text(str(trade_combidict))
+##	update_sum_trades()
+#	person_trade_updated(origin_node)
 
-func _on_PersonScene2_trade_updated(origin_node, trade_combidict):
-	_person2_trade_combidict = trade_combidict
-	$SumTradePerson2Label.set_text(str(trade_combidict))
+#func _on_PersonScene2_trade_updated(origin_node, trade_combidict):
+#	_person2_trade_combidict = trade_combidict
+#	$SumTradePerson2Label.set_text(str(trade_combidict))
+##	update_sum_trades()
+#	person_trade_updated(origin_node)
+	
+func _on_PersonScene_trade_updated(origin_node, trade_combidict):
+	var person_trade_combidict = {}
+	person_trade_combidict = trade_combidict
+	self._array_of_person_trade_combidict.append(person_trade_combidict)
+#	$SumTradePerson2Label.set_text(str(trade_combidict))
 #	update_sum_trades()
 	person_trade_updated(origin_node)
 
@@ -164,3 +179,6 @@ func _on_TimerTestPrices_timeout():
 			$TimerTestPrices.stop()
 		
 	pass # Replace with function body.
+
+func _on_MainScene_signal_num_persons_updated(num):
+	self._num_of_persons = num
